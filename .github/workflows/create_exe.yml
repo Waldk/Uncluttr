@@ -39,10 +39,26 @@ jobs:
         name: Uncluttr
         path: dist/Uncluttr.exe
 
+    - name: Get latest tag
+      id: get_tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const tags = await github.repos.listTags({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+          if (tags.data.length === 0) {
+            throw new Error('No tags found in the repository');
+          }
+          const latestTag = tags.data[0].name;
+          core.setOutput('latest_tag', latestTag);
+
     - name: Create GitHub Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
         files: dist/Uncluttr.exe
+        tag_name: ${{ steps.get_tag.outputs.latest_tag }}
       # env:
         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
