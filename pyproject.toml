@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "uncluttr"
+version = "0.1.0"
+description = ""
+authors = ["Waldeck <Waldeck.ernst.felix@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+watchdog = "^6.0.0"
+requests = "^2.32.3"
+numpy = "^2.2.1"
+tkinterdnd2 = "^0.4.2"
+pymupdf = "^1.25.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
