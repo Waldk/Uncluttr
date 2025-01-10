@@ -39,15 +39,22 @@ jobs:
         name: Uncluttr
         path: dist/Uncluttr.exe
 
-    - name: Get latest tag
-      id: get_latest_tag
-      uses: actions-ecosystem/action-get-latest-tag@v1
+    # - name: Get latest tag
+      # id: get_latest_tag
+      # uses: actions-ecosystem/action-get-latest-tag@v1
+
+    - name: Get version from pyproject.toml
+      id: get_version
+      run: |
+        $version = (Get-Content pyproject.toml -Raw) -match 'version\s*=\s*"(.*)"' | Out-Null; $matches[1]
+        echo "version=$version" >> $env:GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
         files: dist/Uncluttr.exe
-        tag_name: ${{ steps.get_tag.outputs.latest_tag }}
+        # tag_name: ${{ steps.get_tag.outputs.latest_tag }}
+        tag_name: ${{ env.version }}
       # env:
         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
