@@ -38,23 +38,39 @@ jobs:
       with:
         name: Uncluttr
         path: dist/Uncluttr.exe
+    
+    - name: Get version from pyproject.toml
+      id: get_version
+      run: |
+        $version = (Get-Content pyproject.toml -Raw) -match 'version\s*=\s*"(.*)"' | Out-Null; $matches[1]
+        echo "::set-output name=version::$version"
 
     # - name: Get latest tag
       # id: get_latest_tag
       # uses: actions-ecosystem/action-get-latest-tag@v1
 
-    - name: Get version from pyproject.toml
-      id: get_version
-      run: |
-        $version = (Get-Content pyproject.toml -Raw) -match 'version\s*=\s*"(.*)"' | Out-Null; $matches[1]
-        echo "version=$version" >> $env:GITHUB_ENV
+    # - name: Get latest tag
+    #   id: get_tag
+    #   uses: actions/github-script@v6
+    #   with:
+    #     script: |
+    #       const tags = await github.repos.listTags({
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo
+    #       });
+    #       if (tags.data.length === 0) {
+    #         throw new Error('No tags found in the repository');
+    #       }
+    #       const latestTag = tags.data[0].name;
+    #       core.setOutput('latest_tag', latestTag);
 
     - name: Create GitHub Release
       id: create_release
       uses: softprops/action-gh-release@v1
       with:
         files: dist/Uncluttr.exe
-        # tag_name: ${{ steps.get_tag.outputs.latest_tag }}
-        tag_name: v${{ env.version }}
+        tag_name: v${{ steps.get_version.outputs.version }}
+      #   tag_name: v${{ env.version }}
+      #   tag_name: ${{ steps.get_tag.outputs.latest_tag }}
       # env:
-        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
