@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "uncluttr"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["Cérina ALLEK", "Waldeck FELIX <Waldeck.ernst.felix@gmail.com>", "Rafael GONÇALVES", "Alban HOELLINGER", "Baptiste LE SCIELLOUR", "Eva SUPIOT"]
 readme = "README.md"
