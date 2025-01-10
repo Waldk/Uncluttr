@@ -1,1 +1,0 @@
-Pour les éxécutables normalement si on en fait
