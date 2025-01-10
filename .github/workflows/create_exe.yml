@@ -39,20 +39,11 @@ jobs:
         name: Uncluttr
         path: dist/Uncluttr.exe
 
-    - name: Get latest tag
+    - name: Get latest tag using Git CLI
       id: get_tag
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const tags = await github.repos.listTags({
-            owner: context.repo.owner,
-            repo: context.repo.repo
-          });
-          if (tags.data.length === 0) {
-            throw new Error('No tags found in the repository');
-          }
-          const latestTag = tags.data[0].name;
-          core.setOutput('latest_tag', latestTag);
+      run: |
+        latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+        echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
     - name: Create GitHub Release
       id: create_release
