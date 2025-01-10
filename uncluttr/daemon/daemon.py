@@ -29,10 +29,14 @@ class Handler(FileSystemEventHandler):
         else:
             print(f"Received created event - {event.src_path}")
 
-if __name__ == '__main__':
+def start_daemon():
     config = configparser.ConfigParser()
     config.read('configuration/conf.ini')
     directory_to_watch = config['settings']['directory_to_watch']
     
     w = Watcher(directory_to_watch)
+    print("Daemon started")
     w.run()
+
+if __name__ == '__main__':
+    start_daemon()
