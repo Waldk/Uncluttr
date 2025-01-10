@@ -1,68 +1,54 @@
+import configparser
 import tkinter as tk
 from tkinter import filedialog, scrolledtext
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import fitz  # PyMuPDF
+from uncluttr.fileTreatement.fileTreatement import fileAnalysis
+import shutil
+
+from uncluttr.fileTreatement.fileTreatement import folderAnalysis
+
+config = configparser.ConfigParser()
+config.read('configuration/conf.ini')
+path = config['settings']['directory_to_watch']
 
 def open_file():
+    
     """Ouvre un fichier via un explorateur et affiche son contenu."""
-    file_path = filedialog.askopenfilename(title="Choisir un fichier")
+    file_path = filedialog.askopenfilename(
+        filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip")]
+        )    
     if file_path:
-        try :
-            with open(file_path, "r", encoding="utf-16") as file:
-                content = file.read()
-            text_area.delete("1.0", tk.END)  # Efface le contenu précédent
-            text_area.insert(tk.END, content)
-        except Exception as e:
-            pdf_document = fitz.open(file_path)
-            content = ""
-            for page_num in range(len(pdf_document)):
-                    page = pdf_document.load_page(page_num)
-                    content += page.get_text()
-            text_area.delete(1.0, tk.END)
-            text_area.insert(tk.END, content)
-            
+        shutil.copy(file_path, path)
+        folderAnalysis()
+        
+        
+
 def drop_file(event):
-    """Récupère le chemin du fichier déposé et affiche son contenu."""
-    file_path = event.data.strip()
-    if file_path:
-        try:
-            with open(file_path, "r", encoding="utf-8") as file:
-                content = file.read()
-            text_area.delete("1.0", tk.END)
-            text_area.insert(tk.END, content)
-        except Exception as e:
-            text_area.delete("1.0", tk.END)
-            text_area.insert(tk.END, f"Erreur lors de l'ouverture du fichier : {e}")
+    """Récupère le fichier déposé dans la zone de drag-and-drop."""
+    file_path = event.data
+    file_type = file_path.split('.')[-1]
+    if file_type == "zip" or file_type == "pdf":
+        shutil.copy(file_path, path)
+        folderAnalysis()  
+    else:
+        tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
 
 def start_gui():
     # Fenêtre principale
-    root = tk.Tk()
-    root.title("Application Drag and Drop")
-    root.geometry("600x400")
-
-    # Zone de texte pour afficher le contenu du fichier
-    global text_area
-    text_area = scrolledtext.ScrolledText(root, wrap=tk.WORD, width=70, height=20)
-    text_area.pack(pady=10)
+    root = TkinterDnD.Tk()
+    root.title("Uncluttr")
+    root.geometry("800x600")
 
     # Bouton pour ouvrir un fichier
     button_open = tk.Button(root, text="Ouvrir un fichier", command=open_file)
     button_open.pack(pady=5)
 
     # Zone de drag-and-drop
-    drop_area = tk.Label(root, text="Déposez un fichier ici", bg="lightgrey", width=50, height=2)
+    drop_area = tk.Label(root, text="Déposez un fichier ici", bg="lightgrey", width=70, height=4)
     drop_area.pack(pady=10)
-
-    # Configuration de drag-and-drop (nécessite `tkinterdnd2`)
-    try:
-        from tkinterdnd2 import TkinterDnD, DND_FILES
-        root = TkinterDnD.Tk()  # Initialise le support Drag and Drop
-        drop_area = tk.Label(root, text="Déposez un fichier ici", bg="lightgrey", width=50, height=2)
-        drop_area.pack(pady=10)
-        drop_area.drop_target_register(DND_FILES)
-        drop_area.dnd_bind("<<Drop>>", drop_file)
-    except ImportError:
-        drop_area.config(text="Installez tkinterdnd2 pour activer le drag-and-drop")
+    drop_area.drop_target_register(DND_FILES)
+    drop_area.dnd_bind("<<Drop>>", drop_file)
 
     # Lancement de l'application
     root.mainloop()

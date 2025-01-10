@@ -1,9 +1,11 @@
 # source : https://pypi.org/project/watchdog/
 
+import sys
 import time
 import configparser
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from uncluttr.fileTreatement.fileTreatement import folderAnalysis
 
 class Watcher:
     def __init__(self, directory_to_watch):
@@ -28,6 +30,9 @@ class Handler(FileSystemEventHandler):
             return None
         else:
             print(f"Received created event - {event.src_path}")
+            sys.stdout.flush()
+            folderAnalysis()
+            
 
 def start_daemon():
     config = configparser.ConfigParser()
@@ -36,6 +41,8 @@ def start_daemon():
     
     w = Watcher(directory_to_watch)
     print("Daemon started")
+    sys.stdout.flush()  
+    
     w.run()
 
 if __name__ == '__main__':
