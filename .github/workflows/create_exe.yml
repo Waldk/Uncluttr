@@ -1,0 +1,40 @@
+name: Create .exe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m venv .venv
+        .\.venv\Scripts\activate
+        pip install poetry
+        poetry install
+
+    - name: Install PyInstaller
+      run: |
+        .\.venv\Scripts\activate
+        pip install pyinstaller
+
+    - name: Build EXE
+      run: |
+        .\.venv\Scripts\activate
+        pyinstaller --onefile --name Uncluttr --add-data "configuration/conf.ini;configuration" --additional-hooks-dir=./uncluttr uncluttr/core/main.py
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v3
+      with:
+        name: Uncluttr
+        path: dist/Uncluttr.exe
