@@ -33,8 +33,16 @@ jobs:
         .\.venv\Scripts\activate
         pyinstaller --onefile --name Uncluttr --add-data "configuration/conf.ini;configuration" --additional-hooks-dir=./uncluttr uncluttr/core/main.py
 
-    - name: Upload EXE
+    - name: Upload EXE as Artifact
       uses: actions/upload-artifact@v3
       with:
         name: Uncluttr
         path: dist/Uncluttr.exe
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/Uncluttr.exe
+      # env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
