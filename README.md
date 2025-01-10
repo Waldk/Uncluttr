@@ -13,3 +13,4 @@
 - Lancer l'application à l'aide de la commande ```[to define]```, (pour l'instant: ```python -m uncluttr.core.main```)  ou :
     - ```python uncluttr/daemon/daemon.py``` si vous testez uniquement le daemon
     - ```python uncluttr/gui/gui.py``` si vous testez uniquement l'interface graphique'
+- pour l'arrêter, faire un ```CTRL+c``` dans le terminal où vous avez lancé l'application
