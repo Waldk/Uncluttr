@@ -1,9 +1,8 @@
 import configparser
 import tkinter as tk
-from tkinter import filedialog, scrolledtext
+from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import fitz  # PyMuPDF
-from uncluttr.fileTreatement.fileTreatement import fileAnalysis
 import shutil
 
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis

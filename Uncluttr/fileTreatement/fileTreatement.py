@@ -1,5 +1,4 @@
 import configparser
-import shutil
 import zipfile
 import os
 import fitz
@@ -45,4 +44,4 @@ def fileAnalysis(file_path):
                 print(f"{file_path} is a structured PDF.")
             else:
                 print(f"{file_path} is an unstructured PDF.")
-            sys.stdout.flush()  # Flush the output buffer
+            sys.stdout.flush() 
