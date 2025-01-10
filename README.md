@@ -14,3 +14,7 @@
     - ```python uncluttr/daemon/daemon.py``` si vous testez uniquement le daemon
     - ```python uncluttr/gui/gui.py``` si vous testez uniquement l'interface graphique
 - pour l'arrêter, faire un ```CTRL+c``` dans le terminal où vous avez lancé l'application
+
+### Releases
+
+Dans la section **Releases** de github, vous pouvez retrouver le dernier ```.exe``` fonctionnel de l'application.
