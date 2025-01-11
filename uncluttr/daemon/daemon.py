@@ -1,8 +1,10 @@
 # source : https://pypi.org/project/watchdog/
 
 import os, sys, time, configparser
+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
+from uncluttr.fileTreatement.fileTreatement import folderAnalysis
 
 class Watcher:
     def __init__(self, directory_to_watch):
@@ -27,6 +29,9 @@ class Handler(FileSystemEventHandler):
             return None
         else:
             print(f"Received created event - {event.src_path}")
+            sys.stdout.flush()
+            folderAnalysis()
+            
 
 def start_daemon():
     try:
