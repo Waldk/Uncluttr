@@ -1,18 +1,21 @@
 [tool.poetry]
 name = "uncluttr"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
-authors = ["Waldeck <Waldeck.ernst.felix@gmail.com>"]
+authors = ["Cérina ALLEK", "Waldeck FELIX <Waldeck.ernst.felix@gmail.com>", "Rafael GONÇALVES", "Alban HOELLINGER", "Baptiste LE SCIELLOUR", "Eva SUPIOT"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<3.14"
 watchdog = "^6.0.0"
 requests = "^2.32.3"
 numpy = "^2.2.1"
 tkinterdnd2 = "^0.4.2"
 pymupdf = "^1.25.1"
 
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.11.1"
 
 [build-system]
 requires = ["poetry-core"]

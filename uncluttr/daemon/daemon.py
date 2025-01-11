@@ -1,8 +1,7 @@
 # source : https://pypi.org/project/watchdog/
 
-import sys
-import time
-import configparser
+import os, sys, time, configparser
+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
@@ -35,15 +34,26 @@ class Handler(FileSystemEventHandler):
             
 
 def start_daemon():
-    config = configparser.ConfigParser()
-    config.read('configuration/conf.ini')
-    directory_to_watch = config['settings']['directory_to_watch']
-    
-    w = Watcher(directory_to_watch)
-    print("Daemon started")
-    sys.stdout.flush()  
-    
-    w.run()
+    try:
+        config = configparser.ConfigParser()
+
+        if getattr(sys, 'frozen', False):
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.getcwd()
+        
+        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+        config.read(config_path)
+        directory_to_watch = config['settings']['directory_to_watch']
+        
+        w = Watcher(directory_to_watch)
+        print("Daemon started")
+        sys.stdout.flush()
+        
+        w.run()
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
     start_daemon()

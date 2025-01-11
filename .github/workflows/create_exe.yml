@@ -1,0 +1,76 @@
+name: Create .exe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m venv .venv
+        .\.venv\Scripts\activate
+        pip install poetry
+        poetry install
+
+    - name: Install PyInstaller
+      run: |
+        .\.venv\Scripts\activate
+        pip install pyinstaller
+
+    - name: Build EXE
+      run: |
+        .\.venv\Scripts\activate
+        pyinstaller --onefile --name Uncluttr --add-data "configuration/conf.ini;configuration" --additional-hooks-dir=./uncluttr uncluttr/core/main.py
+
+    - name: Upload EXE as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Uncluttr
+        path: dist/Uncluttr.exe
+    
+    - name: Get version from pyproject.toml
+      id: get_version
+      run: |
+        $version = (Get-Content pyproject.toml -Raw) -match 'version\s*=\s*"(.*)"' | Out-Null; $matches[1]
+        echo "::set-output name=version::$version"
+
+    # - name: Get latest tag
+      # id: get_latest_tag
+      # uses: actions-ecosystem/action-get-latest-tag@v1
+
+    # - name: Get latest tag
+    #   id: get_tag
+    #   uses: actions/github-script@v6
+    #   with:
+    #     script: |
+    #       const tags = await github.repos.listTags({
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo
+    #       });
+    #       if (tags.data.length === 0) {
+    #         throw new Error('No tags found in the repository');
+    #       }
+    #       const latestTag = tags.data[0].name;
+    #       core.setOutput('latest_tag', latestTag);
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/Uncluttr.exe
+        tag_name: v${{ steps.get_version.outputs.version }}
+      #   tag_name: v${{ env.version }}
+      #   tag_name: ${{ steps.get_tag.outputs.latest_tag }}
+      # env:
+      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
