@@ -15,8 +15,15 @@ def is_structured_pdf(file_path):
 
 def folderAnalysis(path=None):
     if path is None:
+
         config = configparser.ConfigParser()
-        config.read('configuration/conf.ini')
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.getcwd()
+        
+        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+        config.read(config_path)
         path = config['settings']['directory_to_watch']
     
     print(f"Analyzing files in {path}...")
