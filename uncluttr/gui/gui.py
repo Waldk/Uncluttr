@@ -8,7 +8,7 @@ import shutil
 import fitz  # PyMuPDF
 
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
-
+from uncluttr.daemon.daemon import start_daemon
 config = configparser.ConfigParser()
 if getattr(sys, 'frozen', False):
     base_path = sys._MEIPASS
@@ -29,11 +29,15 @@ def start_gui():
     
     # Espace pour path
     path_label = tk.Label(root, text="Le path actuel est :")
-    path_label.pack(pady=5)
-
     path_space.insert(tk.INSERT,path)
+    # Bouton pour le changement de path
+    path_accept = tk.Button(root, text="Voulez-vous changer le path ?",command=sauvegarde_du_path)
+    
+    #Placement
+    path_label.pack(pady=5)
     path_space.pack(pady=5)
-
+    path_accept.pack(pady=5)
+    
     # Bouton pour ouvrir un fichier
     button_open = tk.Button(root, text="Ouvrir un fichier", command=open_file)
     button_open.pack(pady=5)
@@ -46,6 +50,12 @@ def start_gui():
 
     # Lancement de l'application
     root.mainloop()
+    
+def sauvegarde_du_path():
+    config['settings']['directory_to_watch'] = path_space.get("1.0",tk.END).split("\n")[0]
+    with open(config_path, 'w') as configfile:
+        config.write(configfile)
+    start_daemon()
     
 def open_file():
     

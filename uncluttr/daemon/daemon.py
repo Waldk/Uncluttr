@@ -5,7 +5,7 @@ import os, sys, time, configparser
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
-from uncluttr.gui.gui import tk , path_space
+
 
 class Watcher:
     def __init__(self, directory_to_watch):
@@ -13,6 +13,7 @@ class Watcher:
         self.observer = Observer()
 
     def run(self):
+        print(self.DIRECTORY_TO_WATCH)
         event_handler = Handler()
         self.observer.schedule(event_handler, self.DIRECTORY_TO_WATCH, recursive=False)
         self.observer.start()
@@ -46,12 +47,7 @@ def start_daemon():
         
         config_path = os.path.join(base_path, 'configuration', 'conf.ini')
         config.read(config_path)
-        try :
-            directory_to_watch = path_space.get("1.0",tk.END).split("\n")[0]
-            print(path_space.get("1.0",tk.END).split("\n")[0])
-        except Exception as e:
-            print("exeption")
-            directory_to_watch = config['settings']['directory_to_watch']
+        directory_to_watch = config['settings']['directory_to_watch']
         
         w = Watcher(directory_to_watch)
         print("Daemon started")
@@ -60,6 +56,7 @@ def start_daemon():
         w.run()
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == '__main__':
     start_daemon()
