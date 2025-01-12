@@ -2,7 +2,6 @@ import configparser
 import tkinter as tk
 from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
-import fitz  # PyMuPDF
 import shutil
 
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
@@ -10,34 +9,21 @@ from uncluttr.fileTreatement.fileTreatement import folderAnalysis
 config = configparser.ConfigParser()
 config.read('configuration/conf.ini')
 path = config['settings']['directory_to_watch']
-
-def open_file():
-    
-    """Ouvre un fichier via un explorateur et affiche son contenu."""
-    file_path = filedialog.askopenfilename(
-        filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip")]
-        )    
-    if file_path:
-        shutil.copy(file_path, path)
-        folderAnalysis()
-        
-        
-
-def drop_file(event):
-    """Récupère le fichier déposé dans la zone de drag-and-drop."""
-    file_path = event.data
-    file_type = file_path.split('.')[-1]
-    if file_type == "zip" or file_type == "pdf":
-        shutil.copy(file_path, path)
-        folderAnalysis()  
-    else:
-        tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
+root = TkinterDnD.Tk()
+path_space = tk.Text(root, height=1, width=50)
 
 def start_gui():
     # Fenêtre principale
-    root = TkinterDnD.Tk()
+    
     root.title("Uncluttr")
     root.geometry("800x600")
+    
+    # Espace pour path
+    path_label = tk.Label(root, text="Le path actuel est :")
+    path_label.pack(pady=5)
+
+    path_space.insert(tk.INSERT,path)
+    path_space.pack(pady=5)
 
     # Bouton pour ouvrir un fichier
     button_open = tk.Button(root, text="Ouvrir un fichier", command=open_file)
@@ -51,6 +37,30 @@ def start_gui():
 
     # Lancement de l'application
     root.mainloop()
+    
+def open_file():
+    
+    """Ouvre un fichier via un explorateur et affiche son contenu."""
+    file_path = filedialog.askopenfilename(
+        filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip")]
+        )    
+    if file_path:
+        shutil.copy(file_path, path_space.get("1.0",tk.END).split("\n")[0] )
+        folderAnalysis( path_space.get("1.0",tk.END).split("\n")[0])
+        
+        
+
+def drop_file(event):
+    """Récupère le fichier déposé dans la zone de drag-and-drop."""
+    file_path = event.data
+    file_type = file_path.split('.')[-1]
+    if file_type == "zip" or file_type == "pdf":
+        shutil.copy(file_path, path)
+        folderAnalysis()  
+    else:
+        tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
+
+
 
 if __name__ == "__main__":
     print("Starting GUI...")
