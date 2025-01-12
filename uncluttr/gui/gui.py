@@ -1,13 +1,22 @@
-import configparser
+import configparser, sys, os, shutil
 import tkinter as tk
 from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
+
 import shutil
+
+import fitz  # PyMuPDF
 
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
 
 config = configparser.ConfigParser()
-config.read('configuration/conf.ini')
+if getattr(sys, 'frozen', False):
+    base_path = sys._MEIPASS
+else:
+    base_path = os.getcwd()
+
+config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+config.read(config_path)
 path = config['settings']['directory_to_watch']
 root = TkinterDnD.Tk()
 path_space = tk.Text(root, height=1, width=50)
