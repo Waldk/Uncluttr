@@ -21,17 +21,18 @@ def signal_handler(sig, frame):
         GUI_PROCESS.join()
     sys.exit(0)
 
-
 if __name__ == "__main__":
     multiprocessing.freeze_support()
+    event = multiprocessing.Event()
     signal.signal(signal.SIGINT, signal_handler)
 
     try:
         DAEMON_PROCESS = multiprocessing.Process(target=start_daemon)
-        GUI_PROCESS = multiprocessing.Process(target=start_gui)
-
         DAEMON_PROCESS.start()
+
+        GUI_PROCESS = multiprocessing.Process(target=start_gui(DAEMON_PROCESS))
         GUI_PROCESS.start()
+
         DAEMON_PROCESS.join()
         GUI_PROCESS.join()
     except (KeyboardInterrupt, SystemExit):

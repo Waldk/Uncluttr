@@ -33,7 +33,6 @@ class Watcher:
             self.observer.stop()
         self.observer.join()
 
-
 class Handler(FileSystemEventHandler):
     """Class to handle file system events."""
     @staticmethod
@@ -56,7 +55,6 @@ class Handler(FileSystemEventHandler):
             # dites si vous trouvez ça pas cohérent
 
             # folder_analysis()
-
 
 def start_daemon():
     """Start the daemon."""
@@ -81,8 +79,7 @@ def start_daemon():
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-
-def wait_for_file(file_path, timeout=10):
+def wait_for_file(file_path:str, timeout=10):
     """Wait for a file to be completely copied."""
     start_time = time.time()
     while True:
@@ -96,22 +93,6 @@ def wait_for_file(file_path, timeout=10):
         if time.time() - start_time > timeout:
             raise TimeoutError(f"Timeout waiting for file {file_path} to be ready.")
         time.sleep(1)
-
-
-def update_directory_to_watch(new_directory):
-    """Update the directory to watch in the configuration file."""
-    try:
-        config = configparser.ConfigParser()
-        base_path = get_base_app_files_path()
-        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
-        config.read(config_path)
-        config['settings']['directory_to_watch'] = new_directory
-        with open(config_path, 'w', encoding='utf-8') as configfile:
-            config.write(configfile)
-        print(f"Updated directory to watch to: {new_directory}")
-    except Exception as e:
-        print(f"An error occurred while updating the directory to watch: {e}")
-
 
 if __name__ == '__main__':
     start_daemon()

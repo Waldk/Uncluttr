@@ -11,7 +11,7 @@ def get_base_app_files_path():
         return sys._MEIPASS
     return os.getcwd()
 
-def update_directory_to_watch(new_directory):
+def update_directory_to_watch(new_directory:str):
     """Update the directory to watch in the configuration file."""
     try:
         config = configparser.ConfigParser()
@@ -25,13 +25,18 @@ def update_directory_to_watch(new_directory):
     except Exception as e:
         print(f"An error occurred while updating the directory to watch: {e}")
 
-def update_daemon_path(new_directory_to_watch, daemon_process):
+def update_daemon_path(new_directory_to_watch:str,
+                        daemon_process: multiprocessing.Process) -> multiprocessing.Process:
     """Restart the daemon with a new directory to watch."""
     from uncluttr.daemon.daemon import start_daemon  # Import local to avoid circular import
     if daemon_process is not None:
+        print("Restarting daemon...", daemon_process)
         daemon_process.terminate()
         daemon_process.join()
+        print("Daemon stopped, normalemnt r", daemon_process)
+
     update_directory_to_watch(new_directory_to_watch)
     daemon_process = multiprocessing.Process(target=start_daemon)
     daemon_process.start()
+    print("new daemon", daemon_process)
     return daemon_process

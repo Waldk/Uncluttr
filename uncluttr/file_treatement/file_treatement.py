@@ -78,8 +78,10 @@ def file_analysis(file_path: str = None):
                 print(f"Analyzing {file_path} ...")
                 if is_structured_pdf(file_path):
                     print(f"{file_path} is a structured PDF.\n")
+                    # puis on envoie la team IA commme il se doit
                 else:
                     print(f"{file_path} is an unstructured PDF.\n")
+                    # puis on envoie la team IA commme il se doit
                 sys.stdout.flush()
             case _:
                 print(f"{file_path} is not a file type we currently handle.")

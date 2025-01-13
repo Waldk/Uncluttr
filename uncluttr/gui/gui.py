@@ -1,6 +1,7 @@
 """ This module contains the GUI of the application. """
 
 import configparser
+import multiprocessing
 import os
 import tkinter as tk
 from tkinter import filedialog
@@ -14,27 +15,35 @@ from uncluttr.core.configuration import update_daemon_path
 
 # Lecture du fichier de configuration
 config = configparser.ConfigParser()
-
 base_path = get_base_app_files_path()
 config_path = os.path.join(base_path, 'configuration', 'conf.ini')
 config.read(config_path)
 path = config['settings']['directory_to_watch']
 root = TkinterDnD.Tk()
 path_space = tk.Text(root, height=1, width=50)
+path_accept = None
 
-DAEMON_PROCESS = None
 
-def start_gui():
+
+def start_gui(daemon_process: multiprocessing.Process=None):
     """Start the GUI."""
     # Fenêtre principale
     root.title("Uncluttr")
     root.geometry("800x600")
+    global path_accept
 
     # Espace pour path
     path_label = tk.Label(root, text="Le path actuel est :")
     path_space.insert(tk.INSERT,path)
+
     # Bouton pour le changement de path
-    path_accept = tk.Button(root, text="Voulez-vous changer le path ?",command=sauvegarde_du_path)
+
+    if daemon_process is not None:
+        path_accept = tk.Button(root, text="Voulez-vous changer le path ?",
+                                 command=lambda: sauvegarde_du_path(daemon_process))
+    else:
+        path_accept = tk.Button(root, text="Impossible d'interagir avec le daemon",
+                                 state=tk.DISABLED)
 
     #Placement
     path_label.pack(pady=5)
@@ -54,21 +63,25 @@ def start_gui():
     # Lancement de l'application
     root.mainloop()
 
-def sauvegarde_du_path():
+def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    global DAEMON_PROCESS
+    # global path_accept
+
     new_path = path_space.get("1.0", tk.END).strip()
-    print(new_path)
-    DAEMON_PROCESS = update_daemon_path(new_path, DAEMON_PROCESS)
+    gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
+
+    # Redéfinir le bouton pour utiliser le nouveau processus
+    path_accept.config(text="Voulez-vous changer le path à nouveau ?",
+                        command=lambda: sauvegarde_du_path(gui_daemon_process))
 
 
-    # Crée des processus en plus, c'est pas ce que l'on veut et on ne peut pas les arreter depuis l'ide, bonjour les fuites mémoires
+    # Crée des processus en plus, c'est pas ce que l'on veut et 
+    # on ne peut pas les arreter depuis l'ide pou avec ctrl c, bonjour les fuites mémoires
 
     # config['settings']['directory_to_watch'] = path_space.get("1.0",tk.END).split("\n")[0]
     # with open(config_path, 'w', encoding='utf-8') as configfile:
     #     config.write(configfile)
     # start_daemon()
-
 
 def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
@@ -90,7 +103,6 @@ def open_file():
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
 
-
 def drop_file(event):
     """Récupère le fichier déposé dans la zone de drag-and-drop."""
     try:
@@ -111,7 +123,6 @@ def drop_file(event):
             tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
-
 
 if __name__ == "__main__":
     print("Starting GUI...")
