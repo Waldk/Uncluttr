@@ -23,7 +23,6 @@ def signal_handler(sig, frame):
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
-    event = multiprocessing.Event()
     signal.signal(signal.SIGINT, signal_handler)
 
     try:
