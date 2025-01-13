@@ -58,7 +58,6 @@ def sauvegarde_du_path():
     start_daemon()
     
 def open_file():
-    
     """Ouvre un fichier via un explorateur et affiche son contenu."""
     file_path = filedialog.askopenfilename(
         filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip")]
@@ -66,7 +65,6 @@ def open_file():
     if file_path:
         shutil.copy(file_path, path_space.get("1.0",tk.END).split("\n")[0] )
         folderAnalysis( path_space.get("1.0",tk.END).split("\n")[0])
-        
         
 
 def drop_file(event):
@@ -78,7 +76,6 @@ def drop_file(event):
         folderAnalysis()  
     else:
         tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
-
 
 
 if __name__ == "__main__":
