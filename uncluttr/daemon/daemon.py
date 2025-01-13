@@ -6,7 +6,6 @@ import os
 import sys
 import time
 import configparser
-
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from uncluttr.file_treatement.file_treatement import file_analysis
@@ -55,7 +54,7 @@ class Handler(FileSystemEventHandler):
             # mais regarder dans tous les subfolders si un fichier a été ajouté 
             # et analyser seulement ce dernier
             # dites si vous trouvez ça pas cohérent
-            
+
             # folder_analysis()
 
 
@@ -97,6 +96,21 @@ def wait_for_file(file_path, timeout=10):
         if time.time() - start_time > timeout:
             raise TimeoutError(f"Timeout waiting for file {file_path} to be ready.")
         time.sleep(1)
+
+
+def update_directory_to_watch(new_directory):
+    """Update the directory to watch in the configuration file."""
+    try:
+        config = configparser.ConfigParser()
+        base_path = get_base_app_files_path()
+        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+        config.read(config_path)
+        config['settings']['directory_to_watch'] = new_directory
+        with open(config_path, 'w', encoding='utf-8') as configfile:
+            config.write(configfile)
+        print(f"Updated directory to watch to: {new_directory}")
+    except Exception as e:
+        print(f"An error occurred while updating the directory to watch: {e}")
 
 
 if __name__ == '__main__':

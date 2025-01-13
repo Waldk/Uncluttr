@@ -21,6 +21,7 @@ def signal_handler(sig, frame):
         GUI_PROCESS.join()
     sys.exit(0)
 
+
 if __name__ == "__main__":
     multiprocessing.freeze_support()
     signal.signal(signal.SIGINT, signal_handler)
