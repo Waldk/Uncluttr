@@ -6,12 +6,14 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from uncluttr.fileTreatement.fileTreatement import folderAnalysis
 
+
 class Watcher:
     def __init__(self, directory_to_watch):
         self.DIRECTORY_TO_WATCH = directory_to_watch
         self.observer = Observer()
 
     def run(self):
+        print(self.DIRECTORY_TO_WATCH)
         event_handler = Handler()
         self.observer.schedule(event_handler, self.DIRECTORY_TO_WATCH, recursive=False)
         self.observer.start()
@@ -54,6 +56,7 @@ def start_daemon():
         w.run()
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 if __name__ == '__main__':
     start_daemon()

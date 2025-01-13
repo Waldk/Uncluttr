@@ -4,6 +4,8 @@ import os
 import fitz
 import sys
 
+
+
 def is_structured_pdf(file_path):
     with fitz.open(file_path) as doc:
         for page_num in range(len(doc)):
@@ -13,7 +15,7 @@ def is_structured_pdf(file_path):
                 return True
     return False
 
-def folderAnalysis(path=None):
+def folderAnalysis(path):
     if path is None:
 
         config = configparser.ConfigParser()
