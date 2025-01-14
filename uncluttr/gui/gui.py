@@ -8,7 +8,7 @@ from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
 # Vous avez vraiment besoin de cet import ? vous l'utilisez nulle part de ce que je vois
 # import fitz  # PyMuPDF
-from uncluttr.file_treatement.file_treatement import file_analysis
+from uncluttr.file_treatement.file_treatement import file_analysis,entrainer_modele
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path
 
@@ -24,9 +24,40 @@ path_space = tk.Text(root, height=1, width=50)
 path_accept = None
 
 
+import shutil
+
+# Lecture du fichier de configuration
+config = configparser.ConfigParser()
+base_path = get_base_app_files_path()
+config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+config.read(config_path)
+path = config['settings']['directory_to_watch']
+root = TkinterDnD.Tk()
+path_space = tk.Text(root, height=1, width=50)
+path_accept = None
+
 
 def start_gui(daemon_process: multiprocessing.Process=None):
     """Start the GUI."""
+    entrainer_modele()
+
+
+    # Barre de tache en header
+    menu_bar = tk.Menu(root)
+    root.config(menu=menu_bar)
+
+    file_menu = tk.Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="Action", menu=file_menu)
+    file_menu.add_command(label="Open", command=open_file)
+    file_menu.add_command(label="Arborecence", command=second_page)
+
+    file_menu.add_separator()
+    file_menu.add_command(label="Exit", command=root.quit)
+
+    help_menu = tk.Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="Help", menu=help_menu)
+    help_menu.add_command(label="About")
+    
     # Fenêtre principale
     root.title("Uncluttr")
     root.geometry("800x600")
@@ -40,7 +71,7 @@ def start_gui(daemon_process: multiprocessing.Process=None):
 
     if daemon_process is not None:
         path_accept = tk.Button(root, text="Voulez-vous changer le path ?",
-                                 command=lambda: sauvegarde_du_path(daemon_process))
+                                command=lambda: sauvegarde_du_path(daemon_process))
     else:
         path_accept = tk.Button(root, text="Impossible d'interagir avec le daemon",
                                  state=tk.DISABLED)
@@ -60,6 +91,8 @@ def start_gui(daemon_process: multiprocessing.Process=None):
     drop_area.drop_target_register(DND_FILES)
     drop_area.dnd_bind("<<Drop>>", drop_file)
 
+    second_page_button = tk.Button(root, text="Go to second page", command=second_page)
+    second_page_button.pack(pady=10)
     # Lancement de l'application
     root.mainloop()
 
@@ -102,6 +135,35 @@ def open_file():
             # folder_analysis( path_space.get("1.0",tk.END).split("\n")[0])
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
+    
+def second_page():
+    second_page = tk.Toplevel(root)
+    second_page.title("Second page")
+    second_page.geometry("800x600")
+    second_page_label = tk.Label(second_page, text="This is the second page")
+    second_page_label.pack(pady=10)
+    
+    footer_frame = tk.Frame(second_page)
+    footer_frame.pack(side=tk.BOTTOM, pady=10)
+
+    back_button = tk.Button(footer_frame, text="back", command=start_gui)
+    back_button.pack(side=tk.LEFT, padx=10)
+
+    next_button = tk.Button(footer_frame, text="next", command=thrid_page)
+    next_button.pack(side=tk.LEFT, padx=10)
+    
+    # Boutton d'accpetation de la proposition
+    third_page_button = tk.Button(footer_frame, text="Accept", command=thrid_page)
+    third_page_button.pack(side=tk.LEFT,padx=10)
+     
+def thrid_page():
+    third_page = tk.Toplevel(root)
+    third_page.title("Third page")
+    third_page.geometry("800x600")
+    third_page_label = tk.Label(third_page, text="Bravo le rangement de votre fichier et votre arborecence est terminé")
+    third_page_label.pack(pady=10)
+    
+    tk.Text(third_page, height=1, width=50).pack(pady=5)
 
 def drop_file(event):
     """Récupère le fichier déposé dans la zone de drag-and-drop."""
