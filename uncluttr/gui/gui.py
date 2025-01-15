@@ -21,6 +21,22 @@ root = TkinterDnD.Tk()
 path_space = tk.Text(root, height=1, width=50)
 
 def start_gui():
+    # Barre de tache en header
+    menu_bar = tk.Menu(root)
+    root.config(menu=menu_bar)
+
+    file_menu = tk.Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="Action", menu=file_menu)
+    file_menu.add_command(label="Open", command=open_file)
+    file_menu.add_command(label="Arborecence", command=second_page)
+
+    file_menu.add_separator()
+    file_menu.add_command(label="Exit", command=root.quit)
+
+    help_menu = tk.Menu(menu_bar, tearoff=0)
+    menu_bar.add_cascade(label="Help", menu=help_menu)
+    help_menu.add_command(label="About")
+    
     # Fenêtre principale
     root.title("Uncluttr")
     root.geometry("800x600")
