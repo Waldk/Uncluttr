@@ -12,10 +12,11 @@
 - Lancer la commande ```poetry install```
 - Lancer l'application à l'aide de la commande ```[to define]```, (pour l'instant: ```python -m uncluttr.core.main```)  ou :
     - ```python uncluttr/daemon/daemon.py``` si vous testez uniquement le daemon
-    - ```python uncluttr/gui/gui.py``` si vous testez uniquement l'interface graphique
+    - ```python uncluttr/gui/gui.``` si vous testez uniquement l'interface graphique
 - pour l'arrêter, faire un ```CTRL+c``` dans le terminal où vous avez lancé l'application
 
 ### Releases
 
 - Dans la section **Releases** de github, vous pouvez retrouver le dernier ```.exe``` fonctionnel de l'application.
 - Pour build un ```.exe```, lancer la commande ```pyinstaller --onefile --name Uncluttr --add-data "configuration/conf.ini;configuration" --additional-hooks-dir=./uncluttr uncluttr/core/main.py```, vous retrouverez le ```.exe``` dans le dossier dist.
+py
