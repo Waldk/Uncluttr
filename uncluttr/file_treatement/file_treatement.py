@@ -10,7 +10,6 @@ import re
 import nltk
 import spacy
 from nltk.corpus import stopwords
-from spacy.lang.fr import French
 import joblib  # Pour sauvegarder et charger le modèle ML
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC  # Exemple de modèle ML

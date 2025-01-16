@@ -6,12 +6,16 @@ authors = ["Cérina ALLEK", "Waldeck FELIX <Waldeck.ernst.felix@gmail.com>", "Ra
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.14"
+python = ">=3.12,<3.13"
 watchdog = "^6.0.0"
 requests = "^2.32.3"
 numpy = "^2.2.1"
 tkinterdnd2 = "^0.4.2"
 pymupdf = "^1.25.1"
+nltk = "^3.9.1"
+spacy = "^3.8.4"
+joblib = "^1.4.2"
+scikit-learn = "^1.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
