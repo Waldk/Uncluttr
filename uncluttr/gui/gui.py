@@ -8,7 +8,7 @@ from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
 # Vous avez vraiment besoin de cet import ? vous l'utilisez nulle part de ce que je vois
 # import fitz  # PyMuPDF
-from uncluttr.file_treatement.file_treatement import file_analysis
+from uncluttr.file_treatement.file_treatement import file_analysis,entrainer_modele
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path
 
@@ -25,9 +25,23 @@ path_space = tk.Text(root, height=1, width=50)
 path_accept = None
 
 
+import shutil
+
+# Lecture du fichier de configuration
+config = configparser.ConfigParser()
+base_path = get_base_app_files_path()
+config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+config.read(config_path)
+path = config['settings']['directory_to_watch']
+root = TkinterDnD.Tk()
+path_space = tk.Text(root, height=1, width=50)
+path_accept = None
+
 
 def start_gui(daemon_process: multiprocessing.Process=None):
     """Start the GUI."""
+    entrainer_modele()
+
     # Barre de tache en header
     menu_bar = tk.Menu(root)
     root.config(menu=menu_bar)
@@ -138,13 +152,10 @@ def second_page():
     next_button = tk.Button(footer_frame, text="next", command=thrid_page)
     next_button.pack(side=tk.LEFT, padx=10)
     
-    # Boutton d'accpetation de la proposition
+    # Bouton d'acceptation de la proposition
     third_page_button = tk.Button(footer_frame, text="Accept", command=thrid_page)
     third_page_button.pack(side=tk.LEFT,padx=10)
-    
-    
-    
-    
+
 def thrid_page():
     third_page = tk.Toplevel(root)
     third_page.title("Third page")
