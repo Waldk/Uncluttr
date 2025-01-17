@@ -12,6 +12,7 @@ from uncluttr.file_treatement.file_treatement import file_analysis,entrainer_mod
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path
 
+import shutil
 
 # Lecture du fichier de configuration
 config = configparser.ConfigParser()
@@ -40,7 +41,6 @@ path_accept = None
 def start_gui(daemon_process: multiprocessing.Process=None):
     """Start the GUI."""
     entrainer_modele()
-
 
     # Barre de tache en header
     menu_bar = tk.Menu(root)
@@ -152,10 +152,10 @@ def second_page():
     next_button = tk.Button(footer_frame, text="next", command=thrid_page)
     next_button.pack(side=tk.LEFT, padx=10)
     
-    # Boutton d'accpetation de la proposition
+    # Bouton d'acceptation de la proposition
     third_page_button = tk.Button(footer_frame, text="Accept", command=thrid_page)
     third_page_button.pack(side=tk.LEFT,padx=10)
-     
+
 def thrid_page():
     third_page = tk.Toplevel(root)
     third_page.title("Third page")
