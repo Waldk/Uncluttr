@@ -6,12 +6,21 @@ authors = ["Cérina ALLEK", "Waldeck FELIX <Waldeck.ernst.felix@gmail.com>", "Ra
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.14"
+python = ">=3.12,<3.13"
 watchdog = "^6.0.0"
 requests = "^2.32.3"
 numpy = "^2.2.1"
 tkinterdnd2 = "^0.4.2"
 pymupdf = "^1.25.1"
+pytesseract = "^0.3.13"
+pdf2image = "^1.17.0"
+transformers = "^4.48.0"
+spacy = "^3.8.3"
+fr_core_news_sm={url = "https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-3.8.0/fr_core_news_sm-3.8.0.tar.gz"}
+poppler-utils = "^0.1.0"
+torch = "^2.5.1"
+fitz = "^0.0.1.dev2"
+easyocr = "^1.7.2"
 
 
 [tool.poetry.group.dev.dependencies]
