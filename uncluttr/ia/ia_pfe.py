@@ -73,6 +73,21 @@ def choose_document_tag(frequent_words):
         return document_tags[0][0]
     return "Document inconnu"
 
+# Première version : Extraction de la date pour document non structuré
+def extract_date_unstructuredfile(text):
+    # Expression régulière pour capturer les dates
+
+    date_pattern = r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b'
+    matches = re.findall(date_pattern, text)
+
+    if matches:
+        # Reformater la date trouvée
+        for match in matches:
+            day, month, year = match
+            formatted_date = f"{int(day):02d}-{int(month):02d}-{year}"
+            return formatted_date  # Retourne la première date trouvée
+    return "Aucune date trouvée"
+
 # Pipeline principal
 def process_document(pdf_path):
     try:
@@ -82,10 +97,13 @@ def process_document(pdf_path):
             # Si aucun texte n'est trouvé, utiliser l'OCR
             extracted_text = ocr_with_easyocr(pdf_path)
 
+        # Extraction de la date - TEST
+        date = extract_date_unstructuredfile(extracted_text)
+        
         cleaned_text = preprocess_text(extracted_text)
         frequent_words = get_most_frequent_words(cleaned_text)
         tag = choose_document_tag([word[0] for word in frequent_words])
-        return tag
+        return tag, date
     except Exception as e:
         return f"Erreur lors du traitement du document : {e}"
 

@@ -3,6 +3,7 @@
 import configparser
 import zipfile
 import os
+import re
 import sys
 import pymupdf
 import joblib  # Pour sauvegarder et charger le modèle ML
@@ -11,6 +12,7 @@ from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
 from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
+from uncluttr.ia.ia_pfe import process_document
 
 def is_structured_pdf(file_path: str) -> bool:
     """Check if the file is a structured PDF.
@@ -65,12 +67,15 @@ def extract_text_from_pdf(file_path: str) -> str:
     :param str file_path: path to the file to extract text from
     :return str: extracted text
     """
-    with pymupdf.open(file_path) as doc:
-        texte = ""
-        for page_num in range(len(doc)):
-            page = doc.load_page(page_num)
-            texte += page.get_text("text")
-    return texte
+    try :
+        with pymupdf.open(file_path) as doc:
+            texte = ""
+            for page_num in range(len(doc)):
+                page = doc.load_page(page_num)
+                texte += page.get_text("text")
+        return texte
+    except Exception as e:
+        print(f"An error occurred during folder analysis: {e}")
 
 def extraire_mots_cles(texte: str) -> list:
     """Extract keywords from a text.
@@ -187,7 +192,6 @@ def treat_unstructured_pdf(file_path: str):
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": None,
                                         "document_theme": [None, None]})
-
     # Ajouter le fichier dans l'arborescence
     #  qui de droit
 
@@ -213,3 +217,19 @@ def treat_image(file_path: str):
         #  qui de droit
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
+
+# Première version : Extraction de la date pour document structuré
+# Pas encore lié au main
+def extract_date_structuredfile(text):
+    # Expression régulière pour capturer les dates
+
+    date_pattern = r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b'
+    matches = re.findall(date_pattern, text)
+
+    if matches:
+        # Reformater la date trouvée
+        for match in matches:
+            day, month, year = match
+            formatted_date = f"{int(day):02d}-{int(month):02d}-{year}"
+            return formatted_date  # Retourne la première date trouvée
+    return "Aucune date trouvée"
