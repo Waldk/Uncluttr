@@ -12,6 +12,7 @@ tkinterdnd2 = "^0.4.2"
 
 # Backends
 numpy = "^2.2.1"
+pillow = "^11.1.0"
 watchdog = "^6.0.0"
 requests = "^2.32.3"
 configparser = "^7.1.0"

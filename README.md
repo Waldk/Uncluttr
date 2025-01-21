@@ -7,12 +7,13 @@
     - ```python -m venv .venv``` ou ```python -m venv```
     - ```source .venv/Scripts/activate```
     - normalement vous devriez voir un (.venv) dans votre terminal au dessus de la ligne où vous allez éxecuter vos futurs commandes 
-    - ![alt text](assets/readme/image.png)
+![alt text](assets/readme/image.png)
 
 - Lancer la commande ```poetry install```
 - Lancer l'application à l'aide de la commande ```[to define]```, (pour l'instant: ```python -m uncluttr.core.main```)  ou :
     - ```python uncluttr/daemon/daemon.py``` si vous testez uniquement le daemon
     - ```python uncluttr/gui/gui.py``` si vous testez uniquement l'interface graphique
+    - etc
 - pour l'arrêter, faire un ```CTRL+c``` dans le terminal où vous avez lancé l'application
 
 - Installer un linter d'ailleurs si possible histoire de faire du code qui suit les conventions, genre l'extension ```Pylint``` sur vscode

@@ -25,7 +25,7 @@ path_accept = None
 
 def start_gui(daemon_process: multiprocessing.Process=None):
     """Start the GUI."""
-    entrainer_modele()
+    # entrainer_modele()
 
     # Barre de tache en header
     menu_bar = tk.Menu(root)
@@ -96,12 +96,14 @@ def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
     try:
         file_path = filedialog.askopenfilename(
-            filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip")]
+            # filetypes=[("PDF files", "*.pdf"), ("ZIP files", "*.zip"), ("Image files", "*.jpg;*.jpeg;*.png")]
+            filetypes=[("Handled file types", "*.pdf;*.zip;*.jpg;*.jpeg;*.png")]
             )
         if file_path:
             file_analysis(file_path)
 
     except Exception as e:
+        print(f"An interanl error occurred : {e}")
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
 
 def second_page():
@@ -138,19 +140,10 @@ def drop_file(event):
     try:
         file_path = event.data.replace('{', '').replace('}', '')
         file_type = file_path.split('.')[-1]
-        if file_type == "zip" or file_type == "pdf":
+        if file_type == "zip" or file_type == "pdf" or file_type == "jpg" or file_type == "jpeg" or file_type == "png":
             file_analysis(file_path)
-
-            # on doit pas analyser tout le folder à chaque fois que l'on veut trier un fichier
-            # copier le ficher dans le direcorty_to_watch
-            # fais qu'il sera aussi scanné par le daemon ce qui est pas ce qu'on veut
-            # et on scanne pas tout le dossier le daemon regarde deja tous les subfolders
-            # dites si vous trouvez ça pas cohérent
-
-            # shutil.copy(file_path, path)
-            # folder_analysis()
         else:
-            tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP et PDF sont acceptés.")
+            tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP, PDF, Jpeg et PNG sont acceptés.")
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
 
