@@ -14,11 +14,11 @@ nltk.download('stopwords')
 nlp = spacy.load("fr_core_news_sm")
 
 # Supprimer les accents pour une optionnalité
-def enlever_accents(texte):
+def enlever_accents(texte: str) -> str:
     return ''.join(c for c in unicodedata.normalize('NFD', texte) if unicodedata.category(c) != 'Mn')
 
 # Prétraitement du texte
-def preprocess_text(texte):
+def preprocess_text(texte: str) -> str:
     # Texte en minuscules
     texte = texte.lower()
 

@@ -4,7 +4,7 @@ import configparser
 import zipfile
 import os
 import sys
-import fitz # Ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF)
+import pymupdf # fitz = Ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF)
 import joblib  # Pour sauvegarder et charger le modèle ML
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
@@ -18,7 +18,7 @@ def is_structured_pdf(file_path: str) -> bool:
     :param str file_path: The path to the file.
     :return bool: _description_
     """
-    with fitz.open(file_path) as doc:
+    with pymupdf.open(file_path) as doc:
         for page_num in range(len(doc)):
             page = doc.load_page(page_num)
             text = page.get_text()
@@ -65,7 +65,7 @@ def extract_text_from_pdf(file_path: str) -> str:
     :param str file_path: path to the file to extract text from
     :return str: extracted text
     """
-    with fitz.open(file_path) as doc:
+    with pymupdf.open(file_path) as doc:
         texte = ""
         for page_num in range(len(doc)):
             page = doc.load_page(page_num)

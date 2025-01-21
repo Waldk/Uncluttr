@@ -6,15 +6,16 @@ import json
 from collections import Counter
 import easyocr  # OCR sans Tesseract
 import spacy
-import fitz  # l'ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF directement)
+import pymupdf  # fitz = l'ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF directement)
 from uncluttr.file_treatement.file_treatement import get_base_app_files_path
 
 nlp = spacy.load("fr_core_news_sm")
 
-# # Télécharger le modèle spaCy si nécessaire
+# Télécharger le modèle spacy si nécessaire
 # def check_and_download_dependencies():
 #     try:
 #         spacy.cli.download("fr_core_news_sm")
+#         print("Spacy model downloaded successfully.")
 #     except Exception as e:
 #         print("Erreur lors du téléchargement du modèle spacy :", e)
 
@@ -25,7 +26,7 @@ nlp = spacy.load("fr_core_news_sm")
 def extract_text_from_pdf(pdf_path):
     if not os.path.exists(pdf_path):
         raise FileNotFoundError(f"Le fichier spécifié n'existe pas : {pdf_path}")
-    doc = fitz.open(pdf_path)
+    doc = pymupdf.open(pdf_path)
     text = ""
     for page in doc:
         text += page.get_text()  # Extraire le texte de chaque page

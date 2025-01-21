@@ -49,7 +49,7 @@ def append_metadata_to_pdf(file_path, metadata):
     os.utime(file_path, (original_stat.st_atime, original_stat.st_mtime))
     os.remove(temp_file_path)
 
-    print("New metadata:", current_metadata)
+    print("New metadata:", read_metadata_from_pdf(file_path))
 
 # Option 1: Utiliser PyMuPDF pour lire les métadonnées donc reconstruire en puisant dans "subject"
 def read_metadata_from_pdf(file_path):
@@ -79,7 +79,7 @@ def read_metadata_from_pdf(file_path):
 # Exemple d'utilisation
 if __name__ == "__main__":
     PDF_PATH = os.path.join(os.getcwd(), 'assets', 'example', 'test_metadata.pdf')
-    append_metadata_to_pdf(PDF_PATH, {"document_type": "Contrat",
+    append_metadata_to_pdf(PDF_PATH, {"document_type": "Lettre de motivation",
                                         "document_date": None,
                                         "document_theme": ["example", "test"]})
     print("\nMetadata appended successfully.\n")

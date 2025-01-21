@@ -45,8 +45,8 @@ def append_custom_metadata_to_pdf(file_path, metadata):
     shutil.copy2(temp_file_path, file_path)
     os.utime(file_path, (original_stat.st_atime, original_stat.st_mtime))
     os.remove(temp_file_path)
-
-    print("New metadata:", current_metadata)
+    
+    print("New metadata:", read_custom_metadata_from_pdf(file_path))
 
 def read_custom_metadata_from_pdf(file_path):
     """Read metadata from a PDF file.
@@ -82,7 +82,7 @@ def read_custom_metadata_from_pdf(file_path):
 # Exemple d'utilisation
 if __name__ == "__main__":
     PDF_PATH = os.path.join(os.getcwd(), 'assets', 'example', 'test_custom_metadata.pdf')
-    append_custom_metadata_to_pdf(PDF_PATH, {"document_type": "Contrat",
+    append_custom_metadata_to_pdf(PDF_PATH, {"document_type": "Lettre de motivation",
                                         "document_date": None,
                                         "document_theme": ["example", "test"]})
     print("\nCustom metadata appended successfully.\n")
