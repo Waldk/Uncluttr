@@ -1,0 +1,81 @@
+{
+    "Procédure, méthode, guide": [
+        "procédure",
+        "méthode",
+        "guide",
+        "instructions",
+        "étapes",
+        "processus",
+        "fonctionnement"
+    ],
+    "CV": [
+        "compétences",
+        "expérience",
+        "formation",
+        "objectif",
+        "parcours",
+        "CV",
+        "candidat",
+        "recrutement"
+    ],
+    "Lettre de motivation": [
+        "motivation",
+        "candidature",
+        "poste",
+        "entreprise",
+        "recrutement",
+        "compétences",
+        "intérêt",
+        "travailler"
+    ],
+    "Contrat": [
+        "accord",
+        "engagement",
+        "clause",
+        "signature",
+        "responsabilité",
+        "conditions",
+        "parties"
+    ],
+    "Fiche de paie": [
+        "salaire",
+        "net",
+        "brut",
+        "cotisations",
+        "charges sociales",
+        "rémunération"
+    ],
+    "Devis": [
+        "estimation",
+        "prix",
+        "proposition",
+        "offre",
+        "coût",
+        "service",
+        "quantité"
+    ],
+    "Facture": [
+        "facture",
+        "paiement",
+        "montant",
+        "produit",
+        "service",
+        "date",
+        "référence"
+    ],
+    "Bon de commandes": [
+        "commande",
+        "produit",
+        "quantité",
+        "prix",
+        "bon",
+        "livraison"
+    ],
+    "Attestation": [
+        "attestation",
+        "certification",
+        "déclaration",
+        "preuve",
+        "confirmation"
+    ]
+}
