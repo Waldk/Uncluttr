@@ -6,26 +6,11 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
-# Vous avez vraiment besoin de cet import ? vous l'utilisez nulle part de ce que je vois
-# import fitz  # PyMuPDF
-from uncluttr.file_treatement.file_treatement import file_analysis,entrainer_modele
+from uncluttr.file_treatement.file_treatement import file_analysis
+from uncluttr.file_treatement.training_models import entrainer_modele
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path
 
-import shutil
-
-# Lecture du fichier de configuration
-config = configparser.ConfigParser()
-base_path = get_base_app_files_path()
-config_path = os.path.join(base_path, 'configuration', 'conf.ini')
-config.read(config_path)
-path = config['settings']['directory_to_watch']
-root = TkinterDnD.Tk()
-path_space = tk.Text(root, height=1, width=50)
-path_accept = None
-
-
-import shutil
 
 # Lecture du fichier de configuration
 config = configparser.ConfigParser()
@@ -57,7 +42,7 @@ def start_gui(daemon_process: multiprocessing.Process=None):
     help_menu = tk.Menu(menu_bar, tearoff=0)
     menu_bar.add_cascade(label="Help", menu=help_menu)
     help_menu.add_command(label="About")
-    
+
     # Fenêtre principale
     root.title("Uncluttr")
     root.geometry("800x600")
@@ -107,15 +92,6 @@ def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     path_accept.config(text="Voulez-vous changer le path à nouveau ?",
                         command=lambda: sauvegarde_du_path(gui_daemon_process))
 
-
-    # Crée des processus en plus, c'est pas ce que l'on veut et 
-    # on ne peut pas les arreter depuis l'ide pou avec ctrl c, bonjour les fuites mémoires
-
-    # config['settings']['directory_to_watch'] = path_space.get("1.0",tk.END).split("\n")[0]
-    # with open(config_path, 'w', encoding='utf-8') as configfile:
-    #     config.write(configfile)
-    # start_daemon()
-
 def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
     try:
@@ -125,24 +101,16 @@ def open_file():
         if file_path:
             file_analysis(file_path)
 
-            # on doit pas analyser tout le folder à chaque fois que l'on veut trier un fichier
-            # copier le ficher dans le direcorty_to_watch
-            # fais qu'il sera aussi scanné par le daemon ce qui est pas ce qu'on veut
-            # et on scanne pas tout le dossier le daemon regarde deja tous les subfolders
-            # dites si vous trouvez ça pas cohérent
-
-            # shutil.copy(file_path, path_space.get("1.0",tk.END).split("\n")[0] )
-            # folder_analysis( path_space.get("1.0",tk.END).split("\n")[0])
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
-    
+
 def second_page():
     second_page = tk.Toplevel(root)
     second_page.title("Second page")
     second_page.geometry("800x600")
     second_page_label = tk.Label(second_page, text="This is the second page")
     second_page_label.pack(pady=10)
-    
+
     footer_frame = tk.Frame(second_page)
     footer_frame.pack(side=tk.BOTTOM, pady=10)
 
@@ -151,7 +119,7 @@ def second_page():
 
     next_button = tk.Button(footer_frame, text="next", command=thrid_page)
     next_button.pack(side=tk.LEFT, padx=10)
-    
+
     # Bouton d'acceptation de la proposition
     third_page_button = tk.Button(footer_frame, text="Accept", command=thrid_page)
     third_page_button.pack(side=tk.LEFT,padx=10)
@@ -162,7 +130,7 @@ def thrid_page():
     third_page.geometry("800x600")
     third_page_label = tk.Label(third_page, text="Bravo le rangement de votre fichier et votre arborecence est terminé")
     third_page_label.pack(pady=10)
-    
+
     tk.Text(third_page, height=1, width=50).pack(pady=5)
 
 def drop_file(event):
