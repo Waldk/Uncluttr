@@ -5,13 +5,13 @@ import zipfile
 import os
 import re
 import sys
-import pymupdf # fitz = Ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF)
+import pymupdf
 import joblib  # Pour sauvegarder et charger le modèle ML
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
-# from uncluttr.file_treatement.metadata import append_metadata_to_pdf
-from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf
+from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
+from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
 from uncluttr.ia.ia_pfe import process_document
 
 def is_structured_pdf(file_path: str) -> bool:
@@ -127,15 +127,20 @@ def file_analysis(file_path: str = None):
                 folder_analysis(extract_path)
 
             case '.pdf':
-                print(f"Analyzing {file_path} ...")
+                print(f"Analyzing pdf {file_path} ...")
                 if is_structured_pdf(file_path):
+                    print(f"{file_path} is a structured PDF.\n")
                     treat_structured_pdf(file_path)
                 else:
                     print(f"{file_path} is an unstructured PDF.\n")
                     treat_unstructured_pdf(file_path)
                 sys.stdout.flush()
+            case '.png' | '.jpg' | '.jpeg':
+                print(f"Analyzing image {file_path} ...")
+                treat_image(file_path)
+                sys.stdout.flush()
             case _:
-                print(f"{file_path} is not a file type we currently handle.")
+                print(f"{file_type} is not a file type we currently handle.")
                 sys.stdout.flush()
     except zipfile.BadZipFile as e:
         print(f"Bad zip file: {e}")
@@ -151,8 +156,6 @@ def treat_structured_pdf(file_path: str):
 
     :param str file_path: path to the file to treat
     """
-
-    print(f"\n{file_path.encode('utf-8', errors='replace').decode('utf-8')} is a structured PDF.\n")
     texte_pdf = extract_text_from_pdf(file_path)
 
     texte_nettoye = preprocess_text(texte_pdf)
@@ -164,10 +167,7 @@ def treat_structured_pdf(file_path: str):
     type_document = classifier_document(texte_pdf)
     print(f"Type de document : {type_document}\n")
     sys.stdout.flush()
-    # append_metadata_to_pdf(file_path, {"document_type": type_document,
-    #                                     "document_date": None,
-    #                                     "document_theme": [None, None]})
-    
+
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": None,
                                         "document_theme": [None, None]})
@@ -176,15 +176,47 @@ def treat_structured_pdf(file_path: str):
     # ALBAN
 
 def treat_unstructured_pdf(file_path: str):
-    """Treat a file.
+    """Treat an unstructured pdf.
 
     :param str file_path: path to the file to treat
     """
+    pdf_text= extract_pdf_text_ocr(file_path)
+    cleaned_text = preprocess_text(pdf_text)
+    keywords = extraire_mots_cles(cleaned_text)
+    print(f"Keywords: {keywords}")
 
-    print(f"{file_path} is unstructured, treatment to be implemented.")
+    type_document = classifier_document(pdf_text)
+    print(f"Document type: {type_document}")
+    sys.stdout.flush()
 
-    document_tag = process_document(file_path)
-    print("Tag : ", document_tag)
+    append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
+                                        "document_date": None,
+                                        "document_theme": [None, None]})
+    # Ajouter le fichier dans l'arborescence
+    #  qui de droit
+
+def treat_image(file_path: str):
+    """Treat an image.
+
+    :param str file_path: path to the image to treat
+    """
+    try:
+        image_text= extract_image_text_ocr(file_path)
+        cleaned_text = preprocess_text(image_text)
+        keywords = extraire_mots_cles(cleaned_text)
+        print(f"Keywords: {keywords}")
+
+        type_document = classifier_document(image_text)
+        print(f"Document type: {type_document}")
+        sys.stdout.flush()
+
+        append_custom_metadata_to_image(file_path, {"document_type": type_document,
+                                            "document_date": None,
+                                            "document_theme": [None, None]})
+        # Ajouter le fichier dans l'arborescence
+        #  qui de droit
+    except Exception as e:
+        print(f"An error occurred during image treatment: {e}")
 
 # Première version : Extraction de la date pour document structuré
 # Pas encore lié au main
