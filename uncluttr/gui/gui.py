@@ -83,14 +83,17 @@ def start_gui(daemon_process: multiprocessing.Process=None):
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    # global path_accept
-
-    new_path = path_space.get("1.0", tk.END).strip()
+    # new_path = path_space.get("1.0", tk.END).strip()
+    new_path = filedialog.askdirectory()
     gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
 
     # Redéfinir le bouton pour utiliser le nouveau processus
     path_accept.config(text="Voulez-vous changer le path à nouveau ?",
                         command=lambda: sauvegarde_du_path(gui_daemon_process))
+    
+    # Mettre à jour le path affiché
+    path_space.delete("1.0", tk.END)
+    path_space.insert("1.0", new_path)
 
 def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
