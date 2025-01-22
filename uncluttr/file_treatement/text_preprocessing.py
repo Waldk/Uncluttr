@@ -8,17 +8,22 @@ from nltk.corpus import stopwords
 
 
 # Télécharger les stopwords de NLTK
-nltk.download('stopwords')
+try:
+    stopwords.words('french')
+except LookupError:
+    nltk.download('stopwords')
 
 # Charger le modèle spaCy pour le français
 nlp = spacy.load("fr_core_news_sm")
 
 # Supprimer les accents pour une optionnalité
-def enlever_accents(texte: str) -> str:
-    return ''.join(c for c in unicodedata.normalize('NFD', texte) if unicodedata.category(c) != 'Mn')
+def enlever_accents(text: str) -> str:
+    """delete accents from a string."""
+    return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
 
 # Prétraitement du texte
 def preprocess_text(texte: str) -> str:
+    """Preprocess a text by removing non-alphabetic characters and stopwords, and lemmatizing it."""
     # Texte en minuscules
     texte = texte.lower()
 

@@ -1,8 +1,9 @@
 """ This module contains the GUI of the application. """
 
+import os
+import time
 import configparser
 import multiprocessing
-import os
 import tkinter as tk
 from tkinter import filedialog
 from tkinterdnd2 import TkinterDnD, DND_FILES
@@ -21,6 +22,7 @@ path = config['settings']['directory_to_watch']
 root = TkinterDnD.Tk()
 path_space = tk.Text(root, height=1, width=50)
 path_accept = None
+processes = []
 
 
 def start_gui(daemon_process: multiprocessing.Process=None):
@@ -78,22 +80,37 @@ def start_gui(daemon_process: multiprocessing.Process=None):
 
     second_page_button = tk.Button(root, text="Go to second page", command=second_page)
     second_page_button.pack(pady=10)
+
+    # Liste des processus
+    global process_list
+    process_list = tk.Listbox(root, width=70, height=10)
+    process_list.pack(pady=10)
+    root.after(1000, update_process_list)
+
     # Lancement de l'application
     root.mainloop()
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    # new_path = path_space.get("1.0", tk.END).strip()
     new_path = filedialog.askdirectory()
     gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
-
-    # Redéfinir le bouton pour utiliser le nouveau processus
-    path_accept.config(text="Voulez-vous changer le path à nouveau ?",
-                        command=lambda: sauvegarde_du_path(gui_daemon_process))
-    
-    # Mettre à jour le path affiché
+    path_accept.config(text="Voulez-vous changer le path à nouveau ?", command=lambda: sauvegarde_du_path(gui_daemon_process))
     path_space.delete("1.0", tk.END)
     path_space.insert("1.0", new_path)
+
+def update_process_list():
+    """Update the process list in the GUI."""
+    process_list.delete(0, tk.END)
+    for i, (process, start_time) in enumerate(processes):
+        elapsed_time = time.time() - start_time
+        if process.is_alive():
+            process_list.insert(tk.END, f"{process.name} - Running for {int(elapsed_time)} seconds")
+        else:
+            if isinstance(start_time, float):  # Check if the process was previously running
+                processes[i] = (process, int(elapsed_time))  # Store the elapsed time as an integer
+            process_list.insert(tk.END, f"{process.name} - Completed after {processes[i][1]} seconds")
+
+    root.after(1000, update_process_list)
 
 def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
@@ -103,7 +120,7 @@ def open_file():
             filetypes=[("Handled file types", "*.pdf;*.zip;*.jpg;*.jpeg;*.png")]
             )
         if file_path:
-            file_analysis(file_path)
+            file_analysis(file_path, processes)
 
     except Exception as e:
         print(f"An interanl error occurred : {e}")
@@ -144,7 +161,7 @@ def drop_file(event):
         file_path = event.data.replace('{', '').replace('}', '')
         file_type = file_path.split('.')[-1]
         if file_type == "zip" or file_type == "pdf" or file_type == "jpg" or file_type == "jpeg" or file_type == "png":
-            file_analysis(file_path)
+            file_analysis(file_path, processes)
         else:
             tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP, PDF, Jpeg et PNG sont acceptés.")
     except Exception as e:

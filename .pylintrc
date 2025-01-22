@@ -2,4 +2,5 @@
 
 # Catching too general exception Exception
 # Instance of 'Class' has no 'attribute' member, particulierement pour Document de pymupdf
-disable=W0718,E1101 
+# Disabel warning for line too long
+disable=W0718,E1101,C0301 
