@@ -151,6 +151,7 @@ def file_analysis(file_path: str = None):
     except Exception as e:
         print(f"An unexpected error occurred during file analysis: {e}")
 
+
 def treat_structured_pdf(file_path: str):
     """Treat a file.
 
