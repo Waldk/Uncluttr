@@ -1,0 +1,5 @@
+[MESSAGES CONTROL]
+
+# Catching too general exception Exception
+# Instance of 'Class' has no 'attribute' member, particulierement pour Document de pymupdf
+disable=W0718,E1101 
