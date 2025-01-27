@@ -27,8 +27,8 @@ pymupdf = "^1.25.2"
 pdf2image = "^1.17.0"
 scikit-learn = "^1.6.1"
 transformers = "^4.48.0"
-fr_core_news_sm={url = "https://github.com/explosion/spacy-models/releases/download/fr_core_news_sm-3.8.0/fr_core_news_sm-3.8.0.tar.gz"}
-
+fr_core_news_md={url ="https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-3.8.0/fr_core_news_md-3.8.0.tar.gz"}
+fr_core_news_lg={url ="https://github.com/explosion/spacy-models/releases/download/fr_core_news_lg-3.8.0/fr_core_news_lg-3.8.0.tar.gz"}
 [tool.poetry.group.dev.dependencies]
 pyinstaller = "^6.11.1"
 
