@@ -18,7 +18,6 @@ def enlever_accents(texte: str) -> str:
 # Prétraitement du texte
 def preprocess_text(texte: str) -> str:
 
-    print (texte)
     # Télécharger les stopwords de NLTK
     try:
         stopwordsFR = stopwords.words('french')
