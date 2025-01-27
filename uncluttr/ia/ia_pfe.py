@@ -7,6 +7,7 @@ from collections import Counter
 import easyocr  # OCR sans Tesseract
 import spacy
 import pymupdf  # fitz = l'ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF directement)
+import unicodedata
 from uncluttr.file_treatement.file_treatement import get_base_app_files_path
 
 nlp = spacy.load("fr_core_news_sm")
@@ -49,10 +50,25 @@ def ajout_stopwords():
         lexeme = nlp.vocab[word]
         lexeme.is_stop = True
 
+# Supprimer les accents pour une optionnalité
+def enlever_accents(texte: str) -> str:
+    return ''.join(c for c in unicodedata.normalize('NFD', texte) if unicodedata.category(c) != 'Mn')
+
 # Prétraitement du texte
 def preprocess_text(text):
-    text = re.sub(r'[^a-zA-Z\s]', '', text.lower())  # Nettoyer les caractères inutiles
-    doc = nlp(text)
+
+    # Texte en minuscules
+    text = text.lower()
+
+    # Suppression des caractères non alphabétiques et des espaces supplémentaires
+    text = re.sub(r'[^a-zA-Zéàèùâêîôûçäëïöüôâàèéùê]', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Suppression des accents (si nécessaire)
+    text = enlever_accents(text)
+
+    doc = nlp(texte)
+
     lemmatized_text = ' '.join([token.lemma_ for token in doc if not token.is_stop])
     return lemmatized_text
 

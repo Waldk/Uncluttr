@@ -359,6 +359,21 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.6.10)", "diff-cover (>=9.2.1)",
 typing = ["typing-extensions (>=4.12.2)"]
 
 [[package]]
+name = "fr_core_news_md"
+version = "3.8.0"
+description = "French pipeline optimized for CPU. Components: tok2vec, morphologizer, parser, senter, ner, attribute_ruler, lemmatizer."
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "fr_core_news_md-3.8.0.tar.gz", hash = "sha256:0353cfe24a3d0ef8b2ac1b493a5955708e92fe9647b7ddcaee9da09cee8ad6a9"},
+]
+
+[package.source]
+type = "url"
+url = "https://github.com/explosion/spacy-models/releases/download/fr_core_news_md-3.8.0/fr_core_news_md-3.8.0.tar.gz"
+
+[[package]]
 name = "fr_core_news_sm"
 version = "3.8.0"
 description = "French pipeline optimized for CPU. Components: tok2vec, morphologizer, parser, senter, ner, attribute_ruler, lemmatizer."
@@ -3072,4 +3087,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.13"
-content-hash = "e53554ac4769d35a7b30ceca029037571474d2a0df012b952ed0c74e2b8fe360"
+content-hash = "002ccd86fcbc68bfc4eeeb795ac7c527ee6cdd9281481d6a82ffc9b6b2702aec"
