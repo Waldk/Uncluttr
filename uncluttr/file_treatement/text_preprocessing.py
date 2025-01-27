@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 # Charger le modèle spaCy pour le français : voir si on utilise pas : fr_core_news_lg -> base de données encore plus large
-nlp = spacy.load("fr_core_news_md")
+nlp = spacy.load("fr_core_news_lg")
 
 # Supprimer les accents pour une optionnalité
 def enlever_accents(texte: str) -> str:
@@ -18,6 +18,7 @@ def enlever_accents(texte: str) -> str:
 # Prétraitement du texte
 def preprocess_text(texte: str) -> str:
 
+    print (texte)
     # Télécharger les stopwords de NLTK
     try:
         stopwordsFR = stopwords.words('french')
