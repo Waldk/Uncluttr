@@ -4,7 +4,7 @@ import configparser
 import multiprocessing
 import os
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox, ttk
 from tkinterdnd2 import TkinterDnD, DND_FILES
 from uncluttr.file_treatement.file_treatement import file_analysis
 from uncluttr.file_treatement.training_models import entrainer_modele
@@ -19,8 +19,43 @@ config_path = os.path.join(base_path, 'configuration', 'conf.ini')
 config.read(config_path)
 path = config['settings']['directory_to_watch']
 root = TkinterDnD.Tk()
-path_space = tk.Text(root, height=1, width=50)
+path_space = tk.Text(root, height=1, width=50, bg='lightgrey')
 path_accept = None
+
+class DirectoryTreeViewer:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Directory Tree Viewer")
+
+        self.frame = tk.Frame(self.root)
+        self.frame.pack(pady=20)
+
+        self.select_button = tk.Button(self.frame, text="Select Directory", command=self.select_directory)
+        self.select_button.pack(side=tk.LEFT, padx=10)
+
+        self.tree = ttk.Treeview(self.root)
+        self.tree.pack(expand=True, fill=tk.BOTH)
+
+        self.tree.heading("#0", text="Directory Structure", anchor=tk.W)
+
+    def select_directory(self):
+        directory = filedialog.askdirectory()
+        if directory:
+            self.display_directory_tree(directory)
+
+    def display_directory_tree(self, directory):
+        self.tree.delete(*self.tree.get_children())
+        self.add_node(directory, "")
+
+    def add_node(self, path, parent):
+        node = self.tree.insert(parent, 'end', text=os.path.basename(path), open=False)
+        if os.path.isdir(path):
+            try:
+                for item in os.listdir(path):
+                    full_path = os.path.join(path, item)
+                    self.add_node(full_path, node)
+            except PermissionError:
+                messagebox.showerror("Permission Error", f"Permission denied for directory: {path}")
 
 
 def start_gui(daemon_process: multiprocessing.Process=None):
@@ -46,45 +81,71 @@ def start_gui(daemon_process: multiprocessing.Process=None):
     # Fenêtre principale
     root.title("Uncluttr")
     root.geometry("800x600")
+    root.configure(bg='#2f2f2f')
+    root.resizable(False, False)
     global path_accept
 
+    # Texte "Uncluttr" + ligne horizontale 
+    uncluttr_label = tk.Label(root, text="Uncluttr", font=("Helvetica", 20, "bold"), bg='#2f2f2f', fg='white')
+    separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f')
+    
     # Espace pour path
-    path_label = tk.Label(root, text="Le path actuel est :")
+    path_label = tk.Label(root, text="Nous surveillons ce dossier :", bg='#2f2f2f', fg='white')
     path_space.insert(tk.INSERT,path)
+    
+    # Bouton pour selectionner un dossier
+    select_directory_button = tk.Button(root, text="Choisir un dossier", command=select_directory)
 
     # Bouton pour le changement de path
+    path_accept = tk.Button(root, text="Voulez-vous changer le path pour le daemon ?",command=sauvegarde_du_path)
+    
 
     if daemon_process is not None:
-        path_accept = tk.Button(root, text="Voulez-vous changer le path ?",
+        path_accept = tk.Button(root, text="Valider le changement de chemin?",
                                 command=lambda: sauvegarde_du_path(daemon_process))
     else:
         path_accept = tk.Button(root, text="Impossible d'interagir avec le daemon",
                                  state=tk.DISABLED)
 
-    #Placement
-    path_label.pack(pady=5)
-    path_space.pack(pady=5)
-    path_accept.pack(pady=5)
-
+    # Texte en gras "Ajout de fichiers"
+    ajout_fichiers_label = tk.Label(root, text="Ajout de fichiers", font=("Helvetica", 12, "bold"), bg='#2f2f2f', fg='white')
+    
     # Bouton pour ouvrir un fichier
     button_open = tk.Button(root, text="Ouvrir un fichier", command=open_file)
-    button_open.pack(pady=5)
 
     # Zone de drag-and-drop
-    drop_area = tk.Label(root, text="Déposez un fichier ici", bg="lightgrey", width=70, height=4)
-    drop_area.pack(pady=10)
+    drop_area = tk.Label(root, text="Glisser / Déposer", bg="white", width=90, height=10)
     drop_area.drop_target_register(DND_FILES)
     drop_area.dnd_bind("<<Drop>>", drop_file)
 
     second_page_button = tk.Button(root, text="Go to second page", command=second_page)
-    second_page_button.pack(pady=10)
+    
+    # Placement des éléments
+    uncluttr_label.pack(pady=10)
+    separator.pack(fill=tk.X, pady=10, anchor='w')
+    path_label.pack(pady=5, padx=10, anchor='w')
+    path_space.pack(pady=5, padx=10, anchor='w')
+    select_directory_button.pack(pady=5, padx=10, anchor='w')
+    path_accept.pack(pady=5, padx=10, anchor='e')
+    ajout_fichiers_label.pack(pady=(40, 10))
+    button_open.pack(pady=5)
+    drop_area.pack(pady=10)
+    second_page_button.pack(pady=10, anchor='center', side='bottom')
+        
     # Lancement de l'application
     root.mainloop()
+    
+def select_directory():
+        """Open a file explorer and return the selected path."""
+        chosen_path = filedialog.askdirectory()
+        if chosen_path:
+            path_space.delete("1.0", tk.END)
+            path_space.insert(tk.INSERT, chosen_path)
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    # new_path = path_space.get("1.0", tk.END).strip()
-    new_path = filedialog.askdirectory()
+    
+    new_path = path_space.get("1.0", tk.END).strip()
     gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
 
     # Redéfinir le bouton pour utiliser le nouveau processus
@@ -115,6 +176,8 @@ def second_page():
     second_page.geometry("800x600")
     second_page_label = tk.Label(second_page, text="This is the second page")
     second_page_label.pack(pady=10)
+    app=DirectoryTreeViewer(second_page)
+    app.display_directory_tree(path)
 
     footer_frame = tk.Frame(second_page)
     footer_frame.pack(side=tk.BOTTOM, pady=10)
@@ -128,6 +191,7 @@ def second_page():
     # Bouton d'acceptation de la proposition
     third_page_button = tk.Button(footer_frame, text="Accept", command=thrid_page)
     third_page_button.pack(side=tk.LEFT,padx=10)
+    
 
 def thrid_page():
     third_page = tk.Toplevel(root)
