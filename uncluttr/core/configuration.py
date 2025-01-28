@@ -24,6 +24,21 @@ def update_directory_to_watch(new_directory:str):
         print(f"Updated directory to watch to: {new_directory}")
     except Exception as e:
         print(f"An error occurred while updating the directory to watch: {e}")
+        
+
+def update_storage_directory(new_directory:str):
+    """Update the directory for storage in the configuration file."""
+    try:
+        config = configparser.ConfigParser()
+        base_path = get_base_app_files_path()
+        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+        config.read(config_path)
+        config['settings']['storage_path'] = new_directory
+        with open(config_path, 'w', encoding='utf-8') as configfile:
+            config.write(configfile)
+        print(f"Updated storage directory to: {new_directory}")
+    except Exception as e:
+        print(f"An error occurred while updating the storage directory: {e}")
 
 def update_daemon_path(new_directory_to_watch:str,
                         daemon_process: multiprocessing.Process) -> multiprocessing.Process:
