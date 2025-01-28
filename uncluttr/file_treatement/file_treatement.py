@@ -16,6 +16,7 @@ from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr,
 from uncluttr.ia.ia_pfe import process_document
 from nltk.corpus import stopwords
 
+from uncluttr.file_treatement.rangement import rangement_fichier
 
 def is_structured_pdf(file_path: str) -> bool:
     """Check if the file is a structured PDF.
@@ -196,6 +197,7 @@ def treat_structured_pdf(file_path: str):
                                         "document_theme": [None, None]})
 
     # Ajouter le fichier dans l'arborescence
+    rangement_fichier(file_path)
     # ALBAN
 
 def treat_unstructured_pdf(file_path: str):
@@ -216,6 +218,7 @@ def treat_unstructured_pdf(file_path: str):
                                         "document_date": None,
                                         "document_theme": [None, None]})
     # Ajouter le fichier dans l'arborescence
+    rangement_fichier(file_path)
     #  qui de droit
 
 def treat_image(file_path: str):
@@ -237,6 +240,7 @@ def treat_image(file_path: str):
                                             "document_date": None,
                                             "document_theme": [None, None]})
         # Ajouter le fichier dans l'arborescence
+        rangement_fichier(file_path)
         #  qui de droit
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
