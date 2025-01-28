@@ -174,7 +174,7 @@ def treat_structured_pdf(file_path: str):
                                         "document_theme": [None, None]})
 
     # Ajouter le fichier dans l'arborescence
-    rangement_fichier(file_path, type_document)
+    rangement_fichier(file_path)
     # ALBAN
 
 def treat_unstructured_pdf(file_path: str):
@@ -195,7 +195,7 @@ def treat_unstructured_pdf(file_path: str):
                                         "document_date": None,
                                         "document_theme": [None, None]})
     # Ajouter le fichier dans l'arborescence
-    rangement_fichier(file_path, type_document)
+    rangement_fichier(file_path)
     #  qui de droit
 
 def treat_image(file_path: str):
@@ -217,7 +217,7 @@ def treat_image(file_path: str):
                                             "document_date": None,
                                             "document_theme": [None, None]})
         # Ajouter le fichier dans l'arborescence
-        rangement_fichier(file_path, type_document)
+        rangement_fichier(file_path)
         #  qui de droit
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
