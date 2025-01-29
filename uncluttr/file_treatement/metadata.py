@@ -1,8 +1,8 @@
 """This module contains functions to handle metadata."""
-
 import os
 import shutil
 import pymupdf
+from uncluttr.core.configuration import get_base_app_files_path
 
 # Option 1: Utiliser PyMuPDF et sauvegarder dans la metadata qui existe déjà : "subject"
 def append_metadata_to_pdf(file_path, metadata):
@@ -72,8 +72,7 @@ def read_metadata_from_pdf(file_path):
                     sub_value = sub_value.split(", ")
                 reconstructed_metadata[sub_key] = sub_value
         else:
-            reconstructed_metadata[key] = value
-
+            reconstructed_metadata[key] = value  
     return reconstructed_metadata
 
 # Exemple d'utilisation
@@ -83,5 +82,6 @@ if __name__ == "__main__":
                                         "document_date": None,
                                         "document_theme": ["example", "test"]})
     print("\nMetadata appended successfully.\n")
-
+    
     print("Test reading metadata from PDF: ", read_metadata_from_pdf(PDF_PATH))
+    

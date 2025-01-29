@@ -7,9 +7,11 @@ from collections import Counter
 import easyocr  # OCR sans Tesseract
 import spacy
 import pymupdf  # fitz = l'ancienne version de PyMuPDF pour lire les PDF (jsp pk on uitlise pas PyMuPDF directement)
+import unicodedata
 from uncluttr.file_treatement.file_treatement import get_base_app_files_path
 
 nlp = spacy.load("fr_core_news_sm")
+
 
 # Télécharger le modèle spacy si nécessaire
 # def check_and_download_dependencies():
@@ -39,10 +41,34 @@ def ocr_with_easyocr(pdf_path):
     results = reader.readtext(pdf_path, detail=0)
     return " ".join(results)
 
+def ajout_stopwords():
+    custom_stop_words = ["d", "l", "avoir", "etre", "mettre", "c", "s", "a", "b", "e", "f", "g", "i", "j", "k", "m", "n", "o", "p", "q", "r", "t", "u", "v", "w", "x", "y", "z"]
+
+    # Ajout de chaque mot à la liste de stop words de spacy
+    for word in custom_stop_words:
+        nlp.Defaults.stop_words.add(word)
+        lexeme = nlp.vocab[word]
+        lexeme.is_stop = True
+
+# Supprimer les accents pour une optionnalité
+def enlever_accents(texte: str) -> str:
+    return ''.join(c for c in unicodedata.normalize('NFD', texte) if unicodedata.category(c) != 'Mn')
+
 # Prétraitement du texte
 def preprocess_text(text):
-    text = re.sub(r'[^a-zA-Z\s]', '', text.lower())  # Nettoyer les caractères inutiles
-    doc = nlp(text)
+
+    # Texte en minuscules
+    text = text.lower()
+
+    # Suppression des caractères non alphabétiques et des espaces supplémentaires
+    text = re.sub(r'[^a-zA-Zéàèùâêîôûçäëïöüôâàèéùê]', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Suppression des accents (si nécessaire)
+    text = enlever_accents(text)
+
+    doc = nlp(texte)
+
     lemmatized_text = ' '.join([token.lemma_ for token in doc if not token.is_stop])
     return lemmatized_text
 
@@ -68,8 +94,12 @@ def choose_document_tag(frequent_words):
         common_keywords = [word for word in frequent_words if word in keywords]
         if common_keywords:
             document_tags.append((tag, len(common_keywords)))
+    print ("common_keywords : ")
+    print (common_keywords)
     if document_tags:
         document_tags.sort(key=lambda x: x[1], reverse=True)
+        print ("document_tags : ")
+        print (document_tags)
         return document_tags[0][0]
     return "Document inconnu"
 
@@ -102,6 +132,7 @@ def process_document(pdf_path):
         
         cleaned_text = preprocess_text(extracted_text)
         frequent_words = get_most_frequent_words(cleaned_text)
+        print (frequent_words)
         tag = choose_document_tag([word[0] for word in frequent_words])
         return tag, date
     except Exception as e:
@@ -109,7 +140,13 @@ def process_document(pdf_path):
 
 # Exemple d'utilisation
 if __name__ == "__main__":
+    ajout_stopwords()
+
     # check_and_download_dependencies()
     PDF_PATH = os.path.join(os.getcwd(), 'assets', 'example', 'Motivation.pdf')
     document_tag = process_document(PDF_PATH)
+    
+
+    # Remplacez ce chemin par le chemin de votre fichier PDF
+    #pdf_path = "C:/Users/supio/Documents/ECE ING5/uncluttr - Copie/Faire le mail en Linux.pdf"
     print("Le document appartient à la catégorie :", document_tag)
