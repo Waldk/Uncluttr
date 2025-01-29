@@ -4,9 +4,11 @@
 import os
 import sys
 import shutil
+import configparser
 import pymupdf
 from PIL import Image
 from PIL.ExifTags import TAGS
+from uncluttr.core.configuration import get_base_app_files_path
 
 
 # Option 2: Ajouter des métadonnées personnalisées
@@ -40,7 +42,16 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
     doc.set_metadata(current_metadata)
 
     # Enregistrer les modifications sous un nouveau nom
-    temp_file_path = file_path.replace(".pdf", "_temp.pdf")
+    config = configparser.ConfigParser()
+    appdata_path = get_base_app_files_path()
+    config_path = os.path.join(appdata_path, 'configuration', 'conf.ini')
+    config.read(config_path)
+    appdata_path = config['settings']['appdata_path']
+
+    if not os.path.exists(appdata_path):
+        os.makedirs(appdata_path)
+
+    temp_file_path = os.path.join(appdata_path, os.path.basename(file_path).replace(".pdf", "_temp.pdf"))
     doc.save(temp_file_path)
     doc.close()
 

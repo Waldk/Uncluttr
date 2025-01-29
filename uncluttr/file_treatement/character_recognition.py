@@ -2,8 +2,10 @@
 
 import os
 import time
+import configparser
 import pymupdf
 import easyocr
+from uncluttr.core.configuration import get_base_app_files_path
 
 def extract_pdf_text_ocr(pdf_path: str) -> str:
     """Extract text from a PDF file using OCR with EasyOCR.
@@ -15,7 +17,20 @@ def extract_pdf_text_ocr(pdf_path: str) -> str:
         start_time = time.time()
         reader = easyocr.Reader(["fr"])
         print(f"OCR model loaded in {time.time() - start_time:.5f} seconds")
-        output_folder = os.path.join(os.path.dirname(pdf_path), 'temp_images')
+
+        config = configparser.ConfigParser()
+        appdata_path = get_base_app_files_path()
+        config_path = os.path.join(appdata_path, 'configuration', 'conf.ini')
+        config.read(config_path)
+        appdata_path = config['settings']['appdata_path']
+
+        if not os.path.exists(appdata_path):
+            os.makedirs(appdata_path)
+
+        output_folder = os.path.join(appdata_path, 'temp_images')
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
         image_paths = convert_pdf_to_images(pdf_path, output_folder)
 
         for image_page in image_paths:
