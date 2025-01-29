@@ -2,6 +2,7 @@
 
 import os
 import time
+import shutil
 import configparser
 import multiprocessing
 import tkinter as tk
@@ -23,6 +24,7 @@ root = TkinterDnD.Tk()
 path_space = tk.Text(root, height=1, width=50)
 path_accept = None
 processes = []
+path_space = None
 
 
 def start_gui(daemon_process: multiprocessing.Process=None):
@@ -78,8 +80,13 @@ def start_gui(daemon_process: multiprocessing.Process=None):
     drop_area.drop_target_register(DND_FILES)
     drop_area.dnd_bind("<<Drop>>", drop_file)
 
-    second_page_button = tk.Button(root, text="Go to second page", command=second_page)
-    second_page_button.pack(pady=10)
+    path_label.pack(pady=5, padx=10, anchor='w')
+    path_space.pack(pady=5, padx=10, anchor='w')
+    select_directory_button.pack(pady=5, padx=10, anchor='w')
+    path_accept.pack(pady=5, padx=10, anchor='e')
+    ajout_fichiers_label.pack(pady=(40, 10))
+    button_open.pack(pady=5)
+    drop_area.pack(pady=10)
 
     # Liste des processus
     global process_list
@@ -92,7 +99,7 @@ def start_gui(daemon_process: multiprocessing.Process=None):
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    new_path = filedialog.askdirectory()
+    new_path = path_space.get("1.0", tk.END).strip()
     gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
     path_accept.config(text="Voulez-vous changer le path à nouveau ?", command=lambda: sauvegarde_du_path(gui_daemon_process))
     path_space.delete("1.0", tk.END)

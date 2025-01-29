@@ -7,10 +7,14 @@ import time
 import zipfile
 import configparser
 import multiprocessing
+import nltk
 import joblib  # Pour sauvegarder et charger le modèle ML
 import pymupdf
+from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
+from uncluttr.ia.ia_pfe import process_document
 from uncluttr.core.configuration import get_base_app_files_path
+from uncluttr.file_treatement.rangement import rangement_fichier
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
 from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
