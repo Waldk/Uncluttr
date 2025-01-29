@@ -119,8 +119,10 @@ def classifier_document(texte):
         model_path = os.path.join(base_path, 'models', 'model_svm.joblib')
         vectorizer_path = os.path.join(base_path, 'models', 'vectorizer_tfidf.joblib')
 
+        start_time = time.time()
         classifier = joblib.load(model_path)
         vectorizer = joblib.load(vectorizer_path)
+        print(f"Model loaded in {time.time() - start_time:.2f} seconds")
 
         texte_nettoye = preprocess_text(texte)
         vecteur = vectorizer.transform([texte_nettoye])
@@ -189,7 +191,6 @@ def treat_structured_pdf(file_path: str):
     texte_pdf = extract_text_from_pdf(file_path)
 
     texte_nettoye = preprocess_text(texte_pdf)
-    print(f"Nettoyage du texte termine : \n {texte_nettoye}\n")
 
     document_date = extract_date(texte_pdf)
     print("Date :", document_date)
@@ -207,7 +208,6 @@ def treat_structured_pdf(file_path: str):
 
     # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
-    # ALBAN
 
 def treat_unstructured_pdf(file_path: str):
     """Treat an unstructured pdf.

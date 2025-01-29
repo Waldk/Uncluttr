@@ -15,7 +15,16 @@ def extract_pdf_text_ocr(pdf_path: str) -> str:
         start_time = time.time()
         reader = easyocr.Reader(["fr"])
         print(f"OCR model loaded in {time.time() - start_time:.5f} seconds")
-        output_folder = os.path.join(os.path.dirname(pdf_path), 'temp_images')
+
+        appdata_path = os.path.join(os.getenv('LOCALAPPDATA'), 'Uncluttr')
+
+        if not os.path.exists(appdata_path):
+            os.makedirs(appdata_path)
+
+        output_folder = os.path.join(appdata_path, 'temp_images')
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+
         image_paths = convert_pdf_to_images(pdf_path, output_folder)
 
         for image_page in image_paths:
