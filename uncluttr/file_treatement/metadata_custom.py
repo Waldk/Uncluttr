@@ -4,11 +4,9 @@
 import os
 import sys
 import shutil
-import configparser
 import pymupdf
 from PIL import Image
 from PIL.ExifTags import TAGS
-from uncluttr.core.configuration import get_base_app_files_path
 
 
 # Option 2: Ajouter des métadonnées personnalisées
@@ -18,10 +16,9 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
     :param str file_path: The path to the file.
     :param dict metadata : The metadata to append to the file.
     """
-    print("\nAppending metadata to the PDF file...")
+    print("\nAppending metadata to the PDF file...", os.path.basename(file_path))
     doc = pymupdf.open(file_path)
     current_metadata = doc.metadata
-    print("\nOld metadata:", current_metadata)
 
     # Obtenir la référence des métadonnées
     what, value = doc.xref_get_key(-1, "Info")
@@ -41,16 +38,12 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
 
     doc.set_metadata(current_metadata)
 
-    # Enregistrer les modifications sous un nouveau nom
-    config = configparser.ConfigParser()
-    appdata_path = get_base_app_files_path()
-    config_path = os.path.join(appdata_path, 'configuration', 'conf.ini')
-    config.read(config_path)
-    appdata_path = config['settings']['appdata_path']
+    appdata_path = os.path.join(os.getenv('LOCALAPPDATA'), 'Uncluttr')
 
     if not os.path.exists(appdata_path):
         os.makedirs(appdata_path)
 
+    # Enregistrer les modifications dans un fichier temporaire
     temp_file_path = os.path.join(appdata_path, os.path.basename(file_path).replace(".pdf", "_temp.pdf"))
     doc.save(temp_file_path)
     doc.close()
@@ -60,9 +53,6 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
     shutil.copy2(temp_file_path, file_path)
     os.utime(file_path, (original_stat.st_atime, original_stat.st_mtime))
     os.remove(temp_file_path)
-
-    print("\nNew metadata:", read_custom_metadata_from_pdf(file_path))
-    sys.stdout.flush()
 
 def read_custom_metadata_from_pdf(file_path:str) -> dict:
     """Read metadata from a PDF file.
@@ -102,6 +92,7 @@ def append_custom_metadata_to_image(file_path:str, metadata:dict):
     :param dict metadata : The metadata to append to the file.
     """
 
+    print("\nAppending metadata to the image file...", os.path.basename(file_path))
     image = Image.open(file_path)
     exif_data = image.info.get("exif", b"")
 
