@@ -2,6 +2,7 @@
 
 import os
 import re
+import itertools
 import sys
 import time
 import zipfile
@@ -190,6 +191,9 @@ def treat_structured_pdf(file_path: str):
     texte_nettoye = preprocess_text(texte_pdf)
     print(f"Nettoyage du texte termine : \n {texte_nettoye}\n")
 
+    document_date = extract_date(texte_pdf)
+    print("Date :", document_date)
+
     mots_cles = extraire_mots_cles(texte_nettoye)
     print(f"Mots-cles du PDF: {mots_cles}\n")
 
@@ -211,6 +215,8 @@ def treat_unstructured_pdf(file_path: str):
     :param str file_path: path to the file to treat
     """
     pdf_text= extract_pdf_text_ocr(file_path)
+    document_date = extract_date(pdf_text)
+    print("Date :", document_date)
     cleaned_text = preprocess_text(pdf_text)
     keywords = extraire_mots_cles(cleaned_text)
     print(f"Keywords: {keywords}")
@@ -250,23 +256,83 @@ def treat_image(file_path: str):
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
 
-# Première version : Extraction de la date pour document structuré
-# Pas encore lié au main
-def extract_date_structuredfile(text):
-    # Expression régulière pour capturer les dates
+# Deuxième Version : Extraction de la date pour tout doc
+# Problème à régler : ne prends pas en compte les mois écris en majuscule
+def extract_date(text):
+    # Expression régulière pour capturer les dates de signature, émission de document 
+    date_patterns1 = [
+        r'\b(?<!\bn[ée]\s)le\s(\d{1,2})[-/](\d{1,2})[-/](\d{2,4})\b',                    # Formats JJ/MM/AAAA ou JJ-MM-AAAA
+        r'\b(?<!\bn[ée]\s)le\s(\d{4})[-/](\d{1,2})[-/](\d{1,2})\b',                      # Formats AAAA/MM/JJ ou AAAA-MM-JJ
+        r'\b(?<!\bn[ée]\s)le\s(\d{1,2})\s(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats JJ mois AAAA
+        r'\b(?<!\bn[ée]\s)le\s(\d{1,2})\s(janv.|fév.|mars|avr.|mai|juin|juil.|août|sept.|oct.|nov.|déc.)\s(\d{4})\b',       # Formats JJ abréviation mois AAAA
+    ]
+    
+    date_patterns2 = [                                                 # Pattern de date seule si aucune signature n'a été vérifié auparavant 
+        r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{2,4})\b',                    # Formats JJ/MM/AAAA ou JJ-MM-AAAA
+        r'\b(\d{4})[-/](\d{1,2})[-/](\d{1,2})\b',                      # Formats AAAA/MM/JJ ou AAAA-MM-JJ
+        r'\b(\d{1,2})\s(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats JJ mois AAAA
+        r'\b(\d{1,2})\s(janv.|fév.|mars|avr.|mai|juin|juil.|août|sept.|oct.|nov.|déc.)\s(\d{4})\b',       # Formats JJ abréviation mois AAAA
+    ]
 
-    date_pattern = r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b'
-    matches = re.findall(date_pattern, text)
+    date_patterns3 = [                                    # Pattern de date seule si aucune signature n'a été vérifié auparavant 
+        r'\b(\d{1,2})[-/](\d{2,4})\b',                    # Formats MM/AAAA ou MM-AAAA
+        r'\b(\d{4})[-/](\d{1,2})\b',                      # Formats AAAA/MM ou AAAA-MM
+        r'\b(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats mois AAAA
+        r'\b(janv.|fév.|mars|avr.|mai|juin|juil.|août|sept.|oct.|nov.|déc.)\s(\d{4})\b',       # Formats abréviation mois AAAA
+    ]
 
-    if matches:
-        # Reformater la date trouvée
+    months = {
+        "janvier": "01", "février": "02", "mars": "03", "avril": "04",
+        "mai": "05", "juin": "06", "juillet": "07", "août": "08",
+        "septembre": "09", "octobre": "10", "novembre": "11", "décembre": "12",
+        "janv.": "01", "fév.": "02", "mars": "03", "avr.": "04",
+        "mai": "05", "juin": "06", "juil.": "07", "août": "08",
+        "sept.": "09", "oct.": "10", "nov.": "11", "déc.": "12"
+    }
+
+    dates = []
+
+    for pattern in itertools.chain(date_patterns1,date_patterns2):
+        matches = re.findall(pattern, text, re.IGNORECASE)
         for match in matches:
-            day, month, year = match
-            formatted_date = f"{int(day):02d}-{int(month):02d}-{year}"
-            return formatted_date  # Retourne la première date trouvée
-    return "Aucune date trouvée"
+            if len(match) == 3:  # Dates classiques
+                print("TEST MATCH a 3 item : ", match[0], match[1], match[2])
+                if match[2].isdigit() and len(match[2]) == 2:  # Corriger les années sur deux chiffres
+                    year = f"20{match[2]}" if int(match[2]) < 50 else f"19{match[2]}"
+                else:
+                    year = match[2]
 
-# Exemple d'utilisation
-if __name__ == "__main__":
-    PDF_PATH = os.path.join(os.getcwd(), 'assets', 'example', 'test_ocr.pdf')
-    file_analysis(PDF_PATH)
+                if match[1].lower() in months:  # Mois en lettres -> Numéro
+                    month = months[match[1].lower()]
+                else:
+                    month = match[1].zfill(2)
+
+                day = match[0].zfill(2)
+                dates.append(f"{day}/{month}/{year}")
+
+                extracted_dates = list(set(dates)) # Retirer les doublons
+
+                return extracted_dates  
+   
+    for pattern in date_patterns3:
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        for match in matches:
+            if len(match) == 2:  # Dates MM/AAAA ou AAAA/MM
+                print("TEST MATCH a 2 item : ", match[0], match[1])
+                if match[1].isdigit() and len(match[1]) == 2:  # Corriger les années sur deux chiffres
+                    year = f"20{match[1]}" if int(match[1]) < 50 else f"19{match[1]}"
+                else:
+                    year = match[1]
+
+                if match[0].lower() in months:  # Mois en lettres -> Numéro
+                    month = months[match[0].lower()]
+                else:
+                    month = match[0].zfill(2)
+
+                day = 1
+
+                dates.append(f"{day}/{month}/{year}")
+
+                extracted_dates = list(set(dates)) # Retirer les doublons
+
+                return extracted_dates

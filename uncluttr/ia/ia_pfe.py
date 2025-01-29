@@ -107,7 +107,11 @@ def choose_document_tag(frequent_words):
 def extract_date_unstructuredfile(text):
     # Expression régulière pour capturer les dates
 
-    date_pattern = r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b'
+    date_pattern = {r'\b\d{1,2}/\d{1,2}/\d{4}\b', 
+        '\b\d{1,2}-\d{1,2}-\d{4}\b',
+        '\b\d{4}/\d{1,2}/\d{1,2}\b',
+        '\b\d{1,2}\s\w+\s\d{4}\b',
+        '\b\d{1,2}\s(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s\d{4}\b'}
     matches = re.findall(date_pattern, text)
 
     if matches:
