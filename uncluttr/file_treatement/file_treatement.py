@@ -1,22 +1,24 @@
 ﻿""" This module contains functions to treat files. """
 
-import configparser
-import zipfile
 import os
 import re
 import sys
-import pymupdf
-import joblib  # Pour sauvegarder et charger le modèle ML
+import time
+import zipfile
+import configparser
+import multiprocessing
 import nltk
+import joblib  # Pour sauvegarder et charger le modèle ML
+import pymupdf
+from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
+from uncluttr.ia.ia_pfe import process_document
 from uncluttr.core.configuration import get_base_app_files_path
+from uncluttr.file_treatement.rangement import rangement_fichier
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
 from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
-from uncluttr.ia.ia_pfe import process_document
-from nltk.corpus import stopwords
 
-from uncluttr.file_treatement.rangement import rangement_fichier
 
 def is_structured_pdf(file_path: str) -> bool:
     """Check if the file is a structured PDF.
@@ -131,7 +133,7 @@ def classifier_document(texte):
     except Exception as e:
         return f"Erreur lors de la classification : {str(e)}"
 
-def file_analysis(file_path: str = None):
+def file_analysis(file_path: str = None, processes: list = []):
     """Analyse a file.
 
     :param str file_path: path to the file to analyse, defaults to None
@@ -154,14 +156,18 @@ def file_analysis(file_path: str = None):
                 print(f"Analyzing pdf {file_path} ...")
                 if is_structured_pdf(file_path):
                     print(f"{file_path} is a structured PDF.\n")
-                    treat_structured_pdf(file_path)
+                    process = multiprocessing.Process(target=treat_structured_pdf, args=(file_path,), name=f"Process-Structured-{file}")
                 else:
                     print(f"{file_path} is an unstructured PDF.\n")
-                    treat_unstructured_pdf(file_path)
+                    process = multiprocessing.Process(target=treat_unstructured_pdf, args=(file_path,), name=f"Process-Unstructured-{file}")
+                process.start()
+                processes.append((process, time.time()))
                 sys.stdout.flush()
             case '.png' | '.jpg' | '.jpeg':
                 print(f"Analyzing image {file_path} ...")
-                treat_image(file_path)
+                process = multiprocessing.Process(target=treat_image, args=(file_path,), name=f"Process-Image-{file}")
+                process.start()
+                processes.append((process, time.time()))
                 sys.stdout.flush()
             case _:
                 print(f"{file_type} is not a file type we currently handle.")
@@ -260,3 +266,8 @@ def extract_date_structuredfile(text):
             formatted_date = f"{int(day):02d}-{int(month):02d}-{year}"
             return formatted_date  # Retourne la première date trouvée
     return "Aucune date trouvée"
+
+# Exemple d'utilisation
+if __name__ == "__main__":
+    PDF_PATH = os.path.join(os.getcwd(), 'assets', 'example', 'test_ocr.pdf')
+    file_analysis(PDF_PATH)

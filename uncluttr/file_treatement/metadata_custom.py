@@ -2,6 +2,7 @@
 # Source: https://pymupdf.readthedocs.io/en/latest/recipes-low-level-interfaces.html#how-to-extend-pdf-metadata
 
 import os
+import sys
 import shutil
 import pymupdf
 from PIL import Image
@@ -50,6 +51,7 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
     os.remove(temp_file_path)
 
     print("\nNew metadata:", read_custom_metadata_from_pdf(file_path))
+    sys.stdout.flush()
 
 def read_custom_metadata_from_pdf(file_path:str) -> dict:
     """Read metadata from a PDF file.
@@ -108,6 +110,7 @@ def append_custom_metadata_to_image(file_path:str, metadata:dict):
     os.remove(temp_file_path)
 
     print("New metadata:", read_custom_metadata_from_image(file_path))
+    sys.stdout.flush()
 
 def read_custom_metadata_from_image(file_path:str) -> dict:
     """Read metadata from a image file.
