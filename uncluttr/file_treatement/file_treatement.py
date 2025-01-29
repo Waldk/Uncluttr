@@ -260,3 +260,136 @@ def extract_date_structuredfile(text):
             formatted_date = f"{int(day):02d}-{int(month):02d}-{year}"
             return formatted_date  # Retourne la première date trouvée
     return "Aucune date trouvée"
+
+
+#pour la récupération des mots clés
+def analyse_fichier(file_path: str = None):
+    """Analyse a file and return the keywords.
+
+    :param str file_path: path to the file to analyse, defaults to None
+    :return: List of keywords extracted from the file
+    """
+
+    try:
+        root, file = os.path.split(file_path)
+        file_type = os.path.splitext(file_path)[1]
+        
+        match file_type:
+            case '.zip':
+                extract_path = os.path.join(root, os.path.splitext(file)[0])
+                with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                    zip_ref.extractall(extract_path)
+                os.remove(file_path)
+
+                print(file_path, "extracted.")
+                sys.stdout.flush()
+                folder_analysis(extract_path)
+                return []  # No keywords to return for zip files
+
+            case '.pdf':
+                print(f"Analyzing pdf {file_path} ...")
+                if is_structured_pdf(file_path):
+                    print(f"{file_path} is a structured PDF.\n")
+                    return treat_structured_pdf2(file_path)  # Return keywords from structured PDF
+                else:
+                    print(f"{file_path} is an unstructured PDF.\n")
+                    return treat_unstructured_pdf2(file_path)  # Return keywords from unstructured PDF
+
+            case '.png' | '.jpg' | '.jpeg':
+                print(f"Analyzing image {file_path} ...")
+                return treat_image2(file_path)  # Return keywords from image
+
+            case _:
+                print(f"{file_type} is not a file type we currently handle.")
+                sys.stdout.flush()
+                return []  # Return empty list for unsupported file types
+
+    except zipfile.BadZipFile as e:
+        print(f"Bad zip file: {e}")
+        return []
+    except FileNotFoundError as e:
+        print(f"File not found: {e}")
+        return []
+    except PermissionError as e:
+        print(f"Permission error: {e}")
+        return []
+    except Exception as e:
+        print(f"An unexpected error occurred during file analysis: {e}")
+        return []
+
+
+def treat_structured_pdf2(file_path: str):
+    """Treat a structured PDF file.
+
+    :param str file_path: path to the file to treat
+    """
+    texte_pdf = extract_text_from_pdf(file_path)
+
+    texte_nettoye = preprocess_text(texte_pdf)
+
+    mots_cles = extraire_mots_cles2(texte_nettoye)
+  
+    sys.stdout.flush()
+    # Retourner les mots-clés
+    return mots_cles
+
+
+def treat_unstructured_pdf2(file_path: str):
+    """Treat an unstructured PDF file.
+
+    :param str file_path: path to the file to treat
+    """
+    pdf_text = extract_pdf_text_ocr(file_path)
+    cleaned_text = preprocess_text(pdf_text)
+    keywords = extraire_mots_cles2(cleaned_text)
+
+    sys.stdout.flush()
+
+    # Retourner les mots-clés
+    return keywords
+
+
+def treat_image2(file_path: str):
+    """Treat an image file.
+
+    :param str file_path: path to the image to treat
+    """
+    try:
+        image_text = extract_image_text_ocr(file_path)
+        cleaned_text = preprocess_text(image_text)
+        keywords = extraire_mots_cles2(cleaned_text)
+
+        sys.stdout.flush()
+        
+        # Retourner les mots-clés
+        return keywords
+    except Exception as e:
+        print(f"An error occurred during image treatment: {e}")
+        return []
+
+
+def extraire_mots_cles2(texte: str) -> list:
+    """Extract keywords from a text.
+
+    :param str texte: text to extract keywords from
+    :return list: extracted keywords
+    """
+    try:
+        stopwordsFR = stopwords.words('french')
+    except LookupError:
+        nltk.download('stopwords')
+        stopwordsFR = stopwords.words('french')
+
+    # Ajout de stopwords
+    stopwordsPLUS = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    stopwordsFinal = stopwordsFR + stopwordsPLUS
+
+    vectorizer = TfidfVectorizer(
+        max_features=50,
+        stop_words=stopwordsFinal,
+        ngram_range=(1, 2)
+    )
+    tfidf_matrix = vectorizer.fit_transform([texte])
+    mots_cles = vectorizer.get_feature_names_out()
+
+    return ", ".join(mots_cles)
