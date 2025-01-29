@@ -12,7 +12,6 @@ import joblib  # Pour sauvegarder et charger le modèle ML
 import pymupdf
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
-from uncluttr.ia.ia_pfe import process_document
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.rangement import rangement_fichier
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
