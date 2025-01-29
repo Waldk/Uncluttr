@@ -23,8 +23,9 @@ path_dameon_directory = config['settings']['directory_to_watch']
 path_storage = config['settings']['storage_path']
 root = TkinterDnD.Tk()
 path_accept = None
-processes = []
 path_space = None
+processes = []
+daemon_process = None
 
 class DirectoryTreeViewer:
     def __init__(self, root):
