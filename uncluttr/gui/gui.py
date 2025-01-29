@@ -12,6 +12,7 @@ from uncluttr.file_treatement.file_treatement import file_analysis
 from uncluttr.file_treatement.training_models import entrainer_modele
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path,update_storage_directory
+from uncluttr.file_treatement.rangement import changemtn_rangement_fichier
 
 
 # Lecture du fichier de configuration
@@ -143,7 +144,6 @@ def home_page():
     drop_area.drop_target_register(DND_FILES)
     drop_area.dnd_bind("<<Drop>>", drop_file)
 
-
     # Ajout des éléments à la fenêtre
     path_label.pack(pady=5, padx=10, anchor='w')
     path_space.pack(pady=5, padx=10, anchor='w')
@@ -158,7 +158,6 @@ def home_page():
     process_list = tk.Listbox(root, width=70, height=10)
     process_list.pack(pady=10)
     root.after(1000, update_process_list)
-    
     # Lancement de l'application
     root.mainloop()
 
@@ -252,6 +251,12 @@ def add_file_page():
         "Référentiel",
     ]
     
+    options_rangement = [
+        "type -> date -> theme",
+        "theme -> type -> date",
+        "date -> type -> theme",
+    ]
+    
     parametrage_label = tk.Label(root, text="Paramétrage de l'IA", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
     parametrage_label.pack(pady=(20, 10), anchor='w')
     separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
@@ -278,8 +283,18 @@ def add_file_page():
     
     dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=options, state="readonly")
     dropdown_menu.pack(pady=5, padx=10, anchor='w')
+    
+    dropdown_label = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
+    dropdown_label.pack(pady=(20, 5), anchor='w')
+    
+    selected_option_rangement = tk.StringVar(root)
+    selected_option_rangement.set(options_rangement[0])
+    
+    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option, values=options_rangement, state="readonly")
+    dropdown_menu_rangement.pack(pady=5, padx=10, anchor='w')
+    
     # Bouton pour valider la sélection
-    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: learning(selected_option.get(), file_path_label.cget("text")))
+    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda:[learning(selected_option.get(), file_path_label.cget("text")),changemtn_rangement_fichier(selected_option_rangement)] )
     validate_button.pack(pady=30, anchor='w')
     # Lancement de l'application
     root.mainloop()
