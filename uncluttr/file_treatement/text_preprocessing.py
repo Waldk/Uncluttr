@@ -1,6 +1,8 @@
 """ This module contains functions for text preprocessing. """
 
 import re
+import sys
+import time
 import unicodedata
 import spacy
 import nltk
@@ -8,15 +10,42 @@ from nltk.corpus import stopwords
 from datetime import datetime
 
 
-# Charger le modèle spaCy pour le français : voir si on utilise pas : fr_core_news_lg -> base de données encore plus large
-nlp = spacy.load("fr_core_news_lg")
+# Télécharger les stopwords de NLTK
+try:
+    start_time = time.time()
+    stopwords.words('french')
+    print(f"Les stopwords ont été verifies en {time.time() - start_time:.5f} secondes.")
+    sys.stdout.flush()
+except LookupError:
+    start_time = time.time()
+    nltk.download('stopwords')
+    print(f"Les stopwords ont été téléchargés en {time.time() - start_time:.5f} secondes.")
+    sys.stdout.flush()
+
+# Variable globale pour le modèle spaCy
+nlp = None
+
+def initialize_spacy_model():
+    """Initialiser le modèle spaCy si nécessaire."""
+    global nlp
+    if nlp is None:
+        nlp_start_time = time.time()
+        nlp = spacy.load("fr_core_news_sm")
+        print(f"Modèle spaCy chargé en {time.time() - nlp_start_time:.2f} secondes.")
+    else:
+        print("Le modèle spaCy est déjà chargé.")
+    sys.stdout.flush()
+
 
 # Supprimer les accents pour une optionnalité
-def enlever_accents(texte: str) -> str:
-    return ''.join(c for c in unicodedata.normalize('NFD', texte) if unicodedata.category(c) != 'Mn')
+def enlever_accents(text: str) -> str:
+    """delete accents from a string."""
+    return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
 
 # Prétraitement du texte
 def preprocess_text(texte: str) -> str:
+    """Preprocess a text by removing non-alphabetic characters and stopwords, and lemmatizing it."""
+    initialize_spacy_model()
 
     # Télécharger les stopwords de NLTK
     try:

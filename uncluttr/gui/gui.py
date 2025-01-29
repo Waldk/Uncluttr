@@ -1,9 +1,10 @@
 """ This module contains the GUI of the application. """
 
+import os
+import time
+import shutil
 import configparser
 import multiprocessing
-import os
-import shutil
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from tkinterdnd2 import TkinterDnD, DND_FILES
@@ -11,6 +12,7 @@ from uncluttr.file_treatement.file_treatement import file_analysis
 from uncluttr.file_treatement.training_models import ajouter_texte_avec_type
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path,update_storage_directory
+from uncluttr.file_treatement.rangement import changemtn_rangement_fichier
 
 
 # Lecture du fichier de configuration
@@ -22,8 +24,9 @@ path_dameon_directory = config['settings']['directory_to_watch']
 path_storage = config['settings']['storage_path']
 root = TkinterDnD.Tk()
 path_accept = None
-daemon_process = None 
 path_space = None
+processes = []
+daemon_process = None
 
 class DirectoryTreeViewer:
     def __init__(self, root):
@@ -149,7 +152,12 @@ def home_page():
     ajout_fichiers_label.pack(pady=(40, 10))
     button_open.pack(pady=5)
     drop_area.pack(pady=10)
-    
+
+    # Liste des processus
+    global process_list
+    process_list = tk.Listbox(root, width=70, height=10)
+    process_list.pack(pady=10)
+    root.after(1000, update_process_list)
     # Lancement de l'application
     root.mainloop()
 
@@ -162,19 +170,27 @@ def select_directory():
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
-    
     new_path = path_space.get("1.0", tk.END).strip()
     gui_daemon_process = update_daemon_path(new_path, gui_daemon_process)
-
-    # Redéfinir le bouton pour utiliser le nouveau processus
-    path_accept.config(text="Voulez-vous changer le path à nouveau ?",
-                        command=lambda: sauvegarde_du_path(gui_daemon_process))
-    
-    # Mettre à jour le path affiché
+    path_accept.config(text="Voulez-vous changer le path à nouveau ?", command=lambda: sauvegarde_du_path(gui_daemon_process))
     path_space.delete("1.0", tk.END)
     path_space.insert("1.0", new_path)
     global path_dameon_directory
     path_dameon_directory = new_path
+
+def update_process_list():
+    """Update the process list in the GUI."""
+    process_list.delete(0, tk.END)
+    for i, (process, start_time) in enumerate(processes):
+        elapsed_time = time.time() - start_time
+        if process.is_alive():
+            process_list.insert(tk.END, f"{process.name} - Running for {int(elapsed_time)} seconds")
+        else:
+            if isinstance(start_time, float):  # Check if the process was previously running
+                processes[i] = (process, int(elapsed_time))  # Store the elapsed time as an integer
+            process_list.insert(tk.END, f"{process.name} - Completed after {processes[i][1]} seconds")
+
+    root.after(1000, update_process_list)
 
 def open_file():
     """Ouvre un fichier via un explorateur et affiche son contenu."""
@@ -184,7 +200,7 @@ def open_file():
             filetypes=[("Handled file types", "*.pdf;*.zip;*.jpg;*.jpeg;*.png")]
             )
         if file_path:
-            file_analysis(file_path)
+            file_analysis(file_path, processes)
 
     except Exception as e:
         print(f"An interanl error occurred : {e}")
@@ -196,7 +212,7 @@ def drop_file(event):
         file_path = event.data.replace('{', '').replace('}', '')
         file_type = file_path.split('.')[-1]
         if file_type == "zip" or file_type == "pdf" or file_type == "jpg" or file_type == "jpeg" or file_type == "png":
-            file_analysis(file_path)
+            file_analysis(file_path, processes)
         else:
             tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP, PDF, Jpeg et PNG sont acceptés.")
     except Exception as e:
@@ -245,6 +261,12 @@ def add_file_page():
          "lettre_de_motivation",
     ]
     
+    options_rangement = [
+        "type -> date -> theme",
+        "theme -> type -> date",
+        "date -> type -> theme",
+    ]
+    
     parametrage_label = tk.Label(root, text="Paramétrage de l'IA", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
     parametrage_label.pack(pady=(20, 10), anchor='w')
     separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
@@ -271,8 +293,18 @@ def add_file_page():
     
     dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=options, state="readonly")
     dropdown_menu.pack(pady=5, padx=10, anchor='w')
+    
+    dropdown_label = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
+    dropdown_label.pack(pady=(20, 5), anchor='w')
+    
+    selected_option_rangement = tk.StringVar(root)
+    selected_option_rangement.set(options_rangement[0])
+    
+    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option, values=options_rangement, state="readonly")
+    dropdown_menu_rangement.pack(pady=5, padx=10, anchor='w')
+    
     # Bouton pour valider la sélection
-    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()))
+    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: [ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()),changemtn_rangement_fichier(selected_option_rangement)])
     validate_button.pack(pady=30, anchor='w')
     # Lancement de l'application
     root.mainloop()

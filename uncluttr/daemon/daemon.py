@@ -49,13 +49,6 @@ class Handler(FileSystemEventHandler):
             except Exception as e:
                 print(f"An error occurred : {e}")
 
-            # on doit pas analyser tout le folder à chaque fois qu'un fichier est ajouté
-            # mais regarder dans tous les subfolders si un fichier a été ajouté 
-            # et analyser seulement ce dernier
-            # dites si vous trouvez ça pas cohérent
-
-            # folder_analysis()
-
 def start_daemon():
     """Start the daemon."""
     try:

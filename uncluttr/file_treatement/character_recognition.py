@@ -1,6 +1,7 @@
 """ This module contains functions to extract text from PDF files using OCR. """
 
 import os
+import time
 import pymupdf
 import easyocr
 
@@ -11,7 +12,9 @@ def extract_pdf_text_ocr(pdf_path: str) -> str:
     """
     try:
         text = []
+        start_time = time.time()
         reader = easyocr.Reader(["fr"])
+        print(f"OCR model loaded in {time.time() - start_time:.5f} seconds")
         output_folder = os.path.join(os.path.dirname(pdf_path), 'temp_images')
         image_paths = convert_pdf_to_images(pdf_path, output_folder)
 
@@ -37,8 +40,9 @@ def extract_image_text_ocr(image_path: str, reader=None) -> str:
     print(f"Extracting text from {os.path.basename(image_path)}")
 
     if reader is None:
+        start_time = time.time()
         reader = easyocr.Reader(["fr"])
-
+        print(f"OCR model loaded in {time.time() - start_time:.5f} seconds")
     results = reader.readtext(image_path, detail=0)
     return " ".join(results)
 
