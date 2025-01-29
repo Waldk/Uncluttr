@@ -7,12 +7,16 @@ import re
 import sys
 import pymupdf
 import joblib  # Pour sauvegarder et charger le modèle ML
+import nltk
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
 from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
 from uncluttr.ia.ia_pfe import process_document
+from nltk.corpus import stopwords
+
+from uncluttr.file_treatement.rangement import rangement_fichier
 
 def is_structured_pdf(file_path: str) -> bool:
     """Check if the file is a structured PDF.
@@ -27,7 +31,6 @@ def is_structured_pdf(file_path: str) -> bool:
             if text.strip():
                 return True
     return False
-
 
 def folder_analysis(path:str=None):
     """Analyzing files in a folder.
@@ -83,29 +86,50 @@ def extraire_mots_cles(texte: str) -> list:
     :param str texte: text to extract keywords from
     :return list: extracted keywords
     """
-    vectorizer = TfidfVectorizer(max_features=10)
+    try:
+        stopwordsFR = stopwords.words('french')
+    except LookupError:
+        nltk.download('stopwords')
+        stopwordsFR = stopwords.words('french')
+
+    # Ajout de stopwords
+    stopwordsPLUS = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    stopwordsFinal = stopwordsFR + stopwordsPLUS
+
+    vectorizer = TfidfVectorizer(
+        max_features=15,
+        stop_words=stopwordsFinal,
+        ngram_range=(1, 2)
+    )
     tfidf_matrix = vectorizer.fit_transform([texte])
     mots_cles = vectorizer.get_feature_names_out()
 
     return mots_cles
 
 def classifier_document(texte):
-    """Classify a document."""
-    base_path = get_base_app_files_path()
-    model_path = os.path.join(base_path, 'models', 'model_svm.joblib')
-    vectorizer_path = os.path.join(base_path, 'models', 'vectorizer_tfidf.joblib')
+    """Classify a document based on pre-trained model.
 
-    if os.path.exists(model_path) and os.path.exists(vectorizer_path):
+    :param texte: text to classify
+    :return: classification label
+    """
+    try:
+        base_path = get_base_app_files_path()
+        model_path = os.path.join(base_path, 'models', 'model_svm.joblib')
+        vectorizer_path = os.path.join(base_path, 'models', 'vectorizer_tfidf.joblib')
+
         classifier = joblib.load(model_path)
         vectorizer = joblib.load(vectorizer_path)
-    else:
-        print("Modele de classification ou vectoriseur introuvable. Veuillez entrainer le modèle\n")
-        return "Inconnu"
 
-    texte_nettoye = preprocess_text(texte)
-    vecteur = vectorizer.transform([texte_nettoye])
-    prediction = classifier.predict(vecteur)
-    return prediction[0]
+        texte_nettoye = preprocess_text(texte)
+        vecteur = vectorizer.transform([texte_nettoye])
+        prediction = classifier.predict(vecteur)
+
+        return prediction[0]
+
+    except FileNotFoundError:
+        return "Modèle ou vectoriseur introuvable. Veuillez entraîner le modèle."
+    except Exception as e:
+        return f"Erreur lors de la classification : {str(e)}"
 
 def file_analysis(file_path: str = None):
     """Analyse a file.
@@ -159,7 +183,7 @@ def treat_structured_pdf(file_path: str):
     texte_pdf = extract_text_from_pdf(file_path)
 
     texte_nettoye = preprocess_text(texte_pdf)
-    print("Nettoyage du texte termine.\n")
+    print(f"Nettoyage du texte termine : \n {texte_nettoye}\n")
 
     mots_cles = extraire_mots_cles(texte_nettoye)
     print(f"Mots-cles du PDF: {mots_cles}\n")
@@ -173,6 +197,7 @@ def treat_structured_pdf(file_path: str):
                                         "document_theme": [None, None]})
 
     # Ajouter le fichier dans l'arborescence
+    rangement_fichier(file_path)
     # ALBAN
 
 def treat_unstructured_pdf(file_path: str):
@@ -193,6 +218,7 @@ def treat_unstructured_pdf(file_path: str):
                                         "document_date": None,
                                         "document_theme": [None, None]})
     # Ajouter le fichier dans l'arborescence
+    rangement_fichier(file_path)
     #  qui de droit
 
 def treat_image(file_path: str):
@@ -214,6 +240,7 @@ def treat_image(file_path: str):
                                             "document_date": None,
                                             "document_theme": [None, None]})
         # Ajouter le fichier dans l'arborescence
+        rangement_fichier(file_path)
         #  qui de droit
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
