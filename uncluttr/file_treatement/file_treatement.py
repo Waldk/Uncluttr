@@ -110,30 +110,34 @@ def extraire_mots_cles(texte: str) -> list:
     return mots_cles
 # Fonction pour générer des bigrammes et trigrammes
 def generate_ngrams(words, n=2):
+    """Generate n-grams from a list of words."""
     ngrams = list(itertools.zip_longest(*[words[i:] for i in range(n)], fillvalue=""))
     return [" ".join(gram).strip() for gram in ngrams if "" not in gram]
 
 # Fonction pour générer un thème basé sur des mots et n-grams
 def generate_theme_from_text(text):
+    """Generate a theme from a text."""
     # Prétraiter le texte
     words = text.split()
-    
+    words = [word for word in words if len(word) > 3]
+
     # Affiner les mots pour supprimer les incohérences
     refined_words = refine_words(words)
-    
+
     # Générer des bigrammes (groupes de 2 mots) et trigrammes (groupes de 3 mots)
     bigrams = generate_ngrams(refined_words, 2)
     trigrams = generate_ngrams(refined_words, 3)
-    
+
     # Compter les fréquences des mots, bigrammes et trigrammes
     word_counts = Counter(refined_words)
     bigram_counts = Counter(bigrams)
     trigram_counts = Counter(trigrams)
-    
+
     # Combiner les résultats et sélectionner les plus fréquents
     all_counts = word_counts + bigram_counts + trigram_counts
-    return all_counts.most_common(5)  # Top 5 termes les plus fréquents
-   
+
+    # Retourner les 5 termes les plus fréquents sans leur nombres d'apparitions
+    return [word for word, _ in all_counts.most_common(5)]
 
 
 def classifier_document(texte):
@@ -155,7 +159,7 @@ def classifier_document(texte):
         texte_nettoye = preprocess_text(texte)
         vecteur = vectorizer.transform([texte_nettoye])
         prediction_type = classifier.predict(vecteur)
-        prediction_theme= 
+        prediction_theme = generate_theme_from_text(texte_nettoye)
         return [prediction_type[0], prediction_theme]
 
     except FileNotFoundError:
@@ -226,13 +230,14 @@ def treat_structured_pdf(file_path: str):
     mots_cles = extraire_mots_cles(texte_nettoye)
     print(f"Mots-cles du PDF: {mots_cles}\n")
 
-    type_document = classifier_document(texte_pdf)
+    type_document, theme_document = classifier_document(texte_pdf)
     print(f"Type de document : {type_document}\n")
+    print(f"Theme du document : {theme_document}\n")
     sys.stdout.flush()
 
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": None,
-                                        "document_theme": [None, None]})
+                                        "document_theme": theme_document})
 
     # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
@@ -249,13 +254,14 @@ def treat_unstructured_pdf(file_path: str):
     keywords = extraire_mots_cles(cleaned_text)
     print(f"Keywords: {keywords}")
 
-    type_document = classifier_document(pdf_text)
+    type_document, theme_document = classifier_document(pdf_text)
     print(f"Document type: {type_document}")
+    print(f"Document theme: {theme_document}")
     sys.stdout.flush()
 
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": None,
-                                        "document_theme": [None, None]})
+                                        "document_theme": theme_document})
     # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
     #  qui de droit
@@ -271,13 +277,14 @@ def treat_image(file_path: str):
         keywords = extraire_mots_cles(cleaned_text)
         print(f"Keywords: {keywords}")
 
-        type_document = classifier_document(image_text)
+        type_document, theme_document = classifier_document(image_text)
         print(f"Document type: {type_document}")
+        print(f"Document theme: {theme_document}")
         sys.stdout.flush()
 
         append_custom_metadata_to_image(file_path, {"document_type": type_document,
                                             "document_date": None,
-                                            "document_theme": [None, None]})
+                                            "document_theme": theme_document})
         # Ajouter le fichier dans l'arborescence
         rangement_fichier(file_path)
         #  qui de droit
@@ -340,8 +347,8 @@ def extract_date(text):
 
                 extracted_dates = list(set(dates)) # Retirer les doublons
 
-                return extracted_dates  
-   
+                return extracted_dates
+
     for pattern in date_patterns3:
         matches = re.findall(pattern, text, re.IGNORECASE)
         for match in matches:

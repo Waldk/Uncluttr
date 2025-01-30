@@ -54,6 +54,8 @@ def append_custom_metadata_to_pdf(file_path:str, metadata:dict):
     os.utime(file_path, (original_stat.st_atime, original_stat.st_mtime))
     os.remove(temp_file_path)
 
+    print("New metadata:", read_custom_metadata_from_pdf(file_path))
+
 def read_custom_metadata_from_pdf(file_path:str) -> dict:
     """Read metadata from a PDF file.
 
