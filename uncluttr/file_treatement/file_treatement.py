@@ -8,6 +8,7 @@ import time
 import zipfile
 import configparser
 import multiprocessing
+from collections import Counter
 import nltk
 import joblib  # Pour sauvegarder et charger le modèle ML
 import pymupdf
@@ -15,7 +16,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.rangement import rangement_fichier
-from uncluttr.file_treatement.text_preprocessing import preprocess_text
+from uncluttr.file_treatement.text_preprocessing import preprocess_text, refine_words
 from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
 
@@ -107,6 +108,33 @@ def extraire_mots_cles(texte: str) -> list:
     mots_cles = vectorizer.get_feature_names_out()
 
     return mots_cles
+# Fonction pour générer des bigrammes et trigrammes
+def generate_ngrams(words, n=2):
+    ngrams = list(itertools.zip_longest(*[words[i:] for i in range(n)], fillvalue=""))
+    return [" ".join(gram).strip() for gram in ngrams if "" not in gram]
+
+# Fonction pour générer un thème basé sur des mots et n-grams
+def generate_theme_from_text(text):
+    # Prétraiter le texte
+    words = text.split()
+    
+    # Affiner les mots pour supprimer les incohérences
+    refined_words = refine_words(words)
+    
+    # Générer des bigrammes (groupes de 2 mots) et trigrammes (groupes de 3 mots)
+    bigrams = generate_ngrams(refined_words, 2)
+    trigrams = generate_ngrams(refined_words, 3)
+    
+    # Compter les fréquences des mots, bigrammes et trigrammes
+    word_counts = Counter(refined_words)
+    bigram_counts = Counter(bigrams)
+    trigram_counts = Counter(trigrams)
+    
+    # Combiner les résultats et sélectionner les plus fréquents
+    all_counts = word_counts + bigram_counts + trigram_counts
+    return all_counts.most_common(5)  # Top 5 termes les plus fréquents
+   
+
 
 def classifier_document(texte):
     """Classify a document based on pre-trained model.
@@ -126,9 +154,9 @@ def classifier_document(texte):
 
         texte_nettoye = preprocess_text(texte)
         vecteur = vectorizer.transform([texte_nettoye])
-        prediction = classifier.predict(vecteur)
-
-        return prediction[0]
+        prediction_type = classifier.predict(vecteur)
+        prediction_theme= 
+        return [prediction_type[0], prediction_theme]
 
     except FileNotFoundError:
         return "Modèle ou vectoriseur introuvable. Veuillez entraîner le modèle."

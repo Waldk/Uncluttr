@@ -143,6 +143,21 @@ def preprocess_date(texte: str) -> str:
 
     return texte
 
+# Fonction pour valider et affiner les mots
+def refine_words(words):
+    refined = []
+    for word in words:
+        # Vérifier si un mot est cohérent
+        if is_valid_word(word):
+            refined.append(word)
+    return refined
+
+# Fonction pour vérifier la validité d'un mot à l'aide de spaCy
+def is_valid_word(word):
+    # Utiliser spaCy pour voir si le mot existe dans le vocabulaire
+    return word in nlp.vocab and nlp.vocab[word].is_alpha
+
+
 if __name__ == "__main__":
     text =  text = """
     Les evenements importants sont les suivants : 
@@ -159,3 +174,5 @@ if __name__ == "__main__":
     """
 
     text = preprocess_date(text)
+
+
