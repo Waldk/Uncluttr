@@ -80,7 +80,8 @@ def preprocess_text(texte: str) -> str:
     # Prétraitement pour les dates
 
 # Prétraitement pour les dates
-def preprocess_date(texte: str) -> str:
+def preprocess_date(text: str) -> str:
+    """Preprocess a text by extracting dates."""
 
     mois = {
         "janvier": 1, "février": 2, "fevrier": 2, "mars": 3, "avril": 4,
@@ -116,8 +117,6 @@ def preprocess_date(texte: str) -> str:
             elif month.lower() in mois:  # Mois en lettres
                 month_number = mois[month.lower()]
 
-        
-
         # Vérifier si une année est présente, sinon en mettre 1900 par défaut
         year = int(year) if year else 1900
 
@@ -141,10 +140,27 @@ def preprocess_date(texte: str) -> str:
     for date in dates:
         print(date.strftime("%d/%m/%Y"))
 
-    return texte
+    return text
+
+# Fonction pour valider et affiner les mots
+def refine_words(words):
+    """Refine a list of words by removing non-alphabetic words."""
+    refined = []
+    for word in words:
+        # Vérifier si un mot est cohérent
+        if is_valid_word(word):
+            refined.append(word)
+    return refined
+
+# Fonction pour vérifier la validité d'un mot à l'aide de spaCy
+def is_valid_word(word):
+    """Check if a word is valid using spaCy."""
+    # Utiliser spaCy pour voir si le mot existe dans le vocabulaire
+    return word in nlp.vocab and nlp.vocab[word].is_alpha
+
 
 if __name__ == "__main__":
-    text =  text = """
+    TEXT =  TEXT = """
     Les evenements importants sont les suivants : 
     - Le 12 janvier 2021, un incident s'est produit.
     - Une autre date importante : 25/03.
@@ -158,4 +174,4 @@ if __name__ == "__main__":
     - fiche de paie 01 2002
     """
 
-    text = preprocess_date(text)
+    TEXT = preprocess_date(TEXT)
