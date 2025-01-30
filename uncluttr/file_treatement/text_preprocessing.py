@@ -14,7 +14,7 @@ from datetime import datetime
 try:
     start_time = time.time()
     stopwords.words('french')
-    print(f"Les stopwords ont été verifies en {time.time() - start_time:.5f} secondes.")
+    print(f"La vérification de l'installation des stopwords en {time.time() - start_time:.5f} secondes.")
     sys.stdout.flush()
 except LookupError:
     start_time = time.time()

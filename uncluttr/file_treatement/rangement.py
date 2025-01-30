@@ -5,25 +5,19 @@ import shutil
 import configparser
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.metadata_custom import read_custom_metadata_from_pdf
-import configparser
-from uncluttr.core.configuration import get_base_app_files_path
 
-ordre = " 123"
+ordre = "type -> date -> theme"
 
 def changemtn_rangement_fichier(x):
     global ordre
-    print("il y a un changement d'ordre de rangement")
     ordre = x
 
 def rangement_fichier(file_path):
-    print("\n\n ",ordre,"\n\n")
     config = configparser.ConfigParser()
     base_path = get_base_app_files_path()
     config_path = os.path.join(base_path, 'configuration', 'conf.ini')
     config.read(config_path)
-    path_storage = config['settings']['storage_path']
    
-    print("\n\n vous ête au sein du rangement fichier\n\n")
     def create_directory_if_not_exists(directory):
         if not os.path.exists(directory):
             os.makedirs(directory)

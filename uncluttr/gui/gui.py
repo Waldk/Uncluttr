@@ -294,13 +294,13 @@ def add_file_page():
     dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=options, state="readonly")
     dropdown_menu.pack(pady=5, padx=10, anchor='w')
     
-    dropdown_label = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
-    dropdown_label.pack(pady=(20, 5), anchor='w')
+    dropdown_label_rangement = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
+    dropdown_label_rangement.pack(pady=(20, 5), anchor='w')
     
     selected_option_rangement = tk.StringVar(root)
     selected_option_rangement.set(options_rangement[0])
     
-    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option, values=options_rangement, state="readonly")
+    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option_rangement, values=options_rangement, state="readonly")
     dropdown_menu_rangement.pack(pady=5, padx=10, anchor='w')
     
     # Bouton pour valider la sélection
