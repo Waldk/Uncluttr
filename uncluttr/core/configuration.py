@@ -26,6 +26,21 @@ def update_directory_to_watch(new_directory:str):
         print(f"An error occurred while updating the directory to watch: {e}")
         
 
+def update_directory_order(new_order:str):
+    """Update the directory to watch in the configuration file."""
+    try:
+        config = configparser.ConfigParser()
+        base_path = get_base_app_files_path()
+        config_path = os.path.join(base_path, 'configuration', 'conf.ini')
+        config.read(config_path)
+        config['settings']['ordre_rangement'] = new_order
+        with open(config_path, 'w', encoding='utf-8') as configfile:
+            config.write(configfile)
+        print(f"Updated order: {new_order}")
+    except Exception as e:
+        print(f"An error occurred while updating the order: {e}")
+        
+
 def update_storage_directory(new_directory:str):
     """Update the directory for storage in the configuration file."""
     try:

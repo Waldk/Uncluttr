@@ -6,10 +6,10 @@ import configparser
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.metadata_custom import read_custom_metadata_from_pdf
 
-ordre = "type -> date -> theme"
 
 def changemtn_rangement_fichier(x):
     global ordre
+    print('changement ordre')
     ordre = x
 
 def rangement_fichier(file_path):
@@ -17,33 +17,37 @@ def rangement_fichier(file_path):
     base_path = get_base_app_files_path()
     config_path = os.path.join(base_path, 'configuration', 'conf.ini')
     config.read(config_path)
+
    
     def create_directory_if_not_exists(directory):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
     def find_or_create_subdirectory(base_directory, tags):
+        print(tags)
         for tag in tags:
             subdirectory = os.path.join(base_directory, tag)
             if not os.path.exists(subdirectory):
                 os.makedirs(subdirectory)
-            return subdirectory
+            base_directory += f"/{tag}"
         return base_directory
 
     try:
+
         config = configparser.ConfigParser()
         base_path = get_base_app_files_path()
         config_path = os.path.join(base_path, 'configuration', 'conf.ini')
         config.read(config_path)
         base_directory = config['settings']['storage_path']
-
+        ordre = config['settings']['ordre_rangement']
+        print(ordre)
         create_directory_if_not_exists(base_directory)
 
         metadata = read_custom_metadata_from_pdf(file_path)
         tags = []
         
         if ordre == "type -> date -> theme":
-            if 'document_type' in metadata and metadata['document_type']: # pouvoir changer l'ordre / configurer le path / trouver un moyen de respecter une autre arborescence déjà présente
+            if 'document_type' in metadata and metadata['document_type']:
                 tags.append(metadata['document_type'])
             if 'document_date' in metadata and metadata['document_date']:
                 tags.append(metadata['document_date'])
@@ -65,7 +69,6 @@ def rangement_fichier(file_path):
                 tags.extend([theme for theme in metadata['document_theme'] if theme != 'None'])
         
         target_directory = find_or_create_subdirectory(base_directory, tags)
-        shutil.move(file_path, os.path.join(target_directory, os.path.basename(file_path)))
 
         print(f"File moved to {target_directory}")
     except Exception as e:

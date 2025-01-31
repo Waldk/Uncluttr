@@ -11,7 +11,7 @@ from tkinterdnd2 import TkinterDnD, DND_FILES
 from uncluttr.file_treatement.file_treatement import file_analysis 
 from uncluttr.file_treatement.training_models import ajouter_texte_avec_type, reinitialiser_donnees
 from uncluttr.core.configuration import get_base_app_files_path
-from uncluttr.core.configuration import update_daemon_path,update_storage_directory
+from uncluttr.core.configuration import update_daemon_path,update_storage_directory,update_directory_order
 from uncluttr.file_treatement.rangement import changemtn_rangement_fichier
 
 
@@ -275,7 +275,6 @@ def add_file_page():
     content_frame = tk.Frame(root, bg='#2f2f2f')
     content_frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True, anchor='w')
     
-    dropdown_label = tk.Label(content_frame, text="Choisir un fichier exemple :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
     parametrage_label.pack(pady=(20, 10), anchor='w')
     
     file_path_label = tk.Label(content_frame, text="Aucun fichier sélectionné", bg='#2f2f2f', fg='white', anchor='w')
@@ -302,9 +301,11 @@ def add_file_page():
     
     dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option_rangement, values=options_rangement, state="readonly")
     dropdown_menu_rangement.pack(pady=5, padx=10, anchor='w')
-    
+    #bouton de validation du changement d'ordre
+    validate_button_changement = tk.Button(content_frame, text="Valider le changement", command=lambda: update_directory_order(selected_option_rangement.get()))
+    validate_button_changement.pack(pady=5, anchor='w')
     # Bouton pour valider la sélection
-    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: [ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()),changemtn_rangement_fichier(selected_option_rangement)])
+    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()))
     validate_button.pack(pady=30, anchor='w')
     # Lancement de l'application
     root.mainloop()

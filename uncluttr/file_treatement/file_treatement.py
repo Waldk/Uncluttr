@@ -236,7 +236,7 @@ def treat_structured_pdf(file_path: str):
     sys.stdout.flush()
 
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
-                                        "document_date": None,
+                                        "document_date": document_date,
                                         "document_theme": theme_document})
 
     # Ajouter le fichier dans l'arborescence
@@ -260,7 +260,7 @@ def treat_unstructured_pdf(file_path: str):
     sys.stdout.flush()
 
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
-                                        "document_date": None,
+                                        "document_date": document_date,
                                         "document_theme": theme_document})
     # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
