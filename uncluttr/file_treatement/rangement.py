@@ -29,7 +29,7 @@ def rangement_fichier(file_path):
             subdirectory = os.path.join(base_directory, tag)
             if not os.path.exists(subdirectory):
                 os.makedirs(subdirectory)
-            return subdirectory
+            base_directory += f"/{tag}"
         return base_directory
 
     try:
