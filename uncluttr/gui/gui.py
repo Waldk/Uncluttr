@@ -9,7 +9,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from tkinterdnd2 import TkinterDnD, DND_FILES
 from uncluttr.file_treatement.file_treatement import file_analysis 
-from uncluttr.file_treatement.training_models import ajouter_texte_avec_type
+from uncluttr.file_treatement.training_models import ajouter_texte_avec_type, reinitialiser_donnees
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path,update_storage_directory
 from uncluttr.file_treatement.rangement import changemtn_rangement_fichier

@@ -797,15 +797,16 @@ text = []
 label = []
 
 # Chargement des textes et labels existants
-def charger_donnees(textes,labels):
+def charger_donnees():
+    global text, label
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
             data = json.load(f)
-        textes = data["textes"] 
-        labels = data["labels"]
+        text = data["textes"] 
+        label = data["labels"]
     else:
-        textes = [] 
-        labels = []
+        text = [] 
+        label = []
 
 # Sauvegarder les textes et labels
 def sauvegarder_donnees(textes, labels):
@@ -814,7 +815,7 @@ def sauvegarder_donnees(textes, labels):
 
 # Ajouter un texte et son type à la bdd
 def ajouter_texte_avec_type(path, type_texte):
-    text, label = charger_donnees()
+    charger_donnees()
 
     #analyse et pré-traitement
     nouveau_texte = analyse_fichier(path)
@@ -824,7 +825,7 @@ def ajouter_texte_avec_type(path, type_texte):
         text.append(nouveau_texte)
         label.append(type_texte) 
 
-        entrainer_modele()
+        entrainer_modele(text,label)
 
         # Sauvegarder les nouvelles données
         sauvegarder_donnees(text, label)
@@ -833,8 +834,12 @@ def ajouter_texte_avec_type(path, type_texte):
 
     print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
+def reinitialiser_donnees():
+    sauvegarder_donnees(textes,labels)
+    entrainer_modele(textes,labels)
 
-def entrainer_modele():
+
+def entrainer_modele(textes,labels):
 
     # Télécharger les stopwords de NLTK
     try:
@@ -885,5 +890,5 @@ def entrainer_modele():
 if __name__ == "__main__":
     print("ENTRAINEMENT...")
     charger_donnees(text,label)
-    entrainer_modele()
+    entrainer_modele(textes,labels)
     print("...FINI")
