@@ -821,6 +821,12 @@ def ajouter_texte_avec_type(path, type_texte):
     nouveau_texte = analyse_fichier(path)
 
     if nouveau_texte.strip():
+        # suppression d'un des autres exemples du même label pour l'équilibre
+        if type_texte in labels:
+            index = labels.index(type_texte)
+            del textes[index]
+            del labels[index]
+        
         # Ajout du nouveau texte et label
         text.append(nouveau_texte)
         label.append(type_texte) 
@@ -834,11 +840,12 @@ def ajouter_texte_avec_type(path, type_texte):
 
     print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
+# Reinitialiser les données du modèle
 def reinitialiser_donnees():
     sauvegarder_donnees(textes,labels)
     entrainer_modele(textes,labels)
 
-
+# Entrainer le modèle pour l'extration du type de fichier
 def entrainer_modele(textes,labels):
 
     # Télécharger les stopwords de NLTK
