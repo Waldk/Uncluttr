@@ -76,9 +76,6 @@ def preprocess_text(texte: str) -> str:
 
     return texte_lematise
 
-
-    # Prétraitement pour les dates
-
 # Prétraitement pour les dates
 def preprocess_date(text: str) -> str:
     """Preprocess a text by extracting dates."""

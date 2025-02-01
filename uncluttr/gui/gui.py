@@ -8,8 +8,8 @@ import multiprocessing
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 from tkinterdnd2 import TkinterDnD, DND_FILES
-from uncluttr.file_treatement.file_treatement import file_analysis
-from uncluttr.file_treatement.training_models import entrainer_modele
+from uncluttr.file_treatement.file_treatement import file_analysis 
+from uncluttr.file_treatement.training_models import ajouter_texte_avec_type, reinitialiser_donnees
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path,update_storage_directory,update_directory_order
 from uncluttr.file_treatement.rangement import changemtn_rangement_fichier
@@ -241,14 +241,24 @@ def add_file_page():
     init_page()
     # Options Menu Déroulant
     options = [
-        "Facture", 
-        "Devis",
-        "Contrat",
-        "Bon de commande", 
-        "Fiche de paie", 
-        "Article de presse", 
-        "Recherche", 
-        "Référentiel",
+         "facture", 
+         "devis",
+         "contrat",
+         "bon_de_commande", 
+         "fiche_de_paie", 
+         "article_de_presse", 
+         "recherche", 
+         "procedure",
+         "referentiel",
+         "attestation",
+         "cv",
+         "bon_de_livraison",
+         "cahier_des_charges",
+         "document_darchitecture_technique",
+         "compte-rendu_de_reunion",
+         "analyse_de_risque",
+         "email",
+         "lettre_de_motivation",
     ]
     
     options_rangement = [
@@ -295,13 +305,10 @@ def add_file_page():
     validate_button_changement = tk.Button(content_frame, text="Valider le changement", command=lambda: update_directory_order(selected_option_rangement.get()))
     validate_button_changement.pack(pady=5, anchor='w')
     # Bouton pour valider la sélection
-    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: learning(selected_option.get(), file_path_label.cget("text")))
+    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()))
     validate_button.pack(pady=30, anchor='w')
     # Lancement de l'application
     root.mainloop()
- 
-def learning(type_file, file_path):
-    """Exemple de fonction pour Eva"""
 
 
 if __name__ == "__main__":

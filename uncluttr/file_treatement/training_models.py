@@ -8,6 +8,7 @@ from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
+from uncluttr.file_treatement.file_treatement import analyse_fichier
 from nltk.corpus import stopwords
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
@@ -792,14 +793,20 @@ labels = [
 
 DATA_FILE = 'data.json'
 
+text = []
+label = []
+
 # Chargement des textes et labels existants
 def charger_donnees():
+    global text, label
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
             data = json.load(f)
-        return data["textes"], data["labels"]
+        text = data["textes"] 
+        label = data["labels"]
     else:
-        return [], []
+        text = [] 
+        label = []
 
 # Sauvegarder les textes et labels
 def sauvegarder_donnees(textes, labels):
@@ -807,21 +814,39 @@ def sauvegarder_donnees(textes, labels):
         json.dump({"textes": textes, "labels": labels}, f)
 
 # Ajouter un texte et son type à la bdd
-def ajouter_texte_avec_type(nouveau_texte, type_texte):
-    textes, labels = charger_donnees()
+def ajouter_texte_avec_type(path, type_texte):
+    charger_donnees()
 
-    #pré-traitement
-    preprocess_text(nouveau_texte)
+    #analyse et pré-traitement
+    nouveau_texte = analyse_fichier(path)
 
-    # Ajout du nouveau texte et label
-    textes.append(nouveau_texte)
-    labels.append(type_texte) 
+    if nouveau_texte.strip():
+        # suppression d'un des autres exemples du même label pour l'équilibre
+        if type_texte in labels:
+            index = labels.index(type_texte)
+            del textes[index]
+            del labels[index]
+        
+        # Ajout du nouveau texte et label
+        text.append(nouveau_texte)
+        label.append(type_texte) 
 
-    # Sauvegarder les nouvelles données
-    sauvegarder_donnees(textes, labels)
+        entrainer_modele(text,label)
 
+        # Sauvegarder les nouvelles données
+        sauvegarder_donnees(text, label)
 
-def entrainer_modele():
+        print(f"fichier a ete ajouter mon exemple a la categorie : ",label)
+
+    print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
+
+# Reinitialiser les données du modèle
+def reinitialiser_donnees():
+    sauvegarder_donnees(textes,labels)
+    entrainer_modele(textes,labels)
+
+# Entrainer le modèle pour l'extration du type de fichier
+def entrainer_modele(textes,labels):
 
     # Télécharger les stopwords de NLTK
     try:
@@ -871,6 +896,6 @@ def entrainer_modele():
 
 if __name__ == "__main__":
     print("ENTRAINEMENT...")
-    charger_donnees()
-    entrainer_modele()
+    charger_donnees(text,label)
+    entrainer_modele(textes,labels)
     print("...FINI")
