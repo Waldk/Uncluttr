@@ -1,8 +1,7 @@
-Uncluttr
+uncluttr
 ========
 
 .. toctree::
    :maxdepth: 4
 
-   tests
    uncluttr
