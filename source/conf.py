@@ -32,3 +32,6 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+# -- Options for GitHub Pages ------------------------------------------------
+html_baseurl = 'https://waldk.github.io/Uncluttr/'
