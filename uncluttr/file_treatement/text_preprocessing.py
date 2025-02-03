@@ -26,7 +26,12 @@ except LookupError:
 nlp = None
 
 def initialize_spacy_model():
-    """Initialiser le modèle spaCy si nécessaire."""
+    """Initialize the spaCy model if it is not already loaded.
+
+    This function loads the `fr_core_news_sm` spaCy model and ensures it is available globally.
+
+    :return: None
+    """
     global nlp
     if nlp is None:
         nlp_start_time = time.time()
@@ -36,15 +41,24 @@ def initialize_spacy_model():
         print("Le modèle spaCy est déjà chargé.")
     sys.stdout.flush()
 
-
-# Supprimer les accents pour une optionnalité
 def enlever_accents(text: str) -> str:
-    """delete accents from a string."""
+    """Remove accents from a string.
+
+    :param str text: The input text
+    :return: Text without accents
+    :rtype: str
+    """
     return ''.join(c for c in unicodedata.normalize('NFD', text) if unicodedata.category(c) != 'Mn')
 
-# Prétraitement du texte
 def preprocess_text(texte: str) -> str:
-    """Preprocess a text by removing non-alphabetic characters and stopwords, and lemmatizing it."""
+    """Preprocess a text by removing non-alphabetic characters and stopwords, and lemmatizing it.
+
+    This function also converts text to lowercase, removes accents, and applies tokenization and lemmatization using spaCy.
+
+    :param str texte: The input text to preprocess
+    :return: The cleaned and lemmatized text
+    :rtype: str
+    """
     initialize_spacy_model()
 
     # Télécharger les stopwords de NLTK
@@ -76,72 +90,13 @@ def preprocess_text(texte: str) -> str:
 
     return texte_lematise
 
-# Prétraitement pour les dates
-def preprocess_date(text: str) -> str:
-    """Preprocess a text by extracting dates."""
-
-    mois = {
-        "janvier": 1, "février": 2, "fevrier": 2, "mars": 3, "avril": 4,
-        "mai": 5, "juin": 6, "juillet": 7, "août": 8, "aout": 8,
-        "septembre": 9, "octobre": 10, "novembre": 11, "décembre": 12, "decembre": 12
-    }
-
-    # Expression régulière
-    pattern = r"""
-    \b
-    (?:
-        (\d{1,2})                    
-        (?:/|-|\s)                   
-    )?
-    (janvier|février|fevrier|mars|avril|mai|juin|juillet|août|aout|septembre|octobre|novembre|décembre|decembre|\d{1,2})  
-    (?:\s|-|/)?                       
-    (\d{4})?                        
-    \b
-    """
-
-    # Rechercher toutes les correspondances
-    matches = re.findall(pattern, text, re.VERBOSE | re.IGNORECASE)
-
-    # Traiter les correspondances
-    dates = []
-    for match in matches:
-        day, month, year = match
-        # Convertir le mois en nombre si nécessaire
-        month_number = None
-        if month:
-            if month.isdigit():  # Mois en chiffres
-                month_number = int(month)
-            elif month.lower() in mois:  # Mois en lettres
-                month_number = mois[month.lower()]
-
-        # Vérifier si une année est présente, sinon en mettre 1900 par défaut
-        year = int(year) if year else 1900
-
-        # Créer une date valide si le mois est présent
-        if month_number:
-            if day:  # Si un jour est présent
-                try:
-                    date_obj = datetime(year=year, month=month_number, day=int(day))
-                    dates.append(date_obj)
-                except ValueError:
-                    pass
-            else:  # Si seul le mois est présent, jour par défaut 01
-                try:
-                    date_obj = datetime(year=year, month=month_number, day=1)
-                    dates.append(date_obj)
-                except ValueError:
-                    pass
-
-    # Afficher les résultats
-    print("Dates détectées :")
-    for date in dates:
-        print(date.strftime("%d/%m/%Y"))
-
-    return text
-
-# Fonction pour valider et affiner les mots
 def refine_words(words):
-    """Refine a list of words by removing non-alphabetic words."""
+    """Refine a list of words by removing non-alphabetic words.
+
+    :param list words: List of words to refine
+    :return: A filtered list containing only valid words
+    :rtype: list
+    """
     refined = []
     for word in words:
         # Vérifier si un mot est cohérent
@@ -149,26 +104,14 @@ def refine_words(words):
             refined.append(word)
     return refined
 
-# Fonction pour vérifier la validité d'un mot à l'aide de spaCy
 def is_valid_word(word):
-    """Check if a word is valid using spaCy."""
-    # Utiliser spaCy pour voir si le mot existe dans le vocabulaire
+    """Check if a word is valid using spaCy.
+
+    This function verifies if the word exists in the spaCy vocabulary and is an alphabetic word.
+
+    :param str word: The word to check
+    :return: True if the word is valid, False otherwise
+    :rtype: bool
+    """
     return word in nlp.vocab and nlp.vocab[word].is_alpha
 
-
-if __name__ == "__main__":
-    TEXT =  TEXT = """
-    Les evenements importants sont les suivants : 
-    - Le 12 janvier 2021, un incident s'est produit.
-    - Une autre date importante : 25/03.
-    - Le mois de mars est souvent charge.
-    - Une reunion est prevue en avril.
-    - le doc date du 28-07
-    - rattrapage le 18 mai
-    - facture de juillet 2023
-    - fiche de paie 11-2022
-    - fiche de paie 01/2025
-    - fiche de paie 01 2002
-    """
-
-    TEXT = preprocess_date(TEXT)

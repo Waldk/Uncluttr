@@ -108,15 +108,30 @@ def extraire_mots_cles(texte: str) -> list:
     mots_cles = vectorizer.get_feature_names_out()
 
     return mots_cles
-# Fonction pour générer des bigrammes et trigrammes
+
 def generate_ngrams(words, n=2):
-    """Generate n-grams from a list of words."""
+    """Generate n-grams from a list of words.
+
+    This function creates n-grams (sequences of `n` consecutive words) from a given list of words.
+
+    :param list words: The list of words to generate n-grams from
+    :param int n: The size of the n-grams (default is 2 for bigrams)
+    :return: A list of n-grams
+    :rtype: list
+    """
     ngrams = list(itertools.zip_longest(*[words[i:] for i in range(n)], fillvalue=""))
     return [" ".join(gram).strip() for gram in ngrams if "" not in gram]
 
-# Fonction pour générer un thème basé sur des mots et n-grams
 def generate_theme_from_text(text):
-    """Generate a theme from a text."""
+    """Generate a theme from a text by extracting the most frequent keywords and phrases.
+
+    This function preprocesses the text, removes short words, refines words for consistency, 
+    generates bigrams and trigrams, and selects the most frequently occurring terms.
+
+    :param str text: The input text to analyze
+    :return: A list of the top 5 most frequent words, bigrams, or trigrams
+    :rtype: list
+    """
     # Prétraiter le texte
     words = text.split()
     words = [word for word in words if len(word) > 3]
@@ -138,7 +153,6 @@ def generate_theme_from_text(text):
 
     # Retourner les 5 termes les plus fréquents sans leur nombres d'apparitions
     return [word for word, _ in all_counts.most_common(5)]
-
 
 def classifier_document(texte):
     """Classify a document based on pre-trained model.
@@ -294,7 +308,15 @@ def treat_image(file_path: str):
 # Deuxième Version : Extraction de la date pour tout doc
 # Problème à régler : ne prends pas en compte les mois écris en majuscule
 def extract_date(text):
-    # Expression régulière pour capturer les dates de signature, émission de document 
+    """Extract dates from a given text using predefined regex patterns.
+
+    The function normalizes extracted dates to the format "DD/MM/YYYY" and 
+    handles century correction for two-digit years.
+
+    :param str text: The input text to analyze
+    :return: A list of extracted dates in "DD/MM/YYYY" format
+    :rtype: list
+    """
     date_patterns1 = [
         r'\b(?<!\bn[ée]\s)le\s(\d{1,2})[-/](\d{1,2})[-/](\d{2,4})\b',                    # Formats JJ/MM/AAAA ou JJ-MM-AAAA
         r'\b(?<!\bn[ée]\s)le\s(\d{4})[-/](\d{1,2})[-/](\d{1,2})\b',                      # Formats AAAA/MM/JJ ou AAAA-MM-JJ
@@ -372,7 +394,6 @@ def extract_date(text):
 
                 return extracted_dates
 
-
 #pour la récupération des mots clés
 def analyse_fichier(file_path: str = None):
     """Analyse a file and return the keywords.
@@ -428,7 +449,6 @@ def analyse_fichier(file_path: str = None):
         print(f"An unexpected error occurred during file analysis: {e}")
         return []
 
-
 def treat_structured_pdf2(file_path: str):
     """Treat a structured PDF file.
 
@@ -444,7 +464,6 @@ def treat_structured_pdf2(file_path: str):
     # Retourner les mots-clés
     return mots_cles
 
-
 def treat_unstructured_pdf2(file_path: str):
     """Treat an unstructured PDF file.
 
@@ -458,7 +477,6 @@ def treat_unstructured_pdf2(file_path: str):
 
     # Retourner les mots-clés
     return keywords
-
 
 def treat_image2(file_path: str):
     """Treat an image file.
@@ -477,7 +495,6 @@ def treat_image2(file_path: str):
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
         return []
-
 
 def extraire_mots_cles2(texte: str) -> list:
     """Extract keywords from a text.
