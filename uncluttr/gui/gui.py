@@ -22,6 +22,7 @@ config_path = os.path.join(base_path, 'configuration', 'conf.ini')
 config.read(config_path)
 path_dameon_directory = config['settings']['directory_to_watch']
 path_storage = config['settings']['storage_path']
+order = config['settings']['ordre_rangement']
 root = TkinterDnD.Tk()
 path_accept = None
 path_space = None
@@ -86,7 +87,7 @@ def init_page():
     menu_bar.add_cascade(label="Pages", menu=file_menu)
     file_menu.add_command(label="Page Principale", command=home_page)
     file_menu.add_command(label="Mon Arborescence", command=arborescence_page)
-    file_menu.add_command(label="Parametrage", command=add_file_page)
+    file_menu.add_command(label="Parametrage", command=page_parametrage)
 
     help_menu = tk.Menu(menu_bar, tearoff=0)
     menu_bar.add_cascade(label="Help", menu=help_menu)
@@ -236,77 +237,95 @@ def arborescence_page():
     back_button.pack(side=tk.LEFT, padx=10)
     
 
-def add_file_page():
+def page_parametrage():
     """Page pour ajouter un fichier d'apprentissage."""
     init_page()
+    
     # Options Menu Déroulant
-    options = [
-         "facture", 
-         "devis",
-         "contrat",
-         "bon_de_commande", 
-         "fiche_de_paie", 
-         "article_de_presse", 
-         "recherche", 
-         "procedure",
-         "referentiel",
-         "attestation",
-         "cv",
-         "bon_de_livraison",
-         "cahier_des_charges",
-         "document_darchitecture_technique",
-         "compte-rendu_de_reunion",
-         "analyse_de_risque",
-         "email",
-         "lettre_de_motivation",
-    ]
+    options = {
+         "Facture": "facture", 
+         "Devis": "devis",
+         "Contrat": "contrat",
+         "Bon de commande": "bon_de_commande", 
+         "Fiche de paie": "fiche_de_paie", 
+         "Article de presse": "article_de_presse", 
+         "Recherche": "recherche", 
+         "Procédure": "procedure",
+         "Référentiel": "referentiel",
+         "Attestation": "attestation",
+         "CV": "cv",
+         "Bon de livraison": "bon_de_livraison",
+         "Cahier des charges": "cahier_des_charges",
+         "Document d'architecture technique": "document_darchitecture_technique",
+         "Compte-rendu de réunion": "compte-rendu_de_reunion",
+         "Analyse de risque": "analyse_de_risque",
+         "Email": "email",
+         "Lettre de motivation": "lettre_de_motivation",
+    }
     
-    options_rangement = [
-        "type -> date -> theme",
-        "theme -> type -> date",
-        "date -> type -> theme",
-    ]
-    
-    parametrage_label = tk.Label(root, text="Paramétrage de l'IA", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
-    parametrage_label.pack(pady=(20, 10), anchor='w')
-    separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
-    separator.pack(pady=10, anchor='w')
-    
+    options_rangement = {
+    "TYPE -> DATE -> THEME": "type -> date -> theme",
+    "THEME -> TYPE -> DATE": "theme -> type -> date",
+    "DATE -> TYPE -> THEME": "date -> type -> theme",
+}
     content_frame = tk.Frame(root, bg='#2f2f2f')
-    content_frame.pack(pady=10, padx=10, fill=tk.BOTH, expand=True, anchor='w')
+    content_frame.pack(pady=5, padx=10, fill=tk.BOTH, expand=True, anchor='w')
     
-    parametrage_label.pack(pady=(20, 10), anchor='w')
+    parametrage_label_order = tk.Label(content_frame, text="Paramétrage de l'Arborescence", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
+    parametrage_label_order.pack(pady=(15, 5), anchor='w')
+    separator = tk.Frame(content_frame, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
+    separator.pack(pady=5, anchor='w')
+    
+    dropdown_label_rangement = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
+    dropdown_label_rangement.pack(pady=(15, 0), anchor='w')
+    
+    selected_option_rangement = tk.StringVar(content_frame)
+    selected_option_rangement.set(order)
+    # Find the key associated with the current order value
+    current_order_key = next(key for key, value in options_rangement.items() if value == order)
+    selected_option_rangement.set(current_order_key)
+    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option_rangement, values=list(options_rangement.keys()), state="readonly", width=30)
+    dropdown_menu_rangement.pack(pady=0, padx=10, anchor='w')
+    
+    
+    #bouton de validation du changement d'ordre 
+    validate_button_changement = tk.Button(content_frame, text="Valider le changement", command=lambda: update_directory_order(options_rangement[selected_option_rangement.get()]))
+    validate_button_changement.pack(pady=5, padx= 10, anchor='w')
+    
+    parametrage_label = tk.Label(content_frame, text="Paramétrage de l'IA", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
+    parametrage_label.pack(pady=(15, 5), anchor='w')
+    separator = tk.Frame(content_frame, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
+    separator.pack(pady=5, anchor='w')
+    
+    
+    subtitle_label = tk.Label(content_frame, text="Choisir un document d'apprentissage :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
+    subtitle_label.pack(pady=(5, 0), anchor='w')
     
     file_path_label = tk.Label(content_frame, text="Aucun fichier sélectionné", bg='#2f2f2f', fg='white', anchor='w')
-    file_path_label.pack(fill=tk.X, pady=5, anchor='w')
+    file_path_label.pack(fill=tk.X, padx=5, anchor='w')
     
     select_file_button = tk.Button(content_frame, text="Sélectionner un fichier", command=lambda: file_path_label.config(text=filedialog.askopenfilename()))
-    select_file_button.pack(pady=5, anchor='w')
+    select_file_button.pack(padx=5, anchor='w')
     
     # Menu déroulant
     dropdown_label = tk.Label(content_frame, text="Sélectionnez une catégorie de fichier :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
-    dropdown_label.pack(pady=(20, 5), anchor='w')
+    dropdown_label.pack(pady=(15, 0), anchor='w')
     
     selected_option = tk.StringVar(root)
-    selected_option.set(options[0])
+    selected_option.set(list(options.keys())[0])
+    dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=list(options.keys()), state="readonly")
+    dropdown_menu.pack(pady=0, padx=10, anchor='w')
     
-    dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=options, state="readonly")
-    dropdown_menu.pack(pady=5, padx=10, anchor='w')
-    
-    dropdown_label_rangement = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
-    dropdown_label_rangement.pack(pady=(20, 5), anchor='w')
-    
-    selected_option_rangement = tk.StringVar(root)
-    selected_option_rangement.set(options_rangement[0])
-    
-    dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option_rangement, values=options_rangement, state="readonly")
-    dropdown_menu_rangement.pack(pady=5, padx=10, anchor='w')
-    #bouton de validation du changement d'ordre
-    validate_button_changement = tk.Button(content_frame, text="Valider le changement", command=lambda: update_directory_order(selected_option_rangement.get()))
-    validate_button_changement.pack(pady=5, anchor='w')
     # Bouton pour valider la sélection
-    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"),selected_option.get()))
-    validate_button.pack(pady=30, anchor='w')
+    validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"), options[selected_option.get()]))
+    validate_button.pack(pady=10, anchor='w')
+    
+    footer_frame = tk.Frame(root, bg='#2f2f2f')
+    footer_frame.pack(side=tk.BOTTOM, pady=5, fill=tk.X)
+    
+    red_button = tk.Button(footer_frame, text="Réinitialiser l'IA", fg='red', command=reinitialiser_donnees)
+    red_button.pack(side=tk.RIGHT, padx=10)
+    
     # Lancement de l'application
     root.mainloop()
 
