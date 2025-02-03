@@ -343,7 +343,7 @@ def extract_date(text):
                     month = match[1].zfill(2)
 
                 day = match[0].zfill(2)
-                dates.append(f"{day}/{month}/{year}")
+                dates.append(f"{year}/{month}")
 
                 extracted_dates = list(set(dates)) # Retirer les doublons
 

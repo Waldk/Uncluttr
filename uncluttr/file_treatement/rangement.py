@@ -52,10 +52,12 @@ def rangement_fichier(file_path):
             if 'document_date' in metadata and metadata['document_date']:
                 tags.append(metadata['document_date'])
             if 'document_theme' in metadata and metadata['document_theme']:
-                tags.extend([theme for theme in metadata['document_theme'] if theme != 'None'])
+                tags.append( metadata['document_theme'][0])
+                tags.append( metadata['document_theme'][1])
         elif ordre == "theme -> type -> date":
             if 'document_theme' in metadata and metadata['document_theme']:
-                tags.extend([theme for theme in metadata['document_theme'] if theme != 'None'])
+                tags.append( metadata['document_theme'][0])
+                tags.append( metadata['document_theme'][1])
             if 'document_type' in metadata and metadata['document_type']:
                 tags.append(metadata['document_type'])
             if 'document_date' in metadata and metadata['document_date']:
@@ -66,10 +68,11 @@ def rangement_fichier(file_path):
             if 'document_type' in metadata and metadata['document_type']:
                 tags.append(metadata['document_type'])
             if 'document_theme' in metadata and metadata['document_theme']:
-                tags.extend([theme for theme in metadata['document_theme'] if theme != 'None'])
+                tags.append( metadata['document_theme'][0])
+                tags.append( metadata['document_theme'][1])
         
         target_directory = find_or_create_subdirectory(base_directory, tags)
-
+        shutil.move(file_path, target_directory)
         print(f"File moved to {target_directory}")
     except Exception as e:
         print(f"An error occurred during the moving of the file: {e}")
