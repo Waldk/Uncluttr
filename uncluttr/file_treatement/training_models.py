@@ -796,8 +796,13 @@ DATA_FILE = 'data.json'
 text = []
 label = []
 
-# Chargement des textes et labels existants
 def charger_donnees():
+    """Load existing texts and labels from the data file.
+
+    If the data file does not exist, initializes empty lists.
+
+    :return: None
+    """
     global text, label
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, 'r') as f:
@@ -808,13 +813,25 @@ def charger_donnees():
         text = [] 
         label = []
 
-# Sauvegarder les textes et labels
 def sauvegarder_donnees(textes, labels):
+    """Save texts and labels to the data file.
+
+    :param list textes: List of texts to save
+    :param list labels: Corresponding list of labels
+    :return: None
+    """
     with open(DATA_FILE, 'w') as f:
         json.dump({"textes": textes, "labels": labels}, f)
 
-# Ajouter un texte et son type à la bdd
 def ajouter_texte_avec_type(path, type_texte):
+    """Analyze a file, preprocess it, and add it to the dataset with a label.
+
+    If a text with the same label exists, it will be replaced to maintain balance.
+
+    :param str path: Path to the file to analyze
+    :param str type_texte: Type/category of the text
+    :return: None
+    """
     charger_donnees()
 
     #analyse et pré-traitement
@@ -840,14 +857,24 @@ def ajouter_texte_avec_type(path, type_texte):
 
     print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
-# Reinitialiser les données du modèle
 def reinitialiser_donnees():
+    """Reset the dataset and retrain the model.
+
+    :return: None
+    """
     sauvegarder_donnees(textes,labels)
     entrainer_modele(textes,labels)
 
-# Entrainer le modèle pour l'extration du type de fichier
 def entrainer_modele(textes,labels):
+    """Train a machine learning model to classify text types.
 
+    This function preprocesses texts, applies TF-IDF vectorization, trains an SVM model,
+    and optimizes it using GridSearchCV. The trained model is saved for future use.
+
+    :param list textes: List of preprocessed texts
+    :param list labels: Corresponding labels for classification
+    :return: None
+    """
     # Télécharger les stopwords de NLTK
     try:
         stopwordsFR = stopwords.words('french')
