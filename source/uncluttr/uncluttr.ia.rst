@@ -1,8 +1,7 @@
-uncluttr.ia package
+Ia package
 ===================
 
-Submodules
-----------
+
 
 uncluttr.ia.ia\_pfe module
 --------------------------
@@ -12,8 +11,6 @@ uncluttr.ia.ia\_pfe module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: uncluttr.ia
    :members:

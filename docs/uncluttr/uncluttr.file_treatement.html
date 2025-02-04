@@ -1,0 +1,692 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File_treatement package &mdash; Uncluttr 0.0.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://waldk.github.io/Uncluttr/uncluttr/uncluttr.file_treatement.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8c5712d9"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Gui package" href="uncluttr.gui.html" />
+    <link rel="prev" title="Daemon package" href="uncluttr.daemon.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Uncluttr
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uncluttr</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="uncluttr.html">Uncluttr package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="uncluttr.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="uncluttr.core.html">Core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uncluttr.daemon.html">Daemon package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">File_treatement package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uncluttr.gui.html">Gui package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="uncluttr.ia.html">Ia package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_autosummary/uncluttr.gui.gui.html">uncluttr.gui.gui</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Uncluttr</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">uncluttr</a></li>
+          <li class="breadcrumb-item"><a href="uncluttr.html">Uncluttr package</a></li>
+      <li class="breadcrumb-item active">File_treatement package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/uncluttr/uncluttr.file_treatement.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="file-treatement-package">
+<h1>File_treatement package<a class="headerlink" href="#file-treatement-package" title="Link to this heading"></a></h1>
+<section id="module-uncluttr.file_treatement.character_recognition">
+<span id="uncluttr-file-treatement-character-recognition-module"></span><h2>uncluttr.file_treatement.character_recognition module<a class="headerlink" href="#module-uncluttr.file_treatement.character_recognition" title="Link to this heading"></a></h2>
+<p>This module contains functions to extract text from PDF files using OCR.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.character_recognition.convert_pdf_to_images">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.character_recognition.</span></span><span class="sig-name descname"><span class="pre">convert_pdf_to_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdf_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/character_recognition.html#convert_pdf_to_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.character_recognition.convert_pdf_to_images" title="Link to this definition"></a></dt>
+<dd><p>Convert a PDF file to images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pdf_path</strong> (<em>str</em>) – The path to the PDF file.</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – The folder to save the images.</p></li>
+<li><p><strong>zoom</strong> (<em>float</em>) – The zoom factor for the images (default is 3.0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of paths to the generated images.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.character_recognition.extract_image_text_ocr">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.character_recognition.</span></span><span class="sig-name descname"><span class="pre">extract_image_text_ocr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/character_recognition.html#extract_image_text_ocr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.character_recognition.extract_image_text_ocr" title="Link to this definition"></a></dt>
+<dd><p>Extract text from an image using OCR with EasyOCR.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_path</strong> (<em>str</em>) – The path to the image file.</p>
+</dd>
+<dt class="field-even">Return str<span class="colon">:</span></dt>
+<dd class="field-even"><p>The extracted text.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.character_recognition.extract_pdf_text_ocr">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.character_recognition.</span></span><span class="sig-name descname"><span class="pre">extract_pdf_text_ocr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pdf_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/character_recognition.html#extract_pdf_text_ocr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.character_recognition.extract_pdf_text_ocr" title="Link to this definition"></a></dt>
+<dd><p>Extract text from a PDF file using OCR with EasyOCR.
+:param str pdf_path: The path to the PDF file.
+:return str: The extracted text.</p>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.file_treatement">
+<span id="uncluttr-file-treatement-file-treatement-module"></span><h2>uncluttr.file_treatement.file_treatement module<a class="headerlink" href="#module-uncluttr.file_treatement.file_treatement" title="Link to this heading"></a></h2>
+<p>This module contains functions to treat files.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.analyse_fichier">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">analyse_fichier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#analyse_fichier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.analyse_fichier" title="Link to this definition"></a></dt>
+<dd><p>Analyse a file and return the keywords.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to analyse, defaults to None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of keywords extracted from the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.classifier_document">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">classifier_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#classifier_document"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.classifier_document" title="Link to this definition"></a></dt>
+<dd><p>Classify a document based on pre-trained model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texte</strong> – text to classify</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>classification label</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.extract_date">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">extract_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#extract_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.extract_date" title="Link to this definition"></a></dt>
+<dd><p>Extract dates from a given text using predefined regex patterns.</p>
+<p>The function normalizes extracted dates to the format “DD/MM/YYYY” and
+handles century correction for two-digit years.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The input text to analyze</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of extracted dates in “DD/MM/YYYY” format</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.extract_text_from_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">extract_text_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#extract_text_from_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.extract_text_from_pdf" title="Link to this definition"></a></dt>
+<dd><p>Extract text from a PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to extract text from</p>
+</dd>
+<dt class="field-even">Return str<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.extraire_mots_cles">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">extraire_mots_cles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#extraire_mots_cles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.extraire_mots_cles" title="Link to this definition"></a></dt>
+<dd><p>Extract keywords from a text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texte</strong> (<em>str</em>) – text to extract keywords from</p>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted keywords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.extraire_mots_cles2">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">extraire_mots_cles2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#extraire_mots_cles2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.extraire_mots_cles2" title="Link to this definition"></a></dt>
+<dd><p>Extract keywords from a text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texte</strong> (<em>str</em>) – text to extract keywords from</p>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted keywords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.file_analysis">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">file_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#file_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.file_analysis" title="Link to this definition"></a></dt>
+<dd><p>Analyse a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em>) – path to the file to analyse, defaults to None</p></li>
+<li><p><strong>processes</strong> (<em>list</em>) – list of running processes, defaults to []</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.folder_analysis">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">folder_analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#folder_analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.folder_analysis" title="Link to this definition"></a></dt>
+<dd><p>Analyzing files in a folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<em>str</em>) – path to the folder to analyse, defaults to None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.generate_ngrams">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">generate_ngrams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#generate_ngrams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.generate_ngrams" title="Link to this definition"></a></dt>
+<dd><p>Generate n-grams from a list of words.</p>
+<p>This function creates n-grams (sequences of <cite>n</cite> consecutive words) from a given list of words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>words</strong> (<em>list</em>) – The list of words to generate n-grams from</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The size of the n-grams (default is 2 for bigrams)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of n-grams</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.generate_theme_from_text">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">generate_theme_from_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#generate_theme_from_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.generate_theme_from_text" title="Link to this definition"></a></dt>
+<dd><p>Generate a theme from a text by extracting the most frequent keywords and phrases.</p>
+<p>This function preprocesses the text, removes short words, refines words for consistency,
+generates bigrams and trigrams, and selects the most frequently occurring terms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The input text to analyze</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the top 5 most frequent words, bigrams, or trigrams</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.is_structured_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">is_structured_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#is_structured_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.is_structured_pdf" title="Link to this definition"></a></dt>
+<dd><p>Check if the file is a structured PDF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+<dt class="field-even">Return bool<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_image">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_image" title="Link to this definition"></a></dt>
+<dd><p>Treat an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the image to treat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_image2">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_image2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_image2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_image2" title="Link to this definition"></a></dt>
+<dd><p>Treat an image file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the image to treat</p>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted keywords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_structured_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_structured_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_structured_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_structured_pdf" title="Link to this definition"></a></dt>
+<dd><p>Treat a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to treat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_structured_pdf2">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_structured_pdf2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_structured_pdf2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_structured_pdf2" title="Link to this definition"></a></dt>
+<dd><p>Treat a structured PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to treat</p>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted keywords</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_unstructured_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_unstructured_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_unstructured_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_unstructured_pdf" title="Link to this definition"></a></dt>
+<dd><p>Treat an unstructured pdf.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to treat</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.file_treatement.treat_unstructured_pdf2">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.file_treatement.</span></span><span class="sig-name descname"><span class="pre">treat_unstructured_pdf2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/file_treatement.html#treat_unstructured_pdf2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.file_treatement.treat_unstructured_pdf2" title="Link to this definition"></a></dt>
+<dd><p>Treat an unstructured PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – path to the file to treat</p>
+</dd>
+<dt class="field-even">Return list<span class="colon">:</span></dt>
+<dd class="field-even"><p>extracted keywords</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.metadata">
+<span id="uncluttr-file-treatement-metadata-module"></span><h2>uncluttr.file_treatement.metadata module<a class="headerlink" href="#module-uncluttr.file_treatement.metadata" title="Link to this heading"></a></h2>
+<p>This module contains functions to handle metadata.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata.append_metadata_to_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata.</span></span><span class="sig-name descname"><span class="pre">append_metadata_to_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata.html#append_metadata_to_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata.append_metadata_to_pdf" title="Link to this definition"></a></dt>
+<dd><p>Append metadata to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+</dl>
+<p>:param dict metadata : The metadata to append to the file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata.read_metadata_from_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata.</span></span><span class="sig-name descname"><span class="pre">read_metadata_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata.html#read_metadata_from_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata.read_metadata_from_pdf" title="Link to this definition"></a></dt>
+<dd><p>Read metadata from a PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+<dt class="field-even">Return dict<span class="colon">:</span></dt>
+<dd class="field-even"><p>The metadata of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.metadata_custom">
+<span id="uncluttr-file-treatement-metadata-custom-module"></span><h2>uncluttr.file_treatement.metadata_custom module<a class="headerlink" href="#module-uncluttr.file_treatement.metadata_custom" title="Link to this heading"></a></h2>
+<p>This module contains functions to handle metadata.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata_custom.append_custom_metadata_to_image">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata_custom.</span></span><span class="sig-name descname"><span class="pre">append_custom_metadata_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata_custom.html#append_custom_metadata_to_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata_custom.append_custom_metadata_to_image" title="Link to this definition"></a></dt>
+<dd><p>Append metadata to a image file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+</dl>
+<p>:param dict metadata : The metadata to append to the file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata_custom.append_custom_metadata_to_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata_custom.</span></span><span class="sig-name descname"><span class="pre">append_custom_metadata_to_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata_custom.html#append_custom_metadata_to_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata_custom.append_custom_metadata_to_pdf" title="Link to this definition"></a></dt>
+<dd><p>Append metadata to a PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+</dl>
+<p>:param dict metadata : The metadata to append to the file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata_custom.read_custom_metadata_from_image">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata_custom.</span></span><span class="sig-name descname"><span class="pre">read_custom_metadata_from_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata_custom.html#read_custom_metadata_from_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata_custom.read_custom_metadata_from_image" title="Link to this definition"></a></dt>
+<dd><p>Read metadata from a image file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+<dt class="field-even">Return dict<span class="colon">:</span></dt>
+<dd class="field-even"><p>The metadata of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.metadata_custom.read_custom_metadata_from_pdf">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.metadata_custom.</span></span><span class="sig-name descname"><span class="pre">read_custom_metadata_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/metadata_custom.html#read_custom_metadata_from_pdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.metadata_custom.read_custom_metadata_from_pdf" title="Link to this definition"></a></dt>
+<dd><p>Read metadata from a PDF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to the file.</p>
+</dd>
+<dt class="field-even">Return dict<span class="colon">:</span></dt>
+<dd class="field-even"><p>The metadata of the file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.rangement">
+<span id="uncluttr-file-treatement-rangement-module"></span><h2>uncluttr.file_treatement.rangement module<a class="headerlink" href="#module-uncluttr.file_treatement.rangement" title="Link to this heading"></a></h2>
+<p>Module to move files to a new directory based on their metadata.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.rangement.changement_rangement_fichier">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.rangement.</span></span><span class="sig-name descname"><span class="pre">changement_rangement_fichier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/rangement.html#changement_rangement_fichier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.rangement.changement_rangement_fichier" title="Link to this definition"></a></dt>
+<dd><p>Change the order of the file storage.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.rangement.rangement_fichier">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.rangement.</span></span><span class="sig-name descname"><span class="pre">rangement_fichier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/rangement.html#rangement_fichier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.rangement.rangement_fichier" title="Link to this definition"></a></dt>
+<dd><p>Move a file to a new directory based on its metadata.
+:param str file_path: The path to the file.</p>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.text_preprocessing">
+<span id="uncluttr-file-treatement-text-preprocessing-module"></span><h2>uncluttr.file_treatement.text_preprocessing module<a class="headerlink" href="#module-uncluttr.file_treatement.text_preprocessing" title="Link to this heading"></a></h2>
+<p>This module contains functions for text preprocessing.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.text_preprocessing.enlever_accents">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.text_preprocessing.</span></span><span class="sig-name descname"><span class="pre">enlever_accents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/text_preprocessing.html#enlever_accents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.text_preprocessing.enlever_accents" title="Link to this definition"></a></dt>
+<dd><p>Remove accents from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – The input text</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Text without accents</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.text_preprocessing.initialize_spacy_model">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.text_preprocessing.</span></span><span class="sig-name descname"><span class="pre">initialize_spacy_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/text_preprocessing.html#initialize_spacy_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.text_preprocessing.initialize_spacy_model" title="Link to this definition"></a></dt>
+<dd><p>Initialize the spaCy model if it is not already loaded.</p>
+<p>This function loads the <cite>fr_core_news_sm</cite> spaCy model and ensures it is available globally.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.text_preprocessing.is_valid_word">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.text_preprocessing.</span></span><span class="sig-name descname"><span class="pre">is_valid_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/text_preprocessing.html#is_valid_word"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.text_preprocessing.is_valid_word" title="Link to this definition"></a></dt>
+<dd><p>Check if a word is valid using spaCy.</p>
+<p>This function verifies if the word exists in the spaCy vocabulary and is an alphabetic word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>word</strong> (<em>str</em>) – The word to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the word is valid, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.text_preprocessing.preprocess_text">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.text_preprocessing.</span></span><span class="sig-name descname"><span class="pre">preprocess_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texte</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/uncluttr/file_treatement/text_preprocessing.html#preprocess_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.text_preprocessing.preprocess_text" title="Link to this definition"></a></dt>
+<dd><p>Preprocess a text by removing non-alphabetic characters and stopwords, and lemmatizing it.</p>
+<p>This function also converts text to lowercase, removes accents, and applies tokenization and lemmatization using spaCy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>texte</strong> (<em>str</em>) – The input text to preprocess</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cleaned and lemmatized text</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.text_preprocessing.refine_words">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.text_preprocessing.</span></span><span class="sig-name descname"><span class="pre">refine_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/text_preprocessing.html#refine_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.text_preprocessing.refine_words" title="Link to this definition"></a></dt>
+<dd><p>Refine a list of words by removing non-alphabetic words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>words</strong> (<em>list</em>) – List of words to refine</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A filtered list containing only valid words</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-uncluttr.file_treatement.training_models">
+<span id="uncluttr-file-treatement-training-models-module"></span><h2>uncluttr.file_treatement.training_models module<a class="headerlink" href="#module-uncluttr.file_treatement.training_models" title="Link to this heading"></a></h2>
+<p>Training models for document classification.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.training_models.ajouter_texte_avec_type">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.training_models.</span></span><span class="sig-name descname"><span class="pre">ajouter_texte_avec_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_texte</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/training_models.html#ajouter_texte_avec_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.training_models.ajouter_texte_avec_type" title="Link to this definition"></a></dt>
+<dd><p>Analyze a file, preprocess it, and add it to the dataset with a label.</p>
+<p>If a text with the same label exists, it will be replaced to maintain balance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>str</em>) – Path to the file to analyze</p></li>
+<li><p><strong>type_texte</strong> (<em>str</em>) – Type/category of the text</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.training_models.charger_donnees">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.training_models.</span></span><span class="sig-name descname"><span class="pre">charger_donnees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/training_models.html#charger_donnees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.training_models.charger_donnees" title="Link to this definition"></a></dt>
+<dd><p>Load existing texts and labels from the data file.</p>
+<p>If the data file does not exist, initializes empty lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.training_models.entrainer_modele">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.training_models.</span></span><span class="sig-name descname"><span class="pre">entrainer_modele</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/training_models.html#entrainer_modele"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.training_models.entrainer_modele" title="Link to this definition"></a></dt>
+<dd><p>Train a machine learning model to classify text types.</p>
+<p>This function preprocesses texts, applies TF-IDF vectorization, trains an SVM model,
+and optimizes it using GridSearchCV. The trained model is saved for future use.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>textes</strong> (<em>list</em>) – List of preprocessed texts</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – Corresponding labels for classification</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.training_models.reinitialiser_donnees">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.training_models.</span></span><span class="sig-name descname"><span class="pre">reinitialiser_donnees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/training_models.html#reinitialiser_donnees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.training_models.reinitialiser_donnees" title="Link to this definition"></a></dt>
+<dd><p>Reset the dataset and retrain the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.file_treatement.training_models.sauvegarder_donnees">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.file_treatement.training_models.</span></span><span class="sig-name descname"><span class="pre">sauvegarder_donnees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">textes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/file_treatement/training_models.html#sauvegarder_donnees"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.file_treatement.training_models.sauvegarder_donnees" title="Link to this definition"></a></dt>
+<dd><p>Save texts and labels to the data file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>textes</strong> (<em>list</em>) – List of texts to save</p></li>
+<li><p><strong>labels</strong> (<em>list</em>) – Corresponding list of labels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-uncluttr.file_treatement"></span></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="uncluttr.daemon.html" class="btn btn-neutral float-left" title="Daemon package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="uncluttr.gui.html" class="btn btn-neutral float-right" title="Gui package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cérina ALLEK, Waldeck FELIX, Rafael GONÇALVES, Alban HOELLINGER, Baptiste LE SCIELLOUR, Eva SUPIOT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
