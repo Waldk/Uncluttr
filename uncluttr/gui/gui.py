@@ -2,7 +2,6 @@
 
 import os
 import time
-import shutil
 import configparser
 import multiprocessing
 import tkinter as tk
@@ -12,7 +11,7 @@ from uncluttr.file_treatement.file_treatement import file_analysis
 from uncluttr.file_treatement.training_models import ajouter_texte_avec_type, reinitialiser_donnees
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.core.configuration import update_daemon_path,update_storage_directory,update_directory_order
-from uncluttr.file_treatement.rangement import changemtn_rangement_fichier
+from uncluttr.file_treatement.rangement import changement_rangement_fichier
 
 
 # Lecture du fichier de configuration
@@ -30,15 +29,16 @@ processes = []
 daemon_process = None
 
 class DirectoryTreeViewer:
+    """Class to display the directory tree."""
     def __init__(self, root):
         self.root = root
-        
+
         self.current_directory = tk.Label(root, text="Dossier de stockage actuel: ",bg='#2f2f2f', fg='white')
         self.current_directory.pack(padx=10, anchor='w')
         self.path_space_storage = tk.Text(root, height=1, width=75)
         self.path_space_storage.insert(tk.INSERT,path_storage)
         self.path_space_storage.pack(pady=10, padx=10, anchor='w')
-        
+
         self.select_button = tk.Button(self.root, text="Changer le dossier de stockage", command=self.change_directory)
         self.select_button.pack(padx=10)
 
@@ -48,6 +48,7 @@ class DirectoryTreeViewer:
         self.tree.heading("#0", text="Structure de votre dossier: ", anchor=tk.W)
 
     def change_directory(self):
+        """Change the storage directory."""
         directory = filedialog.askdirectory()
         if directory:
             update_storage_directory(directory)
@@ -58,10 +59,12 @@ class DirectoryTreeViewer:
             self.display_directory_tree(directory)
 
     def display_directory_tree(self, directory):
+        """Display the directory tree."""
         self.tree.delete(*self.tree.get_children())
         self.add_node(directory, "")
 
     def add_node(self, path, parent):
+        """Add a node to the tree."""
         node = self.tree.insert(parent, 'end', text=os.path.basename(path), open=False)
         if os.path.isdir(path):
             try:
@@ -70,16 +73,16 @@ class DirectoryTreeViewer:
                     self.add_node(full_path, node)
             except PermissionError:
                 messagebox.showerror("Permission Error", f"Permission denied for directory: {path}")
-    
+
 def init_page():
-    
+    """Initialise the page."""
     for widget in root.winfo_children():
         widget.destroy()
     root.title("Uncluttr")
     root.geometry("800x600")
     root.configure(bg='#2f2f2f')
     root.resizable(False, False)
-    
+
     menu_bar = tk.Menu(root)
     root.config(menu=menu_bar)
 
@@ -93,26 +96,26 @@ def init_page():
     menu_bar.add_cascade(label="Help", menu=help_menu)
     help_menu.add_command(label="About")
     help_menu.add_command(label="Exit", command=root.quit)
-    
-    # Texte "Uncluttr" + ligne horizontale 
+
+    # Texte "Uncluttr" + ligne horizontale
     uncluttr_label = tk.Label(root, text="Uncluttr", font=("Helvetica", 20, "bold"), bg='#2f2f2f', fg='white')
     separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f')
-    
+
     # Placement des éléments
     uncluttr_label.pack(pady=10)
     separator.pack(fill=tk.X, pady=10, anchor='w')
-    
 
-        
 def start_gui(process: multiprocessing.Process=None):
-    """Start the GUI."""
+    """Start the GUI.
+    :param multiprocessing.Process process: The daemon process.
+    """
     global daemon_process
     if process is not None:
         daemon_process = process
     home_page()
-        
-    
+
 def home_page():
+    """Display the home page."""
     global path_accept, path_storage, path_space
     init_page()
 
@@ -163,11 +166,11 @@ def home_page():
     root.mainloop()
 
 def select_directory():
-        """Open a file explorer and return the selected path."""
-        chosen_path = filedialog.askdirectory()
-        if chosen_path:
-            path_space.delete("1.0", tk.END)
-            path_space.insert(tk.INSERT, chosen_path)
+    """Open a file explorer and return the selected path."""
+    chosen_path = filedialog.askdirectory()
+    if chosen_path:
+        path_space.delete("1.0", tk.END)
+        path_space.insert(tk.INSERT, chosen_path)
 
 def sauvegarde_du_path(gui_daemon_process: multiprocessing.Process):
     """Save the new path."""
@@ -206,7 +209,7 @@ def open_file():
     except Exception as e:
         print(f"An interanl error occurred : {e}")
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
-        
+
 def drop_file(event):
     """Récupère le fichier déposé dans la zone de drag-and-drop."""
     try:
@@ -218,8 +221,7 @@ def drop_file(event):
             tk.messagebox.showerror("Erreur", "Seuls les fichiers ZIP, PDF, Jpeg et PNG sont acceptés.")
     except Exception as e:
         tk.messagebox.showerror("Erreur", f"Une erreur interne imprévue est survenue : {e}")
-        
-        
+
 def arborescence_page():
     """Page pour afficher l'arborescence des fichiers."""
     init_page()
@@ -227,7 +229,7 @@ def arborescence_page():
     parametrage_label.pack(pady=(20, 10), anchor='w')
     separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
     separator.pack(pady=10, anchor='w')
-    
+
     app=DirectoryTreeViewer(root)
     app.display_directory_tree(path_storage)
     footer_frame = tk.Frame(root, bg='#2f2f2f')
@@ -235,13 +237,11 @@ def arborescence_page():
 
     back_button = tk.Button(footer_frame, text="Retour", command=home_page)
     back_button.pack(side=tk.LEFT, padx=10)
-    
 
 def page_parametrage():
     """Page pour ajouter un fichier d'apprentissage."""
     init_page()
-    
-    # Options Menu Déroulant
+
     options = {
          "Facture": "facture", 
          "Devis": "devis",
@@ -262,7 +262,7 @@ def page_parametrage():
          "Email": "email",
          "Lettre de motivation": "lettre_de_motivation",
     }
-    
+
     options_rangement = {
     "TYPE -> DATE -> THEME": "type -> date -> theme",
     "THEME -> TYPE -> DATE": "theme -> type -> date",
@@ -270,15 +270,15 @@ def page_parametrage():
 }
     content_frame = tk.Frame(root, bg='#2f2f2f')
     content_frame.pack(pady=5, padx=10, fill=tk.BOTH, expand=True, anchor='w')
-    
+
     parametrage_label_order = tk.Label(content_frame, text="Paramétrage de l'Arborescence", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
     parametrage_label_order.pack(pady=(15, 5), anchor='w')
     separator = tk.Frame(content_frame, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
     separator.pack(pady=5, anchor='w')
-    
+
     dropdown_label_rangement = tk.Label(content_frame, text="Sélectionnez un ordre :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
     dropdown_label_rangement.pack(pady=(15, 0), anchor='w')
-    
+
     selected_option_rangement = tk.StringVar(content_frame)
     selected_option_rangement.set(order)
     # Find the key associated with the current order value
@@ -286,46 +286,44 @@ def page_parametrage():
     selected_option_rangement.set(current_order_key)
     dropdown_menu_rangement = ttk.Combobox(content_frame, textvariable=selected_option_rangement, values=list(options_rangement.keys()), state="readonly", width=30)
     dropdown_menu_rangement.pack(pady=0, padx=10, anchor='w')
-    
-    
-    #bouton de validation du changement d'ordre 
+
+    #bouton de validation du changement d'ordre
     validate_button_changement = tk.Button(content_frame, text="Valider le changement", command=lambda: update_directory_order(options_rangement[selected_option_rangement.get()]))
     validate_button_changement.pack(pady=5, padx= 10, anchor='w')
-    
+
     parametrage_label = tk.Label(content_frame, text="Paramétrage de l'IA", font=("Helvetica", 16, "bold"), bg='#2f2f2f', fg='white')
     parametrage_label.pack(pady=(15, 5), anchor='w')
     separator = tk.Frame(content_frame, height=2, bd=1, relief=tk.SUNKEN, bg='#2f2f2f', width=400)
     separator.pack(pady=5, anchor='w')
-    
-    
+
     subtitle_label = tk.Label(content_frame, text="Choisir un document d'apprentissage :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
     subtitle_label.pack(pady=(5, 0), anchor='w')
-    
+
     file_path_label = tk.Label(content_frame, text="Aucun fichier sélectionné", bg='#2f2f2f', fg='white', anchor='w')
     file_path_label.pack(fill=tk.X, padx=5, anchor='w')
-    
+
     select_file_button = tk.Button(content_frame, text="Sélectionner un fichier", command=lambda: file_path_label.config(text=filedialog.askopenfilename()))
     select_file_button.pack(padx=5, anchor='w')
-    
+
     # Menu déroulant
     dropdown_label = tk.Label(content_frame, text="Sélectionnez une catégorie de fichier :", bg='#2f2f2f', fg='white', anchor='w', font=("Helvetica", 12))
     dropdown_label.pack(pady=(15, 0), anchor='w')
-    
+
     selected_option = tk.StringVar(root)
     selected_option.set(list(options.keys())[0])
     dropdown_menu = ttk.Combobox(content_frame, textvariable=selected_option, values=list(options.keys()), state="readonly")
     dropdown_menu.pack(pady=0, padx=10, anchor='w')
-    
+
     # Bouton pour valider la sélection
     validate_button = tk.Button(content_frame, text="Valider la sélection", command=lambda: ajouter_texte_avec_type(file_path_label.cget("text"), options[selected_option.get()]))
     validate_button.pack(pady=10, anchor='w')
-    
+
     footer_frame = tk.Frame(root, bg='#2f2f2f')
     footer_frame.pack(side=tk.BOTTOM, pady=5, fill=tk.X)
-    
+
     red_button = tk.Button(footer_frame, text="Réinitialiser l'IA", fg='red', command=reinitialiser_donnees)
     red_button.pack(side=tk.RIGHT, padx=10)
-    
+
     # Lancement de l'application
     root.mainloop()
 

@@ -1,8 +1,7 @@
-uncluttr.file\_treatement package
+File\_treatement package
 =================================
 
-Submodules
-----------
+
 
 uncluttr.file\_treatement.character\_recognition module
 -------------------------------------------------------
@@ -60,8 +59,6 @@ uncluttr.file\_treatement.training\_models module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: uncluttr.file_treatement
    :members:

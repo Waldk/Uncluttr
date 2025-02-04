@@ -29,8 +29,6 @@ def initialize_spacy_model():
     """Initialize the spaCy model if it is not already loaded.
 
     This function loads the `fr_core_news_sm` spaCy model and ensures it is available globally.
-
-    :return: None
     """
     global nlp
     if nlp is None:

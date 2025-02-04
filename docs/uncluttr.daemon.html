@@ -19,9 +19,7 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="uncluttr.file_treatement package" href="uncluttr.file_treatement.html" />
-    <link rel="prev" title="uncluttr.core package" href="uncluttr.core.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,37 +41,28 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uncluttr</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="uncluttr.html">uncluttr package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="uncluttr.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.core.html">uncluttr.core package</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">uncluttr.daemon package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.file_treatement.html">uncluttr.file_treatement package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.gui.html">uncluttr.gui package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.ia.html">uncluttr.ia package</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">uncluttr.daemon package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-uncluttr.daemon.daemon">uncluttr.daemon.daemon module</a><ul>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.Handler"><code class="docutils literal notranslate"><span class="pre">Handler</span></code></a><ul>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.Handler.on_created"><code class="docutils literal notranslate"><span class="pre">Handler.on_created()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#uncluttr-hook-tkinterdnd2-module">uncluttr.hook-tkinterdnd2 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#module-uncluttr">Module contents</a></li>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.Watcher"><code class="docutils literal notranslate"><span class="pre">Watcher</span></code></a><ul>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.Watcher.run"><code class="docutils literal notranslate"><span class="pre">Watcher.run()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.start_daemon"><code class="docutils literal notranslate"><span class="pre">start_daemon()</span></code></a></li>
+<li><a class="reference internal" href="#uncluttr.daemon.daemon.wait_for_file"><code class="docutils literal notranslate"><span class="pre">wait_for_file()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-uncluttr.daemon">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.gui.gui.html">uncluttr.gui.gui</a></li>
-</ul>
-
+</div>
         </div>
       </div>
     </nav>
@@ -88,8 +77,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">uncluttr</a></li>
-          <li class="breadcrumb-item"><a href="uncluttr.html">uncluttr package</a></li>
       <li class="breadcrumb-item active">uncluttr.daemon package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/uncluttr.daemon.rst.txt" rel="nofollow"> View page source</a>
@@ -150,6 +137,17 @@ source : <a class="reference external" href="https://pypi.org/project/watchdog/"
 <dt class="sig sig-object py" id="uncluttr.daemon.daemon.wait_for_file">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.daemon.daemon.</span></span><span class="sig-name descname"><span class="pre">wait_for_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uncluttr/daemon/daemon.html#wait_for_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.daemon.daemon.wait_for_file" title="Link to this definition"></a></dt>
 <dd><p>Wait for a file to be completely copied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em>) – The path to the file to wait for.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The maximum time to wait in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TimeoutError</strong> – If the file is not ready after the timeout.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -161,10 +159,7 @@ source : <a class="reference external" href="https://pypi.org/project/watchdog/"
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="uncluttr.core.html" class="btn btn-neutral float-left" title="uncluttr.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="uncluttr.file_treatement.html" class="btn btn-neutral float-right" title="uncluttr.file_treatement package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

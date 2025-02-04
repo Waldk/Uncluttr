@@ -10,11 +10,12 @@ Welcome to Uncluttr's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   uncluttr/modules
 
 .. autosummary::
    :toctree: _autosummary
    :recursive:
+   :caption: Packages:
 
    uncluttr.file_treatement.character_recognition
    uncluttr.file_treatement.text_preprocessing

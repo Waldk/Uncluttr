@@ -11,7 +11,6 @@
       enlever_accents
       initialize_spacy_model
       is_valid_word
-      preprocess_date
       preprocess_text
       refine_words
    
