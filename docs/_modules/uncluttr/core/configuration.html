@@ -42,8 +42,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">uncluttr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncluttr/modules.html">uncluttr</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
@@ -86,9 +87,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">configparser</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spacy</span>
 
 <div class="viewcode-block" id="get_base_app_files_path">
-<a class="viewcode-back" href="../../../uncluttr.core.html#uncluttr.core.configuration.get_base_app_files_path">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.get_base_app_files_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_base_app_files_path</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the base path for configuration files.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
@@ -96,8 +98,22 @@
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="load_spacy_model">
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.load_spacy_model">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_spacy_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">spacy</span><span class="o">.</span><span class="n">language</span><span class="o">.</span><span class="n">Language</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the path to the model.</span>
+
+<span class="sd">    :param str model_name: The name of the model.</span>
+<span class="sd">    :return spacy.language.Language: The spaCy model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span><span class="p">,</span> <span class="n">model_name</span><span class="p">,</span> <span class="n">model_name</span> <span class="o">+</span> <span class="s1">&#39;-3.8.0&#39;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="update_directory_to_watch">
-<a class="viewcode-back" href="../../../uncluttr.core.html#uncluttr.core.configuration.update_directory_to_watch">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.update_directory_to_watch">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_directory_to_watch</span><span class="p">(</span><span class="n">new_directory</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the directory to watch in the configuration file.</span>
 
@@ -117,7 +133,7 @@
 
 
 <div class="viewcode-block" id="update_directory_order">
-<a class="viewcode-back" href="../../../uncluttr.core.html#uncluttr.core.configuration.update_directory_order">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.update_directory_order">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_directory_order</span><span class="p">(</span><span class="n">new_order</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the directory to watch in the configuration file.</span>
 <span class="sd">    </span>
@@ -137,7 +153,7 @@
 
 
 <div class="viewcode-block" id="update_storage_directory">
-<a class="viewcode-back" href="../../../uncluttr.core.html#uncluttr.core.configuration.update_storage_directory">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.update_storage_directory">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_storage_directory</span><span class="p">(</span><span class="n">new_directory</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the directory for storage in the configuration file.</span>
 <span class="sd">    </span>
@@ -157,7 +173,7 @@
 
 
 <div class="viewcode-block" id="update_daemon_path">
-<a class="viewcode-back" href="../../../uncluttr.core.html#uncluttr.core.configuration.update_daemon_path">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.core.html#uncluttr.core.configuration.update_daemon_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_daemon_path</span><span class="p">(</span><span class="n">new_directory_to_watch</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                         <span class="n">daemon_process</span><span class="p">:</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Restart the daemon with a new directory to watch.</span>

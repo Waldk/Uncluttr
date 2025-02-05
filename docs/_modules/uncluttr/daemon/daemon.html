@@ -42,8 +42,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">uncluttr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncluttr/modules.html">uncluttr</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
@@ -95,7 +96,7 @@
 
 
 <div class="viewcode-block" id="Watcher">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.Watcher">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.Watcher">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Watcher</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to watch a directory for new files.&quot;&quot;&quot;</span>
 
@@ -104,7 +105,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">observer</span> <span class="o">=</span> <span class="n">Observer</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Watcher.run">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.Watcher.run">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.Watcher.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Start the observer.&quot;&quot;&quot;</span>
 
@@ -122,11 +123,11 @@
 
 
 <div class="viewcode-block" id="Handler">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.Handler">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.Handler">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Handler</span><span class="p">(</span><span class="n">FileSystemEventHandler</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to handle file system events.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="Handler.on_created">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.Handler.on_created">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.Handler.on_created">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_created</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_directory</span><span class="p">:</span>
@@ -144,7 +145,7 @@
 
 
 <div class="viewcode-block" id="start_daemon">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.start_daemon">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.start_daemon">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">start_daemon</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the daemon.&quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
@@ -170,7 +171,7 @@
 
 
 <div class="viewcode-block" id="wait_for_file">
-<a class="viewcode-back" href="../../../uncluttr.daemon.html#uncluttr.daemon.daemon.wait_for_file">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.daemon.html#uncluttr.daemon.daemon.wait_for_file">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">wait_for_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Wait for a file to be completely copied.</span>
 <span class="sd">    </span>

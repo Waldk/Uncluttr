@@ -7,7 +7,7 @@ import unicodedata
 import spacy
 import nltk
 from nltk.corpus import stopwords
-from datetime import datetime
+from uncluttr.core.configuration import load_spacy_model
 
 
 # Télécharger les stopwords de NLTK
@@ -33,8 +33,9 @@ def initialize_spacy_model():
     global nlp
     if nlp is None:
         nlp_start_time = time.time()
-        nlp = spacy.load("fr_core_news_sm")
+        nlp = load_spacy_model('fr_core_news_sm')
         print(f"Modèle spaCy chargé en {time.time() - nlp_start_time:.2f} secondes.")
+        print(spacy.util.get_package_path('fr_core_news_sm'))
     else:
         print("Le modèle spaCy est déjà chargé.")
     sys.stdout.flush()
@@ -61,10 +62,10 @@ def preprocess_text(texte: str) -> str:
 
     # Télécharger les stopwords de NLTK
     try:
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
     except LookupError:
         nltk.download('stopwords')
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
 
     # Texte en minuscules
     texte = texte.lower()
@@ -112,4 +113,3 @@ def is_valid_word(word):
     :rtype: bool
     """
     return word in nlp.vocab and nlp.vocab[word].is_alpha
-

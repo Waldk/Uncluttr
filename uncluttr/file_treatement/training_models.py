@@ -281,7 +281,7 @@ textes = [
     "livraison de la commande numero 90876, societe : particulier, articles : meubles de cuisine, date : 20/01/2025, observation : un meuble endommage.",
 
 
-    #cahier des charges 
+    #cahier des charges
     "cahier des charges pour le developpement d'une application mobile de gestion des taches, sections : objectifs, cible utilisateur, specifications fonctionnelles, contraintes techniques, planning de livraison.",
     "specification fonctionnelle pour la conception d'un site e-commerce, details : systeme de paiement, gestion du catalogue produit, suivi des commandes, contraintes legales rgpd.",
     "document de specifications pour un systeme de gestion des ressources humaines, contenu : gestion des conges, suivi des evaluations, rapports d'activite, integration avec le crm.",
@@ -390,7 +390,7 @@ textes = [
     "bonjour, nous souhaitons vous informer qu'un arret temporaire de service est prevu le 1er fevrier, de 22h a 4h, pour maintenance. merci de votre comprehension. cordialement, marion laporte",
     "bonjour, pourriez-vous nous fournir des informations complementaires sur les caracteristiques techniques du materiel propose ? nous avons besoin de clarifications sur la compatibilite avec notre infrastructure existante. merci pour votre retour rapide. cordialement, paul roux",
     "bonjour a tous, nous avons le plaisir d'accueillir camille lemieux dans notre equipe. elle occupera le poste de responsable marketing digital a partir du 15 fevrier. merci de lui reserver un accueil chaleureux. cordialement, maxime durieux",
-    
+
     #lettres de motivation
     "je souhaite postuler au poste de chef de projet au sein de votre entreprise, motive par ma passion pour la gestion de projets innovants",
     "diplomé en finance, je suis interesse par l'offre d'analyste financier et je pense pouvoir contribuer a vos objectifs strategiques",
@@ -778,7 +778,8 @@ labels = [
 ]
 
 
-DATA_FILE = 'data.json'
+# DATA_FILE = 'models/data.json'
+DATA_PATH = os.path.join(get_base_app_files_path(), 'models', 'data.json')
 
 text = []
 label = []
@@ -791,8 +792,9 @@ def charger_donnees():
     :return: None
     """
     global text, label
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as f:
+    print("data path", DATA_PATH)
+    if os.path.exists(DATA_PATH):
+        with open(DATA_PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
         text = data["textes"]
         label = data["labels"]
@@ -807,7 +809,7 @@ def sauvegarder_donnees(textes, labels):
     :param list labels: Corresponding list of labels
     :return: None
     """
-    with open(DATA_FILE, 'w') as f:
+    with open(DATA_PATH, 'w', encoding='utf-8') as f:
         json.dump({"textes": textes, "labels": labels}, f)
 
 def ajouter_texte_avec_type(path, type_texte):
@@ -833,16 +835,16 @@ def ajouter_texte_avec_type(path, type_texte):
 
         # Ajout du nouveau texte et label
         text.append(nouveau_texte)
-        label.append(type_texte) 
+        label.append(type_texte)
 
         entrainer_modele(text,label)
 
         # Sauvegarder les nouvelles données
         sauvegarder_donnees(text, label)
 
-        print(f"fichier a ete ajouter mon exemple a la categorie : ",label)
+        print("fichier a ete ajouter mon exemple a la categorie : ",label)
 
-    print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
+    print("ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
 def reinitialiser_donnees():
     """Reset the dataset and retrain the model.

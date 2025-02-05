@@ -52,7 +52,6 @@
 <li class="toctree-l4"><a class="reference internal" href="uncluttr.daemon.html">Daemon package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="uncluttr.file_treatement.html">File_treatement package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="uncluttr.gui.html">Gui package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.ia.html">Ia package</a></li>
 </ul>
 </li>
 </ul>
@@ -107,6 +106,20 @@
 <dt class="sig sig-object py" id="uncluttr.core.configuration.get_base_app_files_path">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">get_base_app_files_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/uncluttr/core/configuration.html#get_base_app_files_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.get_base_app_files_path" title="Link to this definition"></a></dt>
 <dd><p>Get the base path for configuration files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="uncluttr.core.configuration.load_spacy_model">
+<span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">load_spacy_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Language</span></span></span><a class="reference internal" href="../_modules/uncluttr/core/configuration.html#load_spacy_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.load_spacy_model" title="Link to this definition"></a></dt>
+<dd><p>Get the path to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_name</strong> (<em>str</em>) – The name of the model.</p>
+</dd>
+<dt class="field-even">Return spacy.language.Language<span class="colon">:</span></dt>
+<dd class="field-even"><p>The spaCy model.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
