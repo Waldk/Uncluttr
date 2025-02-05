@@ -844,7 +844,8 @@ def ajouter_texte_avec_type(path, type_texte):
 
         print("fichier a ete ajouter mon exemple a la categorie : ",label)
 
-    print("ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
+    else :
+        print("ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
 def reinitialiser_donnees():
     """Reset the dataset and retrain the model.
