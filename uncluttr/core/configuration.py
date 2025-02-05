@@ -4,12 +4,24 @@ import os
 import sys
 import configparser
 import multiprocessing
+import spacy
 
 def get_base_app_files_path():
     """Get the base path for configuration files."""
     if getattr(sys, 'frozen', False):
         return sys._MEIPASS
     return os.getcwd()
+
+def load_spacy_model(model_name: str) -> spacy.language.Language:
+    """Get the path to the model.
+
+    :param str model_name: The name of the model.
+    :return spacy.language.Language: The spaCy model.
+    """
+    if getattr(sys, 'frozen', False):
+        return spacy.load(os.path.join(sys._MEIPASS, model_name, model_name + '-3.8.0'))
+    else:
+        return spacy.load(model_name)
 
 def update_directory_to_watch(new_directory:str):
     """Update the directory to watch in the configuration file.

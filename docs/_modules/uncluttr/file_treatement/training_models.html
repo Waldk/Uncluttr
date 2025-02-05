@@ -42,8 +42,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">uncluttr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncluttr/modules.html">uncluttr</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
@@ -363,7 +364,7 @@
     <span class="s2">&quot;livraison de la commande numero 90876, societe : particulier, articles : meubles de cuisine, date : 20/01/2025, observation : un meuble endommage.&quot;</span><span class="p">,</span>
 
 
-    <span class="c1">#cahier des charges </span>
+    <span class="c1">#cahier des charges</span>
     <span class="s2">&quot;cahier des charges pour le developpement d&#39;une application mobile de gestion des taches, sections : objectifs, cible utilisateur, specifications fonctionnelles, contraintes techniques, planning de livraison.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;specification fonctionnelle pour la conception d&#39;un site e-commerce, details : systeme de paiement, gestion du catalogue produit, suivi des commandes, contraintes legales rgpd.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;document de specifications pour un systeme de gestion des ressources humaines, contenu : gestion des conges, suivi des evaluations, rapports d&#39;activite, integration avec le crm.&quot;</span><span class="p">,</span>
@@ -472,7 +473,7 @@
     <span class="s2">&quot;bonjour, nous souhaitons vous informer qu&#39;un arret temporaire de service est prevu le 1er fevrier, de 22h a 4h, pour maintenance. merci de votre comprehension. cordialement, marion laporte&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bonjour, pourriez-vous nous fournir des informations complementaires sur les caracteristiques techniques du materiel propose ? nous avons besoin de clarifications sur la compatibilite avec notre infrastructure existante. merci pour votre retour rapide. cordialement, paul roux&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bonjour a tous, nous avons le plaisir d&#39;accueillir camille lemieux dans notre equipe. elle occupera le poste de responsable marketing digital a partir du 15 fevrier. merci de lui reserver un accueil chaleureux. cordialement, maxime durieux&quot;</span><span class="p">,</span>
-    
+
     <span class="c1">#lettres de motivation</span>
     <span class="s2">&quot;je souhaite postuler au poste de chef de projet au sein de votre entreprise, motive par ma passion pour la gestion de projets innovants&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diplomé en finance, je suis interesse par l&#39;offre d&#39;analyste financier et je pense pouvoir contribuer a vos objectifs strategiques&quot;</span><span class="p">,</span>
@@ -860,13 +861,14 @@
 <span class="p">]</span>
 
 
-<span class="n">DATA_FILE</span> <span class="o">=</span> <span class="s1">&#39;data.json&#39;</span>
+<span class="c1"># DATA_FILE = &#39;models/data.json&#39;</span>
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_base_app_files_path</span><span class="p">(),</span> <span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;data.json&#39;</span><span class="p">)</span>
 
 <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">label</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="charger_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.charger_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.charger_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">charger_donnees</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Load existing texts and labels from the data file.</span>
 
@@ -875,8 +877,8 @@
 <span class="sd">    :return: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;textes&quot;</span><span class="p">]</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
@@ -886,7 +888,7 @@
 
 
 <div class="viewcode-block" id="sauvegarder_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.sauvegarder_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.sauvegarder_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sauvegarder_donnees</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Save texts and labels to the data file.</span>
 
@@ -894,12 +896,12 @@
 <span class="sd">    :param list labels: Corresponding list of labels</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;textes&quot;</span><span class="p">:</span> <span class="n">textes</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">},</span> <span class="n">f</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ajouter_texte_avec_type">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.ajouter_texte_avec_type">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.ajouter_texte_avec_type">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ajouter_texte_avec_type</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">type_texte</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a file, preprocess it, and add it to the dataset with a label.</span>
 
@@ -923,7 +925,7 @@
 
         <span class="c1"># Ajout du nouveau texte et label</span>
         <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nouveau_texte</span><span class="p">)</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_texte</span><span class="p">)</span> 
+        <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_texte</span><span class="p">)</span>
 
         <span class="n">entrainer_modele</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">label</span><span class="p">)</span>
 
@@ -936,7 +938,7 @@
 
 
 <div class="viewcode-block" id="reinitialiser_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.reinitialiser_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.reinitialiser_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reinitialiser_donnees</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the dataset and retrain the model.</span>
 
@@ -947,7 +949,7 @@
 
 
 <div class="viewcode-block" id="entrainer_modele">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.entrainer_modele">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.entrainer_modele">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Train a machine learning model to classify text types.</span>
 
