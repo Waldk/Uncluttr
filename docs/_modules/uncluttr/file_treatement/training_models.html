@@ -1,50 +1,100 @@
+
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>uncluttr.file_treatement.training_models &mdash; Uncluttr 0.0.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
-<html lang="en" data-content_root="../../../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>uncluttr.file_treatement.training_models &#8212; Uncluttr 0.0.4 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=686e5160" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
-    <script src="../../../_static/documentation_options.js?v=8c5712d9"></script>
-    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+  
+    <link rel="canonical" href="https://waldk.github.io/Uncluttr/_modules/uncluttr/file_treatement/training_models.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8c5712d9"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
-   
-  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
-  
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
 
-  
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
           
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Uncluttr
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../uncluttr/modules.html">uncluttr</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Packages:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.gui.gui.html">uncluttr.gui.gui</a></li>
+</ul>
 
-          <div class="body" role="main">
-            
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Uncluttr</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">uncluttr.file_treatement.training_models</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <h1>Source code for uncluttr.file_treatement.training_models</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Training models for document classification. &quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.core.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_base_app_files_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.text_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_text</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.file_treatement</span><span class="w"> </span><span class="kn">import</span> <span class="n">analyse_fichier</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 
 
 <span class="n">textes</span> <span class="o">=</span> <span class="p">[</span>
@@ -70,7 +120,6 @@
     <span class="s2">&quot;facture n 23698, client : societe uvw, produits : 20 panneaux photovoltaïques, montant ht : 15 000 euros, tva (10%) : 1 500 euros, total ttc : 16 500 euros, statut : livre mais non regle.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;facture n 87456, societe : sarl rst, contenu : redaction de contenus seo pour 25 articles, montant ht : 1 800 euros, tva (20%) : 360 euros, total ttc : 2 160 euros, paiement reçu le 10/01/2025.&quot;</span><span class="p">,</span>
 
-    
     <span class="c1">#devis</span>
     <span class="s2">&quot;devis num 12345, prix quantite total, 40€, date du devis : 10/12/22, devis, sous total : 160 €, tva (20%) : 32 €&quot;</span><span class="p">,</span>
     <span class="s2">&quot;compte client, paiement : par virement bancaire, 30</span><span class="si">% d</span><span class="s2">&#39;acompte à verser, estimation des couts, validite 1 mois, tva ttc, acompte&quot;</span><span class="p">,</span>
@@ -93,7 +142,6 @@
     <span class="s2">&quot;devis numero 19873, beneficiaire : sarl uvw, description : impression de 5 000 flyers a5, cout ttc : 850 euros, validite : 30 jours.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;devis num 43567, destinataire : societe tuv, prestation : organisation d’un seminaire d’entreprise pour 50 personnes, montant ttc : 9 500 euros, validite : 1 mois.&quot;</span><span class="p">,</span>
 
-    
     <span class="c1">#contrats</span>
     <span class="s2">&quot;contrat, contractant, prestataire, employeur, salarie, partie prenante, signataire, donneur d’ordre, sous-traitance&quot;</span><span class="p">,</span>
     <span class="s2">&quot;accord, prestations, services, obligations, terme, periode d’essai, resiliation, renouvellement, delai, echeance, rupture anticipee, clause resolutoire, clause penale, indemnite&quot;</span><span class="p">,</span>
@@ -116,7 +164,6 @@
     <span class="s2">&quot;contrat de maintenance informatique, prestataire : societe tuv, client : entreprise ghi, prestation : entretien du parc informatique, duree : 12 mois, montant annuel : 10 000 euros.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;contrat de sous-traitance, entreprise : societe xyz, sous-traitant : sarl abc, prestation : gestion de la logistique, montant : 50 000 euros sur 12 mois.&quot;</span><span class="p">,</span>
 
-    
     <span class="c1"># bons de commande</span>
     <span class="s2">&quot;bon de commande numero 5678, fournisseur : abc corp, articles : 10&quot;</span><span class="p">,</span>
     <span class="s2">&quot;commande passee le 12 janvier, produits : fournitures de bureau, reference : 018273781, quantite : 50&quot;</span><span class="p">,</span>
@@ -139,7 +186,6 @@
     <span class="s2">&quot;bon de commande num 31456, destinataire : sci def, service : renovation des espaces communs d’un immeuble, montant ttc : 8 000 euros, delai : 2 mois.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;commande passee le 30/10/2024, numero 78123, entreprise : societe xyz, contenu : installation d’un reseau informatique complet, cout ttc : 15 000 euros, livraison attendue : 15/02/2025.&quot;</span><span class="p">,</span>
 
-    
     <span class="c1"># fiches de paie</span>
     <span class="s2">&quot;fiche de paie, employe : jane doe, salaire : 3000 euros ht, montant, poste, horaire&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bulletin de salaire : periode d&#39;emploi du 1er au 31 mars, net a payer : 2500 euros, date de paiement, taux horaire : 28 euros/heure&quot;</span><span class="p">,</span>
@@ -162,7 +208,6 @@
     <span class="s2">&quot;fiche de paie de fevrier, salaire brut : 1 800 euros, salaire net : 1 400 euros, cotisations sociales : 400 euros, prime de formation : 150 euros.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;fiche de paie de paul martin, salaire brut : 4 500 euros, salaire net : 3 600 euros, cotisations sociales : 900 euros, primes : 500 euros.&quot;</span><span class="p">,</span>
 
-    
     <span class="c1"># articles de presse</span>
     <span class="s2">&quot;article de presse, critique, point de vue, editorial, chronique, source, citation, reporteur, journaliste, agence de presse, titre, accroche, , sujet d’actualite, contexte, enjeu&quot;</span><span class="p">,</span>
     <span class="s2">&quot;dans un article publie recemment, information, temoignage, enquete, reportage, declaration, annonce, revelation, debat, controverse&quot;</span><span class="p">,</span>
@@ -185,7 +230,6 @@
     <span class="s2">&quot;evolution des normes vestimentaires et leur influence sur la societe moderne&quot;</span><span class="p">,</span>
     <span class="s2">&quot;changement des dynamiques familiales avec l&#39;essor du travail a distance. solutions innovantes pour la gestion des dechets plastiques a grande echelle&quot;</span><span class="p">,</span>
 
-
     <span class="c1"># recherches sur un sujet</span>
     <span class="s2">&quot;recherche scientifique sur l&#39;intelligence artificielle et ses applications, reflexion, donnee, analyse, diagnostic, tendance, etude, hypothese, experimentation, collecte de donnees, tests, resultats&quot;</span><span class="p">,</span>
     <span class="s2">&quot;etude publiee dans une revue academique sur les effets des pesticides, experience, pourcentage, analyse, connaissance, source des informations&quot;</span><span class="p">,</span>
@@ -207,7 +251,6 @@
     <span class="s2">&quot;etude sur l&#39;efficacite des legislations contre la cybercriminalite. d&#39;apres un precedent rapport redige par l&#39;anssi, expert dans le domaine en france, nous pouvons en deduire qu&#39;il reste des progrets a faire dans ce domaine&quot;</span><span class="p">,</span>
     <span class="s2">&quot;impact des fermes solaires sur les habitats terrestres et leurs ecosystemes. selon les experts dans ce domaine, les fermes solaires ont beaucoup d&#39;avantages et permettent notamment de produire de l&#39;energie verte&quot;</span><span class="p">,</span>
     <span class="s2">&quot;impact des crises sanitaires sur les politiques economiques et sociales, les resultats des etudes sur le sujet indiquent que les crises sanitaires sont l&#39;element declancheur de potitique nefaste&quot;</span><span class="p">,</span>
-
 
     <span class="c1">#procedure/methode/guide d&#39;utilisation</span>
     <span class="s2">&quot;ce document decrit la methode, etapes, processus, sequence, instructions, plan, ordre, deroulement, organisation, flux de travail, guide pas-a-pas&quot;</span><span class="p">,</span>
@@ -275,7 +318,6 @@
     <span class="s2">&quot;attestation de salaire de anne dupuis, societe : rst, salaire brut pour le mois de janvier 2025 : 1 800 euros.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;attestation de conformite de paul martin, entreprise : lmn, produits livres et installes conformement au contrat du 15/12/2024.&quot;</span><span class="p">,</span>
 
-
     <span class="c1">#cv</span>
     <span class="s2">&quot;cv, experience professionnelle : assistant commercial chez xyz entreprise, gestion des relations clients et suivi des commandes&quot;</span><span class="p">,</span>
     <span class="s2">&quot;competences : maitrise de excel, word, et powerpoint, langues : anglais courant, espagnol intermediaire&quot;</span><span class="p">,</span>
@@ -322,7 +364,7 @@
     <span class="s2">&quot;livraison de la commande numero 90876, societe : particulier, articles : meubles de cuisine, date : 20/01/2025, observation : un meuble endommage.&quot;</span><span class="p">,</span>
 
 
-    <span class="c1">#cahier des charges </span>
+    <span class="c1">#cahier des charges</span>
     <span class="s2">&quot;cahier des charges pour le developpement d&#39;une application mobile de gestion des taches, sections : objectifs, cible utilisateur, specifications fonctionnelles, contraintes techniques, planning de livraison.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;specification fonctionnelle pour la conception d&#39;un site e-commerce, details : systeme de paiement, gestion du catalogue produit, suivi des commandes, contraintes legales rgpd.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;document de specifications pour un systeme de gestion des ressources humaines, contenu : gestion des conges, suivi des evaluations, rapports d&#39;activite, integration avec le crm.&quot;</span><span class="p">,</span>
@@ -343,7 +385,6 @@
     <span class="s2">&quot;document de definition des besoins pour un projet de digitalisation des processus financiers, contenu : flux de validation, suivi des depenses, audits.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;cahier des charges pour un portail client, sections : tableau de bord personnalise, communication directe, gestion des demandes.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;plan fonctionnel pour la mise en place d&#39;un crm sur mesure, inclut : gestion des leads, suivi des opportunites, personnalisation par utilisateur.&quot;</span><span class="p">,</span>
-    
 
     <span class="c1">#document d&#39;architecture technique</span>
     <span class="s2">&quot;document d&#39;architecture systeme pour un projet de migration vers aws, inclut : diagrammes d&#39;infrastructure, composants principaux, details de securite.&quot;</span><span class="p">,</span>
@@ -366,7 +407,6 @@
     <span class="s2">&quot;diagramme technique pour un systeme de sauvegarde distribuee, contenu : replication, tolerances aux pannes, systemes de controle.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;rapport d&#39;architecture pour une plateforme de gestion des ressources humaines, inclut : modeles de donnees, flux de travail, acces utilisateurs.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;design d&#39;un systeme distribue pour la gestion des flux financiers, contenu : interconnexions, securite, gestion des performances.&quot;</span><span class="p">,</span>
-    
 
     <span class="c1">#compte-rendu de reunion</span>
     <span class="s2">&quot;compte rendu de la reunion hebdomadaire d&#39;equipe, points abordes : priorites de la semaine, mise a jour des projets, discussion des obstacles.&quot;</span><span class="p">,</span>
@@ -389,8 +429,7 @@
     <span class="s2">&quot;rapport de reunion hebdomadaire pour un projet it, contenu : taches realisees, priorites de la semaine, problemes techniques.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;compte rendu de reunion avec le client sur la validation des specifications, discussions : points bloques, modifications apportees, nouvelles dates.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;resume de reunion sur la strategie de developpement international, sujets : analyse des marches, priorisation, ressources necessaires.&quot;</span><span class="p">,</span>
-    
-    
+
     <span class="c1">#analyse de risque</span>
     <span class="s2">&quot;analyse des risques pour un projet de migration it, contenu : evaluation des failles de securite, risques de perte de donnees, plan de mitigation.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;document d&#39;analyse de risques pour une campagne marketing digitale, points : reputation en ligne, violations rgpd, impact budgetaire.&quot;</span><span class="p">,</span>
@@ -412,7 +451,6 @@
     <span class="s2">&quot;document d&#39;analyse des risques pour un partenariat strategique, inclut : desaccords sur les objectifs, perte de controle, incompatibilite des cultures d&#39;entreprise.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;evaluation des risques de sante et securite pour un entrepot, contenu : incendies, accidents lies au transport de marchandises, ergonomie des postes.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;rapport d&#39;analyse des risques pour un projet de transformation digitale, themes : resistance des employes, problemes de compatibilite, surcharge des equipes.&quot;</span><span class="p">,</span>
-    
 
     <span class="c1">#emails</span>
     <span class="s2">&quot;hello, je t&#39;ecris pour confirmer la reception des documents contractuels que vous avez transmis. si vous avez des questions ou remarques, n&#39;hesitez pas a me le faire savoir. je reste disponible pour toute clarification. cordialement, jean dubois&quot;</span><span class="p">,</span>
@@ -435,8 +473,7 @@
     <span class="s2">&quot;bonjour, nous souhaitons vous informer qu&#39;un arret temporaire de service est prevu le 1er fevrier, de 22h a 4h, pour maintenance. merci de votre comprehension. cordialement, marion laporte&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bonjour, pourriez-vous nous fournir des informations complementaires sur les caracteristiques techniques du materiel propose ? nous avons besoin de clarifications sur la compatibilite avec notre infrastructure existante. merci pour votre retour rapide. cordialement, paul roux&quot;</span><span class="p">,</span>
     <span class="s2">&quot;bonjour a tous, nous avons le plaisir d&#39;accueillir camille lemieux dans notre equipe. elle occupera le poste de responsable marketing digital a partir du 15 fevrier. merci de lui reserver un accueil chaleureux. cordialement, maxime durieux&quot;</span><span class="p">,</span>
-    
-    
+
     <span class="c1">#lettres de motivation</span>
     <span class="s2">&quot;je souhaite postuler au poste de chef de projet au sein de votre entreprise, motive par ma passion pour la gestion de projets innovants&quot;</span><span class="p">,</span>
     <span class="s2">&quot;diplomé en finance, je suis interesse par l&#39;offre d&#39;analyste financier et je pense pouvoir contribuer a vos objectifs strategiques&quot;</span><span class="p">,</span>
@@ -824,38 +861,56 @@
 <span class="p">]</span>
 
 
-<span class="n">DATA_FILE</span> <span class="o">=</span> <span class="s1">&#39;data.json&#39;</span>
+<span class="c1"># DATA_FILE = &#39;models/data.json&#39;</span>
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_base_app_files_path</span><span class="p">(),</span> <span class="s1">&#39;models&#39;</span><span class="p">,</span> <span class="s1">&#39;data.json&#39;</span><span class="p">)</span>
 
 <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">label</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c1"># Chargement des textes et labels existants</span>
 <div class="viewcode-block" id="charger_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.charger_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.charger_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">charger_donnees</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load existing texts and labels from the data file.</span>
+
+<span class="sd">    If the data file does not exist, initializes empty lists.</span>
+
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;textes&quot;</span><span class="p">]</span> 
+        <span class="n">text</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;textes&quot;</span><span class="p">]</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">label</span> <span class="o">=</span> <span class="p">[]</span></div>
 
 
-<span class="c1"># Sauvegarder les textes et labels</span>
 <div class="viewcode-block" id="sauvegarder_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.sauvegarder_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.sauvegarder_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">sauvegarder_donnees</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_FILE</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save texts and labels to the data file.</span>
+
+<span class="sd">    :param list textes: List of texts to save</span>
+<span class="sd">    :param list labels: Corresponding list of labels</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">DATA_PATH</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;textes&quot;</span><span class="p">:</span> <span class="n">textes</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">},</span> <span class="n">f</span><span class="p">)</span></div>
 
 
-<span class="c1"># Ajouter un texte et son type à la bdd</span>
 <div class="viewcode-block" id="ajouter_texte_avec_type">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.ajouter_texte_avec_type">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.ajouter_texte_avec_type">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ajouter_texte_avec_type</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">type_texte</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze a file, preprocess it, and add it to the dataset with a label.</span>
+
+<span class="sd">    If a text with the same label exists, it will be replaced to maintain balance.</span>
+
+<span class="sd">    :param str path: Path to the file to analyze</span>
+<span class="sd">    :param str type_texte: Type/category of the text</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">charger_donnees</span><span class="p">()</span>
 
     <span class="c1">#analyse et pré-traitement</span>
@@ -867,10 +922,10 @@
             <span class="n">index</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">type_texte</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">textes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
             <span class="k">del</span> <span class="n">labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-        
+
         <span class="c1"># Ajout du nouveau texte et label</span>
         <span class="n">text</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nouveau_texte</span><span class="p">)</span>
-        <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_texte</span><span class="p">)</span> 
+        <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">type_texte</span><span class="p">)</span>
 
         <span class="n">entrainer_modele</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">label</span><span class="p">)</span>
 
@@ -882,33 +937,43 @@
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERREUR - le fichier n&#39;a pas pu etre ajouter comme exemple&quot;</span><span class="p">)</span></div>
 
 
-<span class="c1"># Reinitialiser les données du modèle</span>
 <div class="viewcode-block" id="reinitialiser_donnees">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.reinitialiser_donnees">[docs]</a>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.reinitialiser_donnees">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reinitialiser_donnees</span><span class="p">():</span>
-    <span class="n">sauvegarder_donnees</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
-    <span class="n">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span></div>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the dataset and retrain the model.</span>
+
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sauvegarder_donnees</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span></div>
 
 
-<span class="c1"># Entrainer le modèle pour l&#39;extration du type de fichier</span>
 <div class="viewcode-block" id="entrainer_modele">
-<a class="viewcode-back" href="../../../uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.entrainer_modele">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span><span class="n">labels</span><span class="p">):</span>
+<a class="viewcode-back" href="../../../uncluttr/uncluttr.file_treatement.html#uncluttr.file_treatement.training_models.entrainer_modele">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Train a machine learning model to classify text types.</span>
 
+<span class="sd">    This function preprocesses texts, applies TF-IDF vectorization, trains an SVM model,</span>
+<span class="sd">    and optimizes it using GridSearchCV. The trained model is saved for future use.</span>
+
+<span class="sd">    :param list textes: List of preprocessed texts</span>
+<span class="sd">    :param list labels: Corresponding labels for classification</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Télécharger les stopwords de NLTK</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">stopwordsFR</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;french&#39;</span><span class="p">)</span>
+        <span class="n">stopwords_fr</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;french&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
         <span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
-        <span class="n">stopwordsFR</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;french&#39;</span><span class="p">)</span>
+        <span class="n">stopwords_fr</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;french&#39;</span><span class="p">)</span>
 
     <span class="c1"># Ajout de stopwords</span>
-    <span class="n">stopwordsPLUS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;avoir&#39;</span><span class="p">,</span> <span class="s1">&#39;etre&#39;</span><span class="p">,</span> <span class="s1">&#39;mettre&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
-    <span class="n">stopwordsFinal</span> <span class="o">=</span> <span class="n">stopwordsFR</span> <span class="o">+</span> <span class="n">stopwordsPLUS</span>
+    <span class="n">stopwords_plus</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;avoir&#39;</span><span class="p">,</span> <span class="s1">&#39;etre&#39;</span><span class="p">,</span> <span class="s1">&#39;mettre&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+    <span class="n">stopwords_final</span> <span class="o">=</span> <span class="n">stopwords_fr</span> <span class="o">+</span> <span class="n">stopwords_plus</span>
 
     <span class="n">textes_pretraites</span> <span class="o">=</span> <span class="p">[</span><span class="n">preprocess_text</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">textes</span><span class="p">]</span>
 
-    <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="n">stopwordsFinal</span><span class="p">,</span> <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="n">stopwords_final</span><span class="p">,</span> <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
     <span class="n">X</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">textes_pretraites</span><span class="p">)</span>
     <span class="n">classifier</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
@@ -917,7 +982,7 @@
     <span class="c1">#Validation croisée</span>
     <span class="c1"># Définir les paramètres à tester pour le SVM avec GridSearchCV</span>
     <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;rbf&#39;</span><span class="p">],</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">]}</span>
-    
+
     <span class="c1"># Appliquer la recherche sur grille</span>
     <span class="n">grid_search</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s1">&#39;balanced&#39;</span><span class="p">),</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">grid_search</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
@@ -943,74 +1008,37 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ENTRAINEMENT...&quot;</span><span class="p">)</span>
-    <span class="n">charger_donnees</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">label</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
+    <span class="n">charger_donnees</span><span class="p">()</span>
     <span class="n">entrainer_modele</span><span class="p">(</span><span class="n">textes</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...FINI&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;...Completed&quot;</span><span class="p">)</span>
 </pre></div>
 
+           </div>
           </div>
-          
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Cérina ALLEK, Waldeck FELIX, Rafael GONÇALVES, Alban HOELLINGER, Baptiste LE SCIELLOUR, Eva SUPIOT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../../index.html">Uncluttr</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-
-<search id="searchbox" style="display: none" role="search">
-    <div class="searchformwrapper">
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">uncluttr</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
-  <li><a href="../../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &#169;2025, Cérina ALLEK, Waldeck FELIX, Rafael GONÇALVES, Alban HOELLINGER, Baptiste LE SCIELLOUR, Eva SUPIOT.
-      
-      |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
-      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
-      
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>

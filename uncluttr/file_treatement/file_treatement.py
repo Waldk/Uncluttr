@@ -10,7 +10,7 @@ import configparser
 import multiprocessing
 from collections import Counter
 import nltk
-import joblib  # Pour sauvegarder et charger le modèle ML
+import joblib
 import pymupdf
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -90,18 +90,18 @@ def extraire_mots_cles(texte: str) -> list:
     :return list: extracted keywords
     """
     try:
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
     except LookupError:
         nltk.download('stopwords')
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
 
     # Ajout de stopwords
-    stopwordsPLUS = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    stopwordsFinal = stopwordsFR + stopwordsPLUS
+    stopwords_plus = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    stopwords_final = stopwords_fr + stopwords_plus
 
     vectorizer = TfidfVectorizer(
         max_features=15,
-        stop_words=stopwordsFinal,
+        stop_words=stopwords_final,
         ngram_range=(1, 2)
     )
     tfidf_matrix = vectorizer.fit_transform([texte])
@@ -132,26 +132,20 @@ def generate_theme_from_text(text):
     :return: A list of the top 5 most frequent words, bigrams, or trigrams
     :rtype: list
     """
-    # Prétraiter le texte
     words = text.split()
     words = [word for word in words if len(word) > 3]
 
-    # Affiner les mots pour supprimer les incohérences
     refined_words = refine_words(words)
 
-    # Générer des bigrammes (groupes de 2 mots) et trigrammes (groupes de 3 mots)
     bigrams = generate_ngrams(refined_words, 2)
     trigrams = generate_ngrams(refined_words, 3)
 
-    # Compter les fréquences des mots, bigrammes et trigrammes
     word_counts = Counter(refined_words)
     bigram_counts = Counter(bigrams)
     trigram_counts = Counter(trigrams)
 
-    # Combiner les résultats et sélectionner les plus fréquents
     all_counts = word_counts + bigram_counts + trigram_counts
 
-    # Retourner les 5 termes les plus fréquents sans leur nombres d'apparitions
     return [word for word, _ in all_counts.most_common(5)]
 
 def classifier_document(texte):
@@ -185,6 +179,7 @@ def file_analysis(file_path: str = None, processes: list = []):
     """Analyse a file.
 
     :param str file_path: path to the file to analyse, defaults to None
+    :param list processes: list of running processes, defaults to []
     """
     try:
         root, file = os.path.split(file_path)
@@ -252,8 +247,6 @@ def treat_structured_pdf(file_path: str):
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": document_date,
                                         "document_theme": theme_document})
-
-    # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
 
 def treat_unstructured_pdf(file_path: str):
@@ -276,9 +269,7 @@ def treat_unstructured_pdf(file_path: str):
     append_custom_metadata_to_pdf(file_path, {"document_type": type_document,
                                         "document_date": document_date,
                                         "document_theme": theme_document})
-    # Ajouter le fichier dans l'arborescence
     rangement_fichier(file_path)
-    #  qui de droit
 
 def treat_image(file_path: str):
     """Treat an image.
@@ -299,9 +290,7 @@ def treat_image(file_path: str):
         apppend_custom_metadata_to_image(file_path, {"document_type": str(type_document),
                                             "document_date": None,
                                             "document_theme": theme_document})
-        # Ajouter le fichier dans l'arborescence
         rangement_fichier(file_path)
-        #  qui de droit
     except Exception as e:
         print(f"An error occurred during image treatment: {e}")
 
@@ -323,15 +312,15 @@ def extract_date(text):
         r'\b(?<!\bn[ée]\s)le\s(\d{1,2})\s(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats JJ mois AAAA
         r'\b(?<!\bn[ée]\s)le\s(\d{1,2})\s(janv.|fév.|mars|avr.|mai|juin|juil.|août|sept.|oct.|nov.|déc.)\s(\d{4})\b',       # Formats JJ abréviation mois AAAA
     ]
-    
-    date_patterns2 = [                                                 # Pattern de date seule si aucune signature n'a été vérifié auparavant 
+
+    date_patterns2 = [                                                 # Pattern de date seule si aucune signature n'a été vérifié auparavant
         r'\b(\d{1,2})[-/](\d{1,2})[-/](\d{2,4})\b',                    # Formats JJ/MM/AAAA ou JJ-MM-AAAA
         r'\b(\d{4})[-/](\d{1,2})[-/](\d{1,2})\b',                      # Formats AAAA/MM/JJ ou AAAA-MM-JJ
         r'\b(\d{1,2})\s(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats JJ mois AAAA
         r'\b(\d{1,2})\s(janv.|fév.|mars|avr.|mai|juin|juil.|août|sept.|oct.|nov.|déc.)\s(\d{4})\b',       # Formats JJ abréviation mois AAAA
     ]
 
-    date_patterns3 = [                                    # Pattern de date seule si aucune signature n'a été vérifié auparavant 
+    date_patterns3 = [                                    # Pattern de date seule si aucune signature n'a été vérifié auparavant
         r'\b(\d{1,2})[-/](\d{2,4})\b',                    # Formats MM/AAAA ou MM-AAAA
         r'\b(\d{4})[-/](\d{1,2})\b',                      # Formats AAAA/MM ou AAAA-MM
         r'\b(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s(\d{4})\b',      # Formats mois AAAA
@@ -342,8 +331,8 @@ def extract_date(text):
         "janvier": "01", "février": "02", "mars": "03", "avril": "04",
         "mai": "05", "juin": "06", "juillet": "07", "août": "08",
         "septembre": "09", "octobre": "10", "novembre": "11", "décembre": "12",
-        "janv.": "01", "fév.": "02", "mars": "03", "avr.": "04",
-        "mai": "05", "juin": "06", "juil.": "07", "août": "08",
+        "janv.": "01", "fév.": "02", "mar": "03", "avr.": "04",
+        "mai.": "05", "juin": "06", "juil.": "07", "aout": "08",
         "sept.": "09", "oct.": "10", "nov.": "11", "déc.": "12"
     }
 
@@ -365,7 +354,7 @@ def extract_date(text):
                     month = match[1].zfill(2)
 
                 day = match[0].zfill(2)
-                
+
                 month_word = [k for k, v in months.items() if v == month][0]
                 dates.append(f"{year}/{month_word}")
 
@@ -407,7 +396,7 @@ def analyse_fichier(file_path: str = None):
     try:
         root, file = os.path.split(file_path)
         file_type = os.path.splitext(file_path)[1]
-        
+
         match file_type:
             case '.zip':
                 extract_path = os.path.join(root, os.path.splitext(file)[0])
@@ -451,25 +440,27 @@ def analyse_fichier(file_path: str = None):
         print(f"An unexpected error occurred during file analysis: {e}")
         return []
 
-def treat_structured_pdf2(file_path: str):
+def treat_structured_pdf2(file_path: str) -> list:
     """Treat a structured PDF file.
 
     :param str file_path: path to the file to treat
+    :return list: extracted keywords
     """
     texte_pdf = extract_text_from_pdf(file_path)
 
     texte_nettoye = preprocess_text(texte_pdf)
 
     mots_cles = extraire_mots_cles2(texte_nettoye)
-  
+
     sys.stdout.flush()
     # Retourner les mots-clés
     return mots_cles
 
-def treat_unstructured_pdf2(file_path: str):
+def treat_unstructured_pdf2(file_path: str) -> list:
     """Treat an unstructured PDF file.
 
     :param str file_path: path to the file to treat
+    :return list: extracted keywords
     """
     pdf_text = extract_pdf_text_ocr(file_path)
     cleaned_text = preprocess_text(pdf_text)
@@ -480,10 +471,11 @@ def treat_unstructured_pdf2(file_path: str):
     # Retourner les mots-clés
     return keywords
 
-def treat_image2(file_path: str):
+def treat_image2(file_path: str) -> list:
     """Treat an image file.
 
     :param str file_path: path to the image to treat
+    :return list: extracted keywords
     """
     try:
         image_text = extract_image_text_ocr(file_path)
@@ -491,7 +483,7 @@ def treat_image2(file_path: str):
         keywords = extraire_mots_cles2(cleaned_text)
 
         sys.stdout.flush()
-        
+
         # Retourner les mots-clés
         return keywords
     except Exception as e:
@@ -505,22 +497,21 @@ def extraire_mots_cles2(texte: str) -> list:
     :return list: extracted keywords
     """
     try:
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
     except LookupError:
         nltk.download('stopwords')
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
 
     # Ajout de stopwords
-    stopwordsPLUS = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    stopwordsFinal = stopwordsFR + stopwordsPLUS
+    stopwords_plus = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    stopwords_final = stopwords_fr + stopwords_plus
 
     vectorizer = TfidfVectorizer(
         max_features=50,
-        stop_words=stopwordsFinal,
+        stop_words=stopwords_final,
         ngram_range=(1, 2)
     )
     tfidf_matrix = vectorizer.fit_transform([texte])
     mots_cles = vectorizer.get_feature_names_out()
 
     return ", ".join(mots_cles)
-

@@ -1,8 +1,7 @@
-uncluttr.core package
+Core package
 =====================
 
-Submodules
-----------
+
 
 uncluttr.core.configuration module
 ----------------------------------
@@ -20,8 +19,6 @@ uncluttr.core.main module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: uncluttr.core
    :members:
