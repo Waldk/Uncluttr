@@ -1,8 +1,7 @@
-uncluttr.daemon package
+Daemon package
 =======================
 
-Submodules
-----------
+
 
 uncluttr.daemon.daemon module
 -----------------------------
@@ -12,8 +11,6 @@ uncluttr.daemon.daemon module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: uncluttr.daemon
    :members:

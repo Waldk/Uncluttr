@@ -1,8 +1,7 @@
-uncluttr.gui package
+Gui package
 ====================
 
-Submodules
-----------
+
 
 uncluttr.gui.gui module
 -----------------------
@@ -12,8 +11,6 @@ uncluttr.gui.gui module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
 .. automodule:: uncluttr.gui
    :members:

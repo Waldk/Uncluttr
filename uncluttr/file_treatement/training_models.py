@@ -1,17 +1,17 @@
 """ Training models for document classification. """
 
 import os
-import joblib
-import nltk
 import json
+import nltk
+import joblib
+from nltk.corpus import stopwords
 from sklearn.svm import SVC
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.text_preprocessing import preprocess_text
 from uncluttr.file_treatement.file_treatement import analyse_fichier
-from nltk.corpus import stopwords
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import GridSearchCV
 
 
 textes = [
@@ -37,7 +37,6 @@ textes = [
     "facture n 23698, client : societe uvw, produits : 20 panneaux photovoltaïques, montant ht : 15 000 euros, tva (10%) : 1 500 euros, total ttc : 16 500 euros, statut : livre mais non regle.",
     "facture n 87456, societe : sarl rst, contenu : redaction de contenus seo pour 25 articles, montant ht : 1 800 euros, tva (20%) : 360 euros, total ttc : 2 160 euros, paiement reçu le 10/01/2025.",
 
-    
     #devis
     "devis num 12345, prix quantite total, 40€, date du devis : 10/12/22, devis, sous total : 160 €, tva (20%) : 32 €",
     "compte client, paiement : par virement bancaire, 30% d'acompte à verser, estimation des couts, validite 1 mois, tva ttc, acompte",
@@ -60,7 +59,6 @@ textes = [
     "devis numero 19873, beneficiaire : sarl uvw, description : impression de 5 000 flyers a5, cout ttc : 850 euros, validite : 30 jours.",
     "devis num 43567, destinataire : societe tuv, prestation : organisation d’un seminaire d’entreprise pour 50 personnes, montant ttc : 9 500 euros, validite : 1 mois.",
 
-    
     #contrats
     "contrat, contractant, prestataire, employeur, salarie, partie prenante, signataire, donneur d’ordre, sous-traitance",
     "accord, prestations, services, obligations, terme, periode d’essai, resiliation, renouvellement, delai, echeance, rupture anticipee, clause resolutoire, clause penale, indemnite",
@@ -83,7 +81,6 @@ textes = [
     "contrat de maintenance informatique, prestataire : societe tuv, client : entreprise ghi, prestation : entretien du parc informatique, duree : 12 mois, montant annuel : 10 000 euros.",
     "contrat de sous-traitance, entreprise : societe xyz, sous-traitant : sarl abc, prestation : gestion de la logistique, montant : 50 000 euros sur 12 mois.",
 
-    
     # bons de commande
     "bon de commande numero 5678, fournisseur : abc corp, articles : 10",
     "commande passee le 12 janvier, produits : fournitures de bureau, reference : 018273781, quantite : 50",
@@ -106,7 +103,6 @@ textes = [
     "bon de commande num 31456, destinataire : sci def, service : renovation des espaces communs d’un immeuble, montant ttc : 8 000 euros, delai : 2 mois.",
     "commande passee le 30/10/2024, numero 78123, entreprise : societe xyz, contenu : installation d’un reseau informatique complet, cout ttc : 15 000 euros, livraison attendue : 15/02/2025.",
 
-    
     # fiches de paie
     "fiche de paie, employe : jane doe, salaire : 3000 euros ht, montant, poste, horaire",
     "bulletin de salaire : periode d'emploi du 1er au 31 mars, net a payer : 2500 euros, date de paiement, taux horaire : 28 euros/heure",
@@ -129,7 +125,6 @@ textes = [
     "fiche de paie de fevrier, salaire brut : 1 800 euros, salaire net : 1 400 euros, cotisations sociales : 400 euros, prime de formation : 150 euros.",
     "fiche de paie de paul martin, salaire brut : 4 500 euros, salaire net : 3 600 euros, cotisations sociales : 900 euros, primes : 500 euros.",
 
-    
     # articles de presse
     "article de presse, critique, point de vue, editorial, chronique, source, citation, reporteur, journaliste, agence de presse, titre, accroche, , sujet d’actualite, contexte, enjeu",
     "dans un article publie recemment, information, temoignage, enquete, reportage, declaration, annonce, revelation, debat, controverse",
@@ -152,7 +147,6 @@ textes = [
     "evolution des normes vestimentaires et leur influence sur la societe moderne",
     "changement des dynamiques familiales avec l'essor du travail a distance. solutions innovantes pour la gestion des dechets plastiques a grande echelle",
 
-
     # recherches sur un sujet
     "recherche scientifique sur l'intelligence artificielle et ses applications, reflexion, donnee, analyse, diagnostic, tendance, etude, hypothese, experimentation, collecte de donnees, tests, resultats",
     "etude publiee dans une revue academique sur les effets des pesticides, experience, pourcentage, analyse, connaissance, source des informations",
@@ -174,7 +168,6 @@ textes = [
     "etude sur l'efficacite des legislations contre la cybercriminalite. d'apres un precedent rapport redige par l'anssi, expert dans le domaine en france, nous pouvons en deduire qu'il reste des progrets a faire dans ce domaine",
     "impact des fermes solaires sur les habitats terrestres et leurs ecosystemes. selon les experts dans ce domaine, les fermes solaires ont beaucoup d'avantages et permettent notamment de produire de l'energie verte",
     "impact des crises sanitaires sur les politiques economiques et sociales, les resultats des etudes sur le sujet indiquent que les crises sanitaires sont l'element declancheur de potitique nefaste",
-
 
     #procedure/methode/guide d'utilisation
     "ce document decrit la methode, etapes, processus, sequence, instructions, plan, ordre, deroulement, organisation, flux de travail, guide pas-a-pas",
@@ -242,7 +235,6 @@ textes = [
     "attestation de salaire de anne dupuis, societe : rst, salaire brut pour le mois de janvier 2025 : 1 800 euros.",
     "attestation de conformite de paul martin, entreprise : lmn, produits livres et installes conformement au contrat du 15/12/2024.",
 
-
     #cv
     "cv, experience professionnelle : assistant commercial chez xyz entreprise, gestion des relations clients et suivi des commandes",
     "competences : maitrise de excel, word, et powerpoint, langues : anglais courant, espagnol intermediaire",
@@ -289,7 +281,7 @@ textes = [
     "livraison de la commande numero 90876, societe : particulier, articles : meubles de cuisine, date : 20/01/2025, observation : un meuble endommage.",
 
 
-    #cahier des charges 
+    #cahier des charges
     "cahier des charges pour le developpement d'une application mobile de gestion des taches, sections : objectifs, cible utilisateur, specifications fonctionnelles, contraintes techniques, planning de livraison.",
     "specification fonctionnelle pour la conception d'un site e-commerce, details : systeme de paiement, gestion du catalogue produit, suivi des commandes, contraintes legales rgpd.",
     "document de specifications pour un systeme de gestion des ressources humaines, contenu : gestion des conges, suivi des evaluations, rapports d'activite, integration avec le crm.",
@@ -310,7 +302,6 @@ textes = [
     "document de definition des besoins pour un projet de digitalisation des processus financiers, contenu : flux de validation, suivi des depenses, audits.",
     "cahier des charges pour un portail client, sections : tableau de bord personnalise, communication directe, gestion des demandes.",
     "plan fonctionnel pour la mise en place d'un crm sur mesure, inclut : gestion des leads, suivi des opportunites, personnalisation par utilisateur.",
-    
 
     #document d'architecture technique
     "document d'architecture systeme pour un projet de migration vers aws, inclut : diagrammes d'infrastructure, composants principaux, details de securite.",
@@ -333,7 +324,6 @@ textes = [
     "diagramme technique pour un systeme de sauvegarde distribuee, contenu : replication, tolerances aux pannes, systemes de controle.",
     "rapport d'architecture pour une plateforme de gestion des ressources humaines, inclut : modeles de donnees, flux de travail, acces utilisateurs.",
     "design d'un systeme distribue pour la gestion des flux financiers, contenu : interconnexions, securite, gestion des performances.",
-    
 
     #compte-rendu de reunion
     "compte rendu de la reunion hebdomadaire d'equipe, points abordes : priorites de la semaine, mise a jour des projets, discussion des obstacles.",
@@ -356,8 +346,7 @@ textes = [
     "rapport de reunion hebdomadaire pour un projet it, contenu : taches realisees, priorites de la semaine, problemes techniques.",
     "compte rendu de reunion avec le client sur la validation des specifications, discussions : points bloques, modifications apportees, nouvelles dates.",
     "resume de reunion sur la strategie de developpement international, sujets : analyse des marches, priorisation, ressources necessaires.",
-    
-    
+
     #analyse de risque
     "analyse des risques pour un projet de migration it, contenu : evaluation des failles de securite, risques de perte de donnees, plan de mitigation.",
     "document d'analyse de risques pour une campagne marketing digitale, points : reputation en ligne, violations rgpd, impact budgetaire.",
@@ -379,7 +368,6 @@ textes = [
     "document d'analyse des risques pour un partenariat strategique, inclut : desaccords sur les objectifs, perte de controle, incompatibilite des cultures d'entreprise.",
     "evaluation des risques de sante et securite pour un entrepot, contenu : incendies, accidents lies au transport de marchandises, ergonomie des postes.",
     "rapport d'analyse des risques pour un projet de transformation digitale, themes : resistance des employes, problemes de compatibilite, surcharge des equipes.",
-    
 
     #emails
     "hello, je t'ecris pour confirmer la reception des documents contractuels que vous avez transmis. si vous avez des questions ou remarques, n'hesitez pas a me le faire savoir. je reste disponible pour toute clarification. cordialement, jean dubois",
@@ -402,8 +390,7 @@ textes = [
     "bonjour, nous souhaitons vous informer qu'un arret temporaire de service est prevu le 1er fevrier, de 22h a 4h, pour maintenance. merci de votre comprehension. cordialement, marion laporte",
     "bonjour, pourriez-vous nous fournir des informations complementaires sur les caracteristiques techniques du materiel propose ? nous avons besoin de clarifications sur la compatibilite avec notre infrastructure existante. merci pour votre retour rapide. cordialement, paul roux",
     "bonjour a tous, nous avons le plaisir d'accueillir camille lemieux dans notre equipe. elle occupera le poste de responsable marketing digital a partir du 15 fevrier. merci de lui reserver un accueil chaleureux. cordialement, maxime durieux",
-    
-    
+
     #lettres de motivation
     "je souhaite postuler au poste de chef de projet au sein de votre entreprise, motive par ma passion pour la gestion de projets innovants",
     "diplomé en finance, je suis interesse par l'offre d'analyste financier et je pense pouvoir contribuer a vos objectifs strategiques",
@@ -791,7 +778,8 @@ labels = [
 ]
 
 
-DATA_FILE = 'data.json'
+# DATA_FILE = 'models/data.json'
+DATA_PATH = os.path.join(get_base_app_files_path(), 'models', 'data.json')
 
 text = []
 label = []
@@ -804,13 +792,14 @@ def charger_donnees():
     :return: None
     """
     global text, label
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, 'r') as f:
+    print("data path", DATA_PATH)
+    if os.path.exists(DATA_PATH):
+        with open(DATA_PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        text = data["textes"] 
+        text = data["textes"]
         label = data["labels"]
     else:
-        text = [] 
+        text = []
         label = []
 
 def sauvegarder_donnees(textes, labels):
@@ -820,7 +809,7 @@ def sauvegarder_donnees(textes, labels):
     :param list labels: Corresponding list of labels
     :return: None
     """
-    with open(DATA_FILE, 'w') as f:
+    with open(DATA_PATH, 'w', encoding='utf-8') as f:
         json.dump({"textes": textes, "labels": labels}, f)
 
 def ajouter_texte_avec_type(path, type_texte):
@@ -843,29 +832,29 @@ def ajouter_texte_avec_type(path, type_texte):
             index = labels.index(type_texte)
             del textes[index]
             del labels[index]
-        
+
         # Ajout du nouveau texte et label
         text.append(nouveau_texte)
-        label.append(type_texte) 
+        label.append(type_texte)
 
         entrainer_modele(text,label)
 
         # Sauvegarder les nouvelles données
         sauvegarder_donnees(text, label)
 
-        print(f"fichier a ete ajouter mon exemple a la categorie : ",label)
+        print("fichier a ete ajouter mon exemple a la categorie : ",label)
 
-    print(f"ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
+    print("ERREUR - le fichier n'a pas pu etre ajouter comme exemple")
 
 def reinitialiser_donnees():
     """Reset the dataset and retrain the model.
 
     :return: None
     """
-    sauvegarder_donnees(textes,labels)
-    entrainer_modele(textes,labels)
+    sauvegarder_donnees(textes, labels)
+    entrainer_modele(textes, labels)
 
-def entrainer_modele(textes,labels):
+def entrainer_modele(textes, labels):
     """Train a machine learning model to classify text types.
 
     This function preprocesses texts, applies TF-IDF vectorization, trains an SVM model,
@@ -877,18 +866,18 @@ def entrainer_modele(textes,labels):
     """
     # Télécharger les stopwords de NLTK
     try:
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
     except LookupError:
         nltk.download('stopwords')
-        stopwordsFR = stopwords.words('french')
+        stopwords_fr = stopwords.words('french')
 
     # Ajout de stopwords
-    stopwordsPLUS = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    stopwordsFinal = stopwordsFR + stopwordsPLUS
+    stopwords_plus = ['d', 'l', 'avoir', 'etre', 'mettre', 'c', 's', 'a', 'b', 'e', 'f', 'g', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    stopwords_final = stopwords_fr + stopwords_plus
 
     textes_pretraites = [preprocess_text(t) for t in textes]
 
-    vectorizer = TfidfVectorizer(stop_words=stopwordsFinal, ngram_range=(1, 2))
+    vectorizer = TfidfVectorizer(stop_words=stopwords_final, ngram_range=(1, 2))
 
     X = vectorizer.fit_transform(textes_pretraites)
     classifier = SVC(class_weight='balanced', kernel='linear')
@@ -897,7 +886,7 @@ def entrainer_modele(textes,labels):
     #Validation croisée
     # Définir les paramètres à tester pour le SVM avec GridSearchCV
     parameters = {'C': [0.1, 1, 10], 'kernel': ['linear', 'rbf'], 'gamma': ['scale', 'auto']}
-    
+
     # Appliquer la recherche sur grille
     grid_search = GridSearchCV(SVC(class_weight='balanced'), parameters, cv=3)
     grid_search.fit(X, labels)
@@ -922,7 +911,7 @@ def entrainer_modele(textes,labels):
 
 
 if __name__ == "__main__":
-    print("ENTRAINEMENT...")
-    charger_donnees(text,label)
+    print("Training...")
+    charger_donnees()
     entrainer_modele(textes,labels)
-    print("...FINI")
+    print("...Completed")

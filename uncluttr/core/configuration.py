@@ -4,6 +4,7 @@ import os
 import sys
 import configparser
 import multiprocessing
+import spacy
 
 def get_base_app_files_path():
     """Get the base path for configuration files."""
@@ -11,8 +12,22 @@ def get_base_app_files_path():
         return sys._MEIPASS
     return os.getcwd()
 
+def load_spacy_model(model_name: str) -> spacy.language.Language:
+    """Get the path to the model.
+
+    :param str model_name: The name of the model.
+    :return spacy.language.Language: The spaCy model.
+    """
+    if getattr(sys, 'frozen', False):
+        return spacy.load(os.path.join(sys._MEIPASS, model_name, model_name + '-3.8.0'))
+    else:
+        return spacy.load(model_name)
+
 def update_directory_to_watch(new_directory:str):
-    """Update the directory to watch in the configuration file."""
+    """Update the directory to watch in the configuration file.
+
+    :param str new_directory: The new directory to watch.
+    """
     try:
         config = configparser.ConfigParser()
         base_path = get_base_app_files_path()
@@ -24,10 +39,12 @@ def update_directory_to_watch(new_directory:str):
         print(f"Updated directory to watch to: {new_directory}")
     except Exception as e:
         print(f"An error occurred while updating the directory to watch: {e}")
-        
 
 def update_directory_order(new_order:str):
-    """Update the directory to watch in the configuration file."""
+    """Update the directory to watch in the configuration file.
+    
+    param str new_order: The new order for the directory.
+    """
     try:
         config = configparser.ConfigParser()
         base_path = get_base_app_files_path()
@@ -39,10 +56,12 @@ def update_directory_order(new_order:str):
         print(f"Updated order: {new_order}")
     except Exception as e:
         print(f"An error occurred while updating the order: {e}")
-        
 
 def update_storage_directory(new_directory:str):
-    """Update the directory for storage in the configuration file."""
+    """Update the directory for storage in the configuration file.
+    
+    :param str new_directory: The new directory for storage.
+    """
     try:
         config = configparser.ConfigParser()
         base_path = get_base_app_files_path()
@@ -57,7 +76,12 @@ def update_storage_directory(new_directory:str):
 
 def update_daemon_path(new_directory_to_watch:str,
                         daemon_process: multiprocessing.Process) -> multiprocessing.Process:
-    """Restart the daemon with a new directory to watch."""
+    """Restart the daemon with a new directory to watch.
+    
+    :param str new_directory_to_watch: The new directory to watch.
+    :param multiprocessing.Process daemon_process: The current daemon process.
+    :return: The new daemon process.
+    """
     from uncluttr.daemon.daemon import start_daemon  # Import local to avoid circular import
     if daemon_process is not None:
         print("Restarting daemon...", daemon_process)

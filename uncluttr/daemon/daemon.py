@@ -73,7 +73,12 @@ def start_daemon():
         print(f"An unexpected error occurred: {e}")
 
 def wait_for_file(file_path:str, timeout=10):
-    """Wait for a file to be completely copied."""
+    """Wait for a file to be completely copied.
+    
+    :param str file_path: The path to the file to wait for.
+    :param int timeout: The maximum time to wait in seconds.
+    :raises TimeoutError: If the file is not ready after the timeout.
+    """
     start_time = time.time()
     while True:
         if os.path.exists(file_path) and os.path.getsize(file_path) > 0:

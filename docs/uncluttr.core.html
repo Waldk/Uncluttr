@@ -19,9 +19,7 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="uncluttr.daemon package" href="uncluttr.daemon.html" />
-    <link rel="prev" title="uncluttr package" href="uncluttr.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,37 +41,27 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">uncluttr</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="uncluttr.html">uncluttr package</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="uncluttr.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">uncluttr.core package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.daemon.html">uncluttr.daemon package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.file_treatement.html">uncluttr.file_treatement package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.gui.html">uncluttr.gui package</a></li>
-<li class="toctree-l4"><a class="reference internal" href="uncluttr.ia.html">uncluttr.ia package</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">uncluttr.core package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-uncluttr.core.configuration">uncluttr.core.configuration module</a><ul>
+<li><a class="reference internal" href="#uncluttr.core.configuration.get_base_app_files_path"><code class="docutils literal notranslate"><span class="pre">get_base_app_files_path()</span></code></a></li>
+<li><a class="reference internal" href="#uncluttr.core.configuration.update_daemon_path"><code class="docutils literal notranslate"><span class="pre">update_daemon_path()</span></code></a></li>
+<li><a class="reference internal" href="#uncluttr.core.configuration.update_directory_order"><code class="docutils literal notranslate"><span class="pre">update_directory_order()</span></code></a></li>
+<li><a class="reference internal" href="#uncluttr.core.configuration.update_directory_to_watch"><code class="docutils literal notranslate"><span class="pre">update_directory_to_watch()</span></code></a></li>
+<li><a class="reference internal" href="#uncluttr.core.configuration.update_storage_directory"><code class="docutils literal notranslate"><span class="pre">update_storage_directory()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#uncluttr-hook-tkinterdnd2-module">uncluttr.hook-tkinterdnd2 module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="uncluttr.html#module-uncluttr">Module contents</a></li>
+<li><a class="reference internal" href="#module-uncluttr.core.main">uncluttr.core.main module</a><ul>
+<li><a class="reference internal" href="#uncluttr.core.main.signal_handler"><code class="docutils literal notranslate"><span class="pre">signal_handler()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-uncluttr.core">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.character_recognition.html">uncluttr.file_treatement.character_recognition</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_autosummary/uncluttr.gui.gui.html">uncluttr.gui.gui</a></li>
-</ul>
-
+</div>
         </div>
       </div>
     </nav>
@@ -88,8 +76,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">uncluttr</a></li>
-          <li class="breadcrumb-item"><a href="uncluttr.html">uncluttr package</a></li>
       <li class="breadcrumb-item active">uncluttr.core package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/uncluttr.core.rst.txt" rel="nofollow"> View page source</a>
@@ -118,24 +104,46 @@
 <dt class="sig sig-object py" id="uncluttr.core.configuration.update_daemon_path">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">update_daemon_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_directory_to_watch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">daemon_process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Process</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Process</span></span></span><a class="reference internal" href="_modules/uncluttr/core/configuration.html#update_daemon_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.update_daemon_path" title="Link to this definition"></a></dt>
 <dd><p>Restart the daemon with a new directory to watch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_directory_to_watch</strong> (<em>str</em>) – The new directory to watch.</p></li>
+<li><p><strong>daemon_process</strong> (<em>multiprocessing.Process</em>) – The current daemon process.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new daemon process.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="uncluttr.core.configuration.update_directory_order">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">update_directory_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uncluttr/core/configuration.html#update_directory_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.update_directory_order" title="Link to this definition"></a></dt>
 <dd><p>Update the directory to watch in the configuration file.</p>
+<p>param str new_order: The new order for the directory.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="uncluttr.core.configuration.update_directory_to_watch">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">update_directory_to_watch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uncluttr/core/configuration.html#update_directory_to_watch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.update_directory_to_watch" title="Link to this definition"></a></dt>
 <dd><p>Update the directory to watch in the configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_directory</strong> (<em>str</em>) – The new directory to watch.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="uncluttr.core.configuration.update_storage_directory">
 <span class="sig-prename descclassname"><span class="pre">uncluttr.core.configuration.</span></span><span class="sig-name descname"><span class="pre">update_storage_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/uncluttr/core/configuration.html#update_storage_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#uncluttr.core.configuration.update_storage_directory" title="Link to this definition"></a></dt>
 <dd><p>Update the directory for storage in the configuration file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_directory</strong> (<em>str</em>) – The new directory for storage.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -157,10 +165,7 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="uncluttr.html" class="btn btn-neutral float-left" title="uncluttr package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="uncluttr.daemon.html" class="btn btn-neutral float-right" title="uncluttr.daemon package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
