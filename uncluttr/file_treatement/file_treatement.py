@@ -17,7 +17,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from uncluttr.core.configuration import get_base_app_files_path
 from uncluttr.file_treatement.rangement import rangement_fichier
 from uncluttr.file_treatement.text_preprocessing import preprocess_text, refine_words
-from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, append_custom_metadata_to_image
+from uncluttr.file_treatement.metadata_custom import append_custom_metadata_to_pdf, apppend_custom_metadata_to_image
 from uncluttr.file_treatement.character_recognition import extract_pdf_text_ocr, extract_image_text_ocr
 
 
@@ -287,7 +287,7 @@ def treat_image(file_path: str):
         print(f"Document theme: {theme_document}")
         sys.stdout.flush()
 
-        append_custom_metadata_to_image(file_path, {"document_type": type_document,
+        apppend_custom_metadata_to_image(file_path, {"document_type": str(type_document),
                                             "document_date": None,
                                             "document_theme": theme_document})
         rangement_fichier(file_path)

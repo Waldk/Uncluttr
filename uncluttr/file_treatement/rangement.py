@@ -4,7 +4,7 @@ import os
 import shutil
 import configparser
 from uncluttr.core.configuration import get_base_app_files_path
-from uncluttr.file_treatement.metadata_custom import read_custom_metadata_from_pdf
+from uncluttr.file_treatement.metadata_custom import read_custom_metadata_from_pdf,read_custom_metadata_from_image
 
 
 def changement_rangement_fichier(x):
@@ -52,10 +52,17 @@ def rangement_fichier(file_path: str):
         ordre = config['settings']['ordre_rangement']
         print(ordre)
         create_directory_if_not_exists(base_directory)
+        print("Reading metadata from the file...")
+        file_type = os.path.splitext(file_path)[1]
+        match file_type:
+            case '.pdf':
+                metadata = read_custom_metadata_from_pdf(file_path)
+            case '.jpg':
+                metadata = read_custom_metadata_from_image(file_path)
+                metadata['document_theme'] = metadata['document_theme'].split(", ")
 
-        metadata = read_custom_metadata_from_pdf(file_path)
         tags = []
-
+        print("Metadata read:", metadata)
         if ordre == "type -> date -> theme":
             if 'document_type' in metadata and metadata['document_type']:
                 tags.append(metadata['document_type'])
@@ -81,7 +88,9 @@ def rangement_fichier(file_path: str):
                 tags.append( metadata['document_theme'][0])
                 tags.append( metadata['document_theme'][1])
 
+        print("Tags:", tags)
         target_directory = find_or_create_subdirectory(base_directory, tags)
+        print(f"Moving file to {target_directory}")
         shutil.move(file_path, target_directory)
         print(f"File moved to {target_directory}")
     except Exception as e:
