@@ -42,17 +42,17 @@ Dans la section **Releases** de github, vous pouvez retrouver le dernier ```.exe
 
 Prérequis: 
 - Disposer d'un IDE permettant d'utiliser Pythonn >3.12, <3.13 (**[Guide d'Installation de Python](https://www.python.org/about/gettingstarted/)**).
-- cloner le dépôt à l'emplacement désiré à l'aide de la commande 
+- cloner le dépôt à l'emplacement désiré à l'aide de la commande dans un terminal, de préférence un bash :
 ```sh
 git clone https://github.com/Waldk/Uncluttr.git
 ```
 
-1. **Installer Poetry** :
+1. Installer Poetry :
 ```sh
 pip install poetry
 ```
 
-3. **Installer les Dépendances** :
+3. Installer les Dépendances :
 ```sh
 poetry install
 ```
@@ -63,8 +63,10 @@ Si ce n'est pas le cas, créer et activer un environnement virtuel :
 python -m venv .venv
 source .venv/Scripts/activate
 ```
-- vous devriez voir un (.venv) dans votre terminal au dessus de la ligne où vous allez éxecuter vos futurs commandes 
+- vous devriez voir un (.venv) dans votre terminal au-dessus de la ligne où vous allez éxecuter vos futurs commandes
+
 ![alt text](assets/readme/terminal.png)
+
 puis utiliser la commande :
 ```sh
 poetry install
@@ -87,7 +89,7 @@ python -m uncluttr.core.main
 ### Description Détailée des Principales Fonctionnalités
 
 - On aura deux points d’entrée principaux pour le traitement des fichiers :
-    - **Daemon de surveillance** : e manière éponyme, viendra observer l’ajout d’un fichier dans un dossier source, par défaut le dossier dans lequel les documents numérisés sont stockés, afin de déclencher le traitement de ces derniers.
+    - **Daemon de surveillance** : de manière éponyme, viendra observer l’ajout d’un fichier dans un dossier source, par défaut le dossier dans lequel les documents numérisés sont stockés, afin de déclencher le traitement de ces derniers.
     - **Interface Graphique** : l’ajout de fichiers effectués manuellement par un utilisateur via une IHM
 
 - Le traitement sera effectué dans la méthode [file_analysis](https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/file_treatement.py#L178). On viendra ensuite observer le type et la structure du fichier afin de voir s'il s'agit d'un `.zip`, on le décompressera et traitera l'ensemble des fichiers, on vérifiera si le texte est consultable, comme par exemple pour un fichier texte ou un pdf dit structuré. Si ce n’est pas le cas comme dans des images ou des pdfs non structuré, on viendra transmettre les fichiers à un OCR, un outil de reconnaissance de caractères, afin d’en faire émerger le texte. 
@@ -105,12 +107,31 @@ python -m uncluttr.core.main
 - On retrouvera dans le dossier configuration le fichier [conf.ini](https://github.com/Waldk/Uncluttr/blob/main/configuration/conf.ini) afin de paramétrer différents paramètres de l'application.
 
 - On pourra observer d'autres fonctionnalités au sein de l'interface graphique :
-    - On pourra, en plus de le faire dans les fichiers de configuration, venir modifier le dossier qui sera surveillé par le daemon. ![alt text](assets/readme/daemon.png)
-    - On pourra chercher un fichier à traiter via l'explorateur de fichiers de Windows ![alt text](assets/readme/add.png)
-    - Il sera possible de faire un glisser-déposer (drag and drop) des fichiers directement dans l'interface afin de lancer le traitement de ces derniers. ![alt text](assets/readme/drag.png)
-    - On pourra observer l'état des processus fils dédiés au traitement des fihciers ![alt text](assets/readme/process.png)
-    - Il sera possible de choisir un type de fichier spécifique afin d'affiner le modèle pour qu'il corresponde bien à la structure des fichiers de l'utilisateur. De plus, on pourra paramétrer les aspects sur lesquels mettre l'accent lors de la création de l'arborescence des dossiers. ![alt text](assets/readme/settings.png)
-    - Enfin, une page dédiée permettra de consulter l'arborescence des dossiers et de naviguer facilement à travers les documents organisés. ![alt text](assets/readme/arbo.png)
+    - On pourra, en plus de le faire dans les fichiers de configuration, venir modifier le dossier qui sera surveillé par le daemon. 
+
+    ![alt text](assets/readme/daemon.png)
+
+    - On pourra chercher un fichier à traiter via l'explorateur de fichiers de Windows 
+
+    ![alt text](assets/readme/add.png)
+
+    - Il sera possible de faire un glisser-déposer (drag and drop) des fichiers directement dans l'interface afin de lancer le traitement de ces derniers. 
+    
+    ![alt text](assets/readme/drag.png)
+    
+    - On pourra observer l'état des processus fils dédiés au traitement des fichiers 
+    
+    ![alt text](assets/readme/process.png)
+    
+    - Il sera possible de choisir un type de fichier spécifique afin d'affiner le modèle pour qu'il corresponde bien à la structure des fichiers de l'utilisateur, grâce à la fonction [`entrainer_modele`](https://github.com/Waldk/Uncluttr/blob/docs/uncluttr/file_treatement/training_models.py#L858). De plus, on pourra paramétrer les aspects sur lesquels mettre l'accent lors de la création de l'arborescence des dossiers. 
+    
+    ![alt text](assets/readme/settings.png)
+    
+    - Enfin, une page dédiée permettra de consulter l'arborescence des dossiers et de naviguer facilement à travers les documents organisés.
+    
+    ![alt text](assets/readme/arbo.png)
+
+- On pourra retrouver les modèles servant à l'extraction des éléments clés dans le dossier [models](https://github.com/Waldk/Uncluttr/tree/docs/models), ces derniers étant gérés par la bibliothèque [joblib](https://joblib.readthedocs.io/en/stable/)
 
 ### Scénarios d'Utilisation Typiques
 
@@ -121,12 +142,13 @@ python -m uncluttr.core.main
 
 ### Fonctionnalités à venir
 
-- Rendre le démarrage du daemon indépent du reste et automatique au démarrage
-- Envoie de notifications à la fin du traitemennt d'un fichier
-- amélioration de l'interface graphique
+- Rendre le démarrage du daemon indépent du reste et automatique au démarrage de la machine hôte
+- Envoi de notifications à la fin du traitemennt d'un fichier
+- Amélioration de l'interface graphique
 - Mise en place d'API plus efficace
 - Rendre l'application compatible avec les appareils mobiles
 - Améliorer les modèles de traitement des fichiers
+- Autres évolutions que vous jugez pertinentes :)
 
 ### Releases
 
@@ -146,9 +168,9 @@ Pour générer la documentation de votre projet Uncluttr, suivez ces étapes :
 ```sh
 git checkout docs
 ```
-penser à rebase si nécessaire la branche docs sur la main afin de prendre les dernières modifications en compte via la commande:
+Penser à rebase si nécessaire la branche docs sur la main afin de prendre les dernières modifications en compte via la commande:
 ```sh
-git rebaase main
+git rebase main
 ```
 
 2. **Générer les Fichiers `.rst` pour les Modules Python** :
@@ -166,13 +188,13 @@ Enfin, réaliser un commit et push ce dernier en ligne. Une fois ces commandes e
 
 ### Conventions de Codage  
 
-- Respect de **PEP 8** pour un code propre et lisible  
+- Respect de **[PEP 8](http://peps.python.org/pep-0008/)** pour un code propre et lisible  
 - Documentation systématique avec des **docstrings**  
 - Analyse du code avec **Pylint** pour détecter erreurs et incohérences  
-- Gestion des erreurs via des **exceptions personnalisées**  
-- Mise en place progressive de **tests unitaires** avec `unittest`  
+- Gestion des erreurs via des **exceptions personnalisées** et  l'affichage de **pop-ups** à l'IHM 
+- Mise en place progressive de **tests unitaires** avec [`unittest`](https://docs.python.org/fr/3/library/unittest.html)  
 - Organisation du projet en **modules et packages structurés**  
-- Gestion des dépendances avec **Poetry** via `pyproject.toml`  
+- Gestion des dépendances avec **[Poetry](https://python-poetry.org/docs/)** via `pyproject.toml`  
 
 ### Bonnes Pratiques et Outils  
 
@@ -183,7 +205,7 @@ Enfin, réaliser un commit et push ce dernier en ligne. Une fois ces commandes e
 
 ### Défis et Problèmes Rencontrés  
 
-- Gestion des dépendances et compatibilité des versions de packages  
+- Rendre facilement accesible des modèles issues du machine learning sans installation fastidieuses par l'utilisateur 
 - Intégration de **l’OCR** et des modèles de traitement de texte  
 
 
@@ -193,7 +215,7 @@ Pour plus de détails, consultez la [documentation complète](https://waldk.gith
 
 ## Contribution  
 
-Si vous souhaitez contribuer au projet, n’hésitez pas ! Les corrections de bugs, améliorations, ajustements visuels, etc., sont toujours les bienvenus. Si vous envisagez d’implémenter une fonctionnalité majeure, merci d’ouvrir une discussion à ce sujet au préalable. La documentation contient des informations de base pour bien débuter.  
+Si vous souhaitez contribuer au projet, n’hésitez pas ! Les corrections de bugs, améliorations, ajustements visuels, etc., sont toujours les bienvenus. Si vous envisagez d’implémenter une fonctionnalité majeure, merci d’ouvrir une discussion à ce sujet au préalable. La documentation contient des informations de base pour bien débuter ainsi que le Read me que vous venez de consulter, et les autres documents annexes à celui-ci.  
 
 
 ## Références Utiles
