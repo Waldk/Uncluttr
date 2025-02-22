@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.rangement.html">uncluttr.file_treatement.rangement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
@@ -87,7 +88,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">configparser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.core.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_base_app_files_path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.metadata_custom</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_custom_metadata_from_pdf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.metadata_custom</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_custom_metadata_from_pdf</span><span class="p">,</span><span class="n">read_custom_metadata_from_image</span>
 
 
 <div class="viewcode-block" id="changement_rangement_fichier">
@@ -140,10 +141,17 @@
         <span class="n">ordre</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;settings&#39;</span><span class="p">][</span><span class="s1">&#39;ordre_rangement&#39;</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">ordre</span><span class="p">)</span>
         <span class="n">create_directory_if_not_exists</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reading metadata from the file...&quot;</span><span class="p">)</span>
+        <span class="n">file_type</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">match</span> <span class="n">file_type</span><span class="p">:</span>
+            <span class="k">case</span> <span class="s1">&#39;.pdf&#39;</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="n">read_custom_metadata_from_pdf</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="k">case</span> <span class="s1">&#39;.jpg&#39;</span><span class="p">:</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="n">read_custom_metadata_from_image</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+                <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_theme&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_theme&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
 
-        <span class="n">metadata</span> <span class="o">=</span> <span class="n">read_custom_metadata_from_pdf</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
         <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Metadata read:&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ordre</span> <span class="o">==</span> <span class="s2">&quot;type -&gt; date -&gt; theme&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;document_type&#39;</span> <span class="ow">in</span> <span class="n">metadata</span> <span class="ow">and</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_type&#39;</span><span class="p">]:</span>
                 <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_type&#39;</span><span class="p">])</span>
@@ -169,7 +177,9 @@
                 <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_theme&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
                 <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;document_theme&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tags:&quot;</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
         <span class="n">target_directory</span> <span class="o">=</span> <span class="n">find_or_create_subdirectory</span><span class="p">(</span><span class="n">base_directory</span><span class="p">,</span> <span class="n">tags</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Moving file to </span><span class="si">{</span><span class="n">target_directory</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">target_directory</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File moved to </span><span class="si">{</span><span class="n">target_directory</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>

@@ -22,6 +22,7 @@ Welcome to Uncluttr's documentation!
    uncluttr.file_treatement.metadata_custom
    uncluttr.file_treatement.file_treatement
    uncluttr.file_treatement.spacy_model
+   uncluttr.file_treatement.rangement
    uncluttr.core.configuration
    uncluttr.core.main
    uncluttr.daemon.daemon

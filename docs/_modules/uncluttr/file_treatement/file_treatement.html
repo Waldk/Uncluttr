@@ -50,6 +50,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.text_preprocessing.html">uncluttr.file_treatement.text_preprocessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.metadata_custom.html">uncluttr.file_treatement.metadata_custom</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.file_treatement.html">uncluttr.file_treatement.file_treatement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.file_treatement.rangement.html">uncluttr.file_treatement.rangement</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.configuration.html">uncluttr.core.configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.core.main.html">uncluttr.core.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_autosummary/uncluttr.daemon.daemon.html">uncluttr.daemon.daemon</a></li>
@@ -100,7 +101,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.core.configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_base_app_files_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.rangement</span><span class="w"> </span><span class="kn">import</span> <span class="n">rangement_fichier</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.text_preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocess_text</span><span class="p">,</span> <span class="n">refine_words</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.metadata_custom</span><span class="w"> </span><span class="kn">import</span> <span class="n">append_custom_metadata_to_pdf</span><span class="p">,</span> <span class="n">append_custom_metadata_to_image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.metadata_custom</span><span class="w"> </span><span class="kn">import</span> <span class="n">append_custom_metadata_to_pdf</span><span class="p">,</span> <span class="n">apppend_custom_metadata_to_image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uncluttr.file_treatement.character_recognition</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_pdf_text_ocr</span><span class="p">,</span> <span class="n">extract_image_text_ocr</span>
 
 
@@ -402,7 +403,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Document theme: </span><span class="si">{</span><span class="n">theme_document</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-        <span class="n">append_custom_metadata_to_image</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;document_type&quot;</span><span class="p">:</span> <span class="n">type_document</span><span class="p">,</span>
+        <span class="n">apppend_custom_metadata_to_image</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;document_type&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">type_document</span><span class="p">),</span>
                                             <span class="s2">&quot;document_date&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
                                             <span class="s2">&quot;document_theme&quot;</span><span class="p">:</span> <span class="n">theme_document</span><span class="p">})</span>
         <span class="n">rangement_fichier</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
