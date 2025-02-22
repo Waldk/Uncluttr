@@ -10,6 +10,7 @@
    
       append_custom_metadata_to_image
       append_custom_metadata_to_pdf
+      apppend_custom_metadata_to_image
       read_custom_metadata_from_image
       read_custom_metadata_from_pdf
    
