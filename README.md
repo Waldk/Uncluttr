@@ -140,7 +140,7 @@ python -m uncluttr.core.main
 - Classification automatique et ajout de métadonnées
 - Organisation des documents dans une arborescence
 
-https://github.com/Waldk/Uncluttr/blob/docs/assets/readme/uncluttr_court_compressed.mp4
+https://github.com/user-attachments/assets/eabb38db-ba34-4935-86f2-7224f6fdb598
 
 ### Fonctionnalités à venir
 
