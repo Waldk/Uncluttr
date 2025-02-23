@@ -1,0 +1,462 @@
+\documentclass[french]{article}
+
+\usepackage[dvipsnames]{xcolor}
+\usepackage[textwidth=18cm]{geometry}
+\usepackage{titlesec}
+\usepackage[3D]{movie15}
+\usepackage{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{courier}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{subsubsection}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\geometry{vmargin=3cm }
+\setlength{\headheight}{10pt} 
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+\lfoot{\includegraphics[width=0.2\textwidth]{Images/ece.png}}
+\usepackage{listings}    
+\usepackage{xcolor}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.47,0.47,0.33}
+\definecolor{myorange}{rgb}{0.8,0.4,0}
+\definecolor{mywhite}{rgb}{0.98,0.98,0.98}
+\definecolor{myblue}{rgb}{0.01,0.61,0.98}
+\definecolor{mypurple}{rgb}{0.01,0.10,0.30}
+\definecolor{mycyan}{HTML}{00878c}
+\newcommand*{\FormatDigit}[1]{\ttfamily\textcolor{mygreen}{#1}}
+\lstdefinestyle{FormattedNumber}{%
+    literate=*{0}{{\FormatDigit{0}}}{1}%
+             {1}{{\FormatDigit{1}}}{1}%
+             {2}{{\FormatDigit{2}}}{1}%
+             {3}{{\FormatDigit{3}}}{1}%
+             {4}{{\FormatDigit{4}}}{1}%
+             {5}{{\FormatDigit{5}}}{1}%
+             {6}{{\FormatDigit{6}}}{1}%
+             {7}{{\FormatDigit{7}}}{1}%
+             {8}{{\FormatDigit{8}}}{1}%
+             {9}{{\FormatDigit{9}}}{1}%
+             {.0}{{\FormatDigit{.0}}}{2}%
+             {.1}{{\FormatDigit{.1}}}{2}%
+             {.2}{{\FormatDigit{.2}}}{2}%
+             {.3}{{\FormatDigit{.3}}}{2}%
+             {.4}{{\FormatDigit{.4}}}{2}%
+             {.5}{{\FormatDigit{.5}}}{2}%
+             {.6}{{\FormatDigit{.6}}}{2}%
+             {.7}{{\FormatDigit{.7}}}{2}%
+             {.8}{{\FormatDigit{.8}}}{2}%
+             {.9}{{\FormatDigit{.9}}}{2}%
+             {\ }{{ }}{1}%
+}
+\lstset{%
+  backgroundcolor=\color{mywhite},   
+  basicstyle=\footnotesize,       
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                   
+  commentstyle=\color{mypurple},    
+  deletekeywords={...},           
+  escapeinside={\%*}{*)},          
+  extendedchars=true,              
+  frame=shadowbox,                    
+  keepspaces=true,                 
+  keywordstyle=\color{myorange},       
+  language=Octave,                
+  morekeywords={*,...},            
+  numbers=left,                    
+  numbersep=5pt,                   
+  numberstyle=\tiny\color{mygray}, 
+  rulecolor=\color{white},         
+  rulesepcolor=\color{mycyan},
+  showspaces=false,                
+  showstringspaces=false,          
+  showtabs=false,                  
+  stepnumber=1,                    
+  stringstyle=\color{myorange},    
+  tabsize=4,               
+  title=\lstname,
+  emphstyle=\color{mycyan},%  style for emph={} 
+}    
+\lstdefinestyle{Arduino}{%
+    style=FormattedNumber,
+    keywords={Serial,println,write,digitalRead,digitalWrite,begin,attach,delay,Servo,pinMode,analogRead,analogWrite,map},%                 define keywords
+    morecomment=[l]{//},%             treat // as comments
+    morecomment=[s]{/*}{*/},%         define /* ... */ comments
+    emph={HIGH, INPUT, OUTPUT, LOW, int, char, float, string, void, unsigned, long}%        keywords to emphasize
+}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{figure}[!h] \flushleft
+        \includegraphics[width=.35\textwidth]{Images/ece.png}
+    \end{figure}
+    \normalsize \textsc{} \\ [1.0cm]
+    \vspace{.5cm}
+    \begin{center}
+        \hline
+        \vspace{4mm}
+        \begin{huge}
+            \textbf{\textcolor{mycyan}{Uncluttr}\\
+            \vspace{4mm}- Document de prise en main -}
+        \end{huge}
+    \end{center}
+    \hline
+    \begin{center}
+        \vspace{1 cm}
+        \begin{tabular}{||c||c||}
+            \hline
+            \textbf{Auteur} & \textcolor{mycyan}{Waldeck FELIX} waldeck.felix@edu.ece.fr \\
+            \hline
+            \textbf{Date de Dépôt} & 22/02/2025 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \vspace *{1,5 cm}
+    \vfill
+    \centering
+    Nous attestons que ce travail est original, qu’il est le fruit d’un travail commun et qu’il a été rédigé de manière autonome.
+\end{titlepage}
+
+\newpage
+\subsection{Avant-Propos}
+
+Ce document de prise en main est une adaptation du \href{https://github.com/Waldk/Uncluttr}{README disponible sur notre dépôt GitHub}. Pour une expérience de lecture optimale, nous vous recommandons de consulter directement le README sur GitHub, où la mise en forme, les liens interactifs et les images intégrées offrent une navigation plus fluide et agréable. En le lisant en ligne, vous bénéficierez également des mises à jour en temps réel et des fonctionnalités interactives prévues pour faciliter la compréhension du projet.
+
+\tableofcontents
+\listoffigures
+\noindent\rule{18cm}{0.8pt}
+
+\newpage
+
+\section{Introduction}
+
+\subsection{Contexte du projet et objectifs globaux}
+
+Uncluttr vise à faciliter la numérisation et l’archivage intelligent des documents d’une entreprise grâce à un système automatisé de traitement et de tri. Les fichiers ajoutés sont analysés puis classés dynamiquement selon une arborescence évolutive, qui s’adapte à l’arrivée de nouveaux documents.
+
+\subsection{Aperçu des Fonctionnalités Clés}
+
+\begin{itemize}
+    \item Surveillance de dossiers en temps réel via un démon de surveillance \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.daemon.daemon.html}{(lien vers la doc)}
+    \item Extraction de texte via OCR pour les PDF non structurés et les images \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.file_treatement.character_recognition.html}{(lien vers la doc)}
+    \item Prétraitement et analyse de texte \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.file_treatement.text_preprocessing.html}{(lien vers la doc)}
+    \item Classification automatique des documents \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.file_treatement.file_treatement.html}{(lien vers la doc)}
+    \item Ajout de métadonnées et création de tags \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.file_treatement.metadata_custom.html}{(lien vers la doc)}
+    \item Organisation des documents dans une arborescence \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.file_treatement.file_treatement.html}{(lien vers la doc)}
+    \item Interface graphique pour l'ajout et la consultation de fichiers, ainsi que la configuration de l'application \href{https://waldk.github.io/Uncluttr/_autosummary/uncluttr.gui.gui.html}{(lien vers la doc)}
+\end{itemize}
+
+\section{Vue d'Ensemble du Projet}
+
+\subsection{Principaux Composants du Projet}
+
+\begin{itemize}
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/daemon/daemon.py}{Daemon} : Surveillance des dossiers et déclenchement des traitements
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/gui/gui.py}{Interface Graphique} : Visualisation et ajustement du classement des documents
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/character_recognition.py}{Extraction de Texte} : Utilisation de l'OCR pour extraire le texte des PDF et images
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/text_preprocessing.py}{Prétraitement de Texte} : Nettoyage et lemmatisation du texte
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/file_treatement.py}{Analyse de Texte} : Classification et génération de thèmes
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/metadata_custom.py}{Ajout de Métadonnées} : Ajout de tags et métadonnées aux documents
+    \item \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/rangement.py}{Organisation des Documents} : Création d'une arborescence pour le rangement des documents
+\end{itemize}
+
+\subsection{Diagramme d'Architecture Simplifié}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{assets/readme/architecture.png}
+    \caption{Diagramme d'Architecture Simplifié}
+\end{figure}
+
+\newpage
+
+\section{Installation de l'application}
+
+Dans la section \textbf{Releases} de github, vous pouvez retrouver le dernier \texttt{.exe} fonctionnel de l'application. Téléchargez ce dernier et exécutez-le afin de pouvoir utiliser l'application. Pour le fonctionnement de cette dernière, consultez la section : \href{#prise-en-main-de-lapplication}{\textcolor{mycyan}{Prise en main de l'application}}
+
+\subsection{Installation de l'Environnement de Développement}
+
+\subsubsection{Guide Pas à Pas}
+
+Prérequis:
+\begin{itemize}
+    \item Disposer d'un IDE permettant d'utiliser Python >3.12, <3.13 \href{https://www.python.org/about/gettingstarted/}{(Guide d'Installation de Python)}
+    \item Cloner le dépôt à l'emplacement désiré à l'aide de la commande dans un terminal, de préférence un bash :
+\end{itemize}
+
+\begin{lstlisting}[language=bash]
+git clone https://github.com/Waldk/Uncluttr.git
+\end{lstlisting}
+
+\begin{enumerate}
+    \item Installer Poetry :
+    \begin{lstlisting}[language=bash]
+pip install poetry
+    \end{lstlisting}
+
+    \item Installer les Dépendances :
+    \begin{lstlisting}[language=bash]
+poetry install
+    \end{lstlisting}
+    L'utilisation de poetry devrait automatiquement générer un environnement virtuel prêt à l'emploi.
+
+    Si ce n'est pas le cas, créer et activer un environnement virtuel :
+    \begin{lstlisting}[language=bash]
+python -m venv .venv
+source .venv/Scripts/activate
+    \end{lstlisting}
+    Vous devriez voir un (.venv) dans votre terminal au-dessus de la ligne où vous allez exécuter vos futures commandes.
+
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/terminal.png}
+        \caption{Terminal avec environnement virtuel activé}
+    \end{figure}
+
+\newpage
+
+    Puis utiliser la commande :
+    \begin{lstlisting}[language=bash]
+poetry install
+    \end{lstlisting}
+
+    \item Lancer l'Application :
+    \begin{lstlisting}[language=bash]
+python -m uncluttr.core.main
+    \end{lstlisting}
+\end{enumerate}
+
+\newpage
+\section{Prise en main de l'application}
+
+\subsection{Présentation de la Structure du Code Source}
+
+\begin{itemize}
+    \item \href{https://github.com/Waldk/Uncluttr/tree/main/uncluttr/core}{core} : Contient le code principal de l'application
+    \item \href{https://github.com/Waldk/Uncluttr/tree/main/uncluttr/daemon}{daemon} : Contient le code du démon de surveillance
+    \item \href{https://github.com/Waldk/Uncluttr/tree/main/uncluttr/gui}{gui} : Contient le code de l'interface graphique, cette dernière utilisant tkinter
+    \item \href{https://github.com/Waldk/Uncluttr/tree/main/uncluttr/file_treatement}{file\_treatement} : Contient les modules de traitement de fichiers
+\end{itemize}
+
+\subsection{Description Détailée des Principales Fonctionnalités}
+
+On aura deux points d’entrée principaux pour le traitement des fichiers :\\
+\begin{itemize}
+    \item \textbf{Daemon de surveillance} : de manière éponyme, viendra observer l’ajout d’un fichier dans un dossier source, par défaut le dossier dans lequel les documents numérisés sont stockés, afin de déclencher le traitement de ces derniers.
+    \item \textbf{Interface Graphique} : l’ajout de fichiers effectués manuellement par un utilisateur via une IHM\\
+\end{itemize}
+
+Le traitement sera effectué dans la méthode \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/file_treatement.py#L178}{file\_analysis}. On viendra ensuite observer le type et la structure du fichier afin de voir s'il s'agit d'un \texttt{.zip}, on le décompressera et traitera l'ensemble des fichiers, on vérifiera si le texte est consultable, comme par exemple pour un fichier texte ou un pdf dit structuré. Si ce n’est pas le cas comme dans des images ou des pdfs non structuré, on viendra transmettre les fichiers à un OCR, un outil de reconnaissance de caractères, afin d’en faire émerger le texte.\\
+\begin{itemize}
+    \item \textbf{Extraction de Texte} : Utilisation de l'OCR pour extraire le texte des PDF et images \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/character_recognition.py#L8}{(extract\_pdf\_text\_ocr)}\\
+\end{itemize}
+
+Une fois le texte obtenu, on viendra traiter ce dernier afin d'en extraire les informations clés via les modèles que l’on a entrainés, notamment le type de fichier, si c’est une facture, un contrat, ou bien encore le thème ou des dates clés, pour ce faire on aura :\\
+\begin{itemize}
+    \item \textbf{Prétraitement de Texte} : Nettoyage et lemmatisation du texte \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/text_preprocessing.py#L52}{(preprocess\_text)}
+    \item \textbf{Analyse de Texte} : Classification et extraction des informations clés \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/file_treatement.py#L151}{(classifier\_document)} et \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/file_treatement.py#L299}{(extract\_date)}
+    \item \textbf{Ajout de Métadonnées} : Ajout des informations sous forme de tags aux métadonnées des fichiers \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/metadata_custom.py#L13}{(append\_metadata\_to\_pdf)}\\
+\end{itemize}
+
+Enfin à l’aide de toutes ces informations on viendra ajouter le fichier dans le bon dossier en en créant si nécessaire.\\
+\begin{itemize}
+    \item \textbf{Organisation des Documents} : Création d'une arborescence pour le rangement des documents \href{https://github.com/Waldk/Uncluttr/blob/main/uncluttr/file_treatement/rangement.py#L16}{(rangement\_fichier)}\\
+\end{itemize}
+
+Ce processus pourra donc s'exécuter de manière fluide, sans interruption en tâche de fond à chaque document scanné, afin de ne pas alourdir le processus de travail de l’utilisateur.\\
+
+On retrouvera dans le dossier configuration le fichier \href{https://github.com/Waldk/Uncluttr/blob/main/configuration/conf.ini}{conf.ini} afin de paramétrer différents paramètres de l'application.
+
+\newpage
+On pourra observer d'autres fonctionnalités au sein de l'interface graphique :
+\begin{itemize}
+    \item On pourra, en plus de le faire dans les fichiers de configuration, venir modifier le dossier qui sera surveillé par le daemon.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/daemon.png}
+        \caption{Modification du dossier surveillé par le daemon}
+    \end{figure}
+    \newpage
+    \item On pourra chercher un fichier à traiter via l'explorateur de fichiers de Windows.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/add.png}
+        \caption{Recherche de fichier via l'explorateur de fichiers}
+    \end{figure}
+    \newpage
+    \item Il sera possible de faire un glisser-déposer (drag and drop) des fichiers directement dans l'interface afin de lancer le traitement de ces derniers.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/drag.png}
+        \caption{Glisser-déposer des fichiers}
+    \end{figure}
+    \newpage
+    \item On pourra observer l'état des processus fils dédiés au traitement des fichiers.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/process.png}
+        \caption{État des processus fils}
+    \end{figure}
+    \newpage
+    \item Il sera possible de choisir un type de fichier spécifique afin d'affiner le modèle pour qu'il corresponde bien à la structure des fichiers de l'utilisateur, grâce à la fonction \href{https://github.com/Waldk/Uncluttr/blob/docs/uncluttr/file_treatement/training_models.py#L858}{entrainer\_modele}. De plus, on pourra paramétrer les aspects sur lesquels mettre l'accent lors de la création de l'arborescence des dossiers.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/settings.png}
+        \caption{Paramétrage des aspects de l'arborescence}
+    \end{figure}
+    \newpage
+    \item Enfin, une page dédiée permettra de consulter l'arborescence des dossiers et de naviguer facilement à travers les documents organisés.
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=1\textwidth]{assets/readme/arbo.png}
+        \caption{Consultation de l'arborescence des dossiers}
+    \end{figure}
+\end{itemize}
+
+On pourra retrouver les modèles servant à l'extraction des éléments clés dans le dossier \href{https://github.com/Waldk/Uncluttr/tree/docs/models}{models}, ces derniers étant gérés par la bibliothèque \href{https://joblib.readthedocs.io/en/stable/}{joblib}.
+
+\subsection{Scénarios d'Utilisation Typiques}
+
+\begin{itemize}
+    \item Surveillance d'un dossier pour l'ajout de nouveaux fichiers
+    \item Extraction et prétraitement du texte des documents ajoutés
+    \item Classification automatique et ajout de métadonnées
+    \item Organisation des documents dans une arborescence
+\end{itemize}
+
+\newpage
+\subsection{Fonctionnalités à venir}
+
+\begin{itemize}
+    \item Rendre le démarrage du daemon indépendant du reste et automatique au démarrage de la machine hôte
+    \item Envoi de notifications à la fin du traitement d'un fichier
+    \item Amélioration de l'interface graphique
+    \item Mise en place d'API plus efficace afin de rendre l'application compatible avec les appareils mobiles ou d'avoir une application web
+    \item Améliorer les modèles de traitement des fichiers
+    \item Autres évolutions que vous jugez pertinentes :)
+\end{itemize}
+
+\subsection{Releases}
+
+\begin{itemize}
+    \item Dans la section \textbf{Releases} de github, vous pouvez retrouver le dernier \texttt{.exe} fonctionnel de l'application. Pour build un \texttt{.exe}, lancer la commande 
+    \begin{lstlisting}[language=bash]
+    pyinstaller --onefile --name Uncluttr --add-data "configuration/conf.ini;configuration" --add-data "configuration/document\_keywords.json;configuration" --add-data "models/model\_svm.joblib;models" --add-data "models/vectorizer\_tfidf.joblib;models" --additional-hooks-dir=./uncluttr uncluttr/core/main.py\end{lstlisting}
+    Vous retrouverez le \texttt{.exe} dans le dossier dist.
+    \item Si vous avez déjà build une fois, vous devriez avoir un fichier \texttt{.spec}, auquel cas vous pouvez build un exécutable avec la commande : \texttt{pyinstaller Uncluttr.spec}
+    \item \textbf{Mettre à jour la version} du logiciel dans \texttt{pyproject.toml}
+    \item \textbf{Créer un tag Git} correspondant à la nouvelle version (\texttt{git tag -a vX.Y.Z -m "Version X.Y.Z"})
+    \item \textbf{Pousser les modifications et le tag} avec : \texttt{git push origin main --tags}
+    \item Dans la section github actions, vous trouverez des jobs vous permettant de réaliser des releases de façon automatisée
+\end{itemize}
+
+\subsection{Génération de la Documentation}
+
+Pour générer la documentation de votre projet Uncluttr, suivez ces étapes :
+
+\begin{enumerate}
+    \item \textbf{Se Positionner sur la Branche \texttt{docs}} :
+    \begin{verbatim}
+    git checkout docs
+    \end{verbatim}
+    Pensez à rebaser si nécessaire la branche docs sur main afin de prendre les dernières modifications en compte via la commande :
+    \begin{verbatim}
+    git rebase main
+    \end{verbatim}
+
+    \item \textbf{Générer les Fichiers \texttt{.rst} pour les Modules Python} :
+    \begin{verbatim}
+    sphinx-apidoc -o source/uncluttr/ ../uncluttr/
+    \end{verbatim}
+
+    \item \textbf{Construire la Documentation HTML} :
+    \begin{verbatim}
+    sphinx-build -b html source/ docs/
+    \end{verbatim}
+    Enfin, réalisez un commit et poussez ce dernier en ligne. Une fois ces commandes exécutées, les automatisations de GitHub Pages prendront le relais pour publier la documentation mise à jour. Vous pourrez alors consulter la documentation en ligne à l'adresse \href{https://waldk.github.io/Uncluttr/}{https://waldk.github.io/Uncluttr/}.
+\end{enumerate}
+
+\subsection{Bonnes Pratiques de Développement}
+
+\subsubsection{Conventions de Codage}
+
+\begin{itemize}
+    \item Respect de \href{http://peps.python.org/pep-0008/}{PEP 8} pour un code propre et lisible
+    \item Documentation systématique avec des \texttt{docstrings}
+    \item Analyse du code avec \texttt{Pylint} pour détecter erreurs et incohérences
+    \item Gestion des erreurs via des \texttt{exceptions personnalisées} et l'affichage de \texttt{pop-ups} à l'IHM
+    \item Mise en place progressive de \texttt{tests unitaires} avec \href{https://docs.python.org/fr/3/library/unittest.html}{unittest}
+    \item Organisation du projet en \texttt{modules et packages structurés}
+    \item Gestion des dépendances avec \href{https://python-poetry.org/docs/}{Poetry} via \texttt{pyproject.toml}
+\end{itemize}
+
+\subsubsection{Bonnes Pratiques et Outils}
+
+\begin{itemize}
+    \item Utiliser des \texttt{environnements virtuels} pour isoler les dépendances
+    \item Vérifier la qualité du code avec \texttt{Pylint} et d'autres linters
+    \item Assurer une gestion robuste des erreurs pour éviter les crashs
+    \item Versionner le code avec \texttt{Git} et adopter les bonnes pratiques de collaboration (pull requests, revues de code)
+\end{itemize}
+
+\subsection{Défis et Problèmes Rencontrés}
+
+\begin{itemize}
+    \item Rendre facilement accessibles des modèles issus du machine learning sans installations fastidieuses par l'utilisateur
+    \item Intégration de \texttt{l’OCR} et des modèles de traitement de texte
+\end{itemize}
+
+Merci d'avoir exploré Uncluttr ! Nous espérons que ce projet vous sera utile et vous inspirera à contribuer et à améliorer encore plus cette solution. N'hésitez pas à explorer, apprendre et partager vos idées avec nous !
+
+Pour plus de détails, consultez la \href{https://waldk.github.io/Uncluttr/}{documentation complète}.
+
+\subsection{Contribution}
+
+Si vous souhaitez contribuer au projet, n’hésitez pas ! Les corrections de bugs, améliorations, ajustements visuels, etc., sont toujours les bienvenus. Si vous envisagez d’implémenter une fonctionnalité majeure, merci d’ouvrir une discussion à ce sujet au préalable. La documentation contient des informations de base pour bien débuter ainsi que le README que vous venez de consulter, et les autres documents annexes à celui-ci.
+
+\subsection{Références Utiles}
+
+\subsubsection{Liens vers des ressources}
+
+\begin{itemize}
+    \item \href{https://www.python.org/about/gettingstarted/}{Guide d'Installation de Python}
+    \item \href{https://python-poetry.org/}{Poetry}
+    \item \href{https://pypi.org/project/watchdog/}{Watchdog}
+    \item Documentation de \href{https://spacy.io/}{spaCy}
+    \item Documentation de \href{https://pyinstaller.org/en/stable/}{PyInstaller}
+    \item \href{https://www.python.org/dev/peps/pep-0008/}{PEP 8 - Style Guide for Python Code}
+    \item Guide \href{https://git-scm.com/book/en/v2}{Git}
+    \item Documentation de \href{https://docs.pytest.org/en/stable/}{Pytest}
+    \item Documentation de \href{https://pylint.pycqa.org/en/latest/}{Pylint}
+\end{itemize}
+
+\subsubsection{Informations de Contact}
+
+\begin{itemize}
+    \item Cérina ALLEK : \href{mailto:cerina.allek@edu.ece.fr}{cerina.allek@edu.ece.fr}
+    \item Waldeck FELIX : \href{mailto:waldecklernst.felix@edu.ece.fr}{waldecklernst.felix@edu.ece.fr}
+    \item Rafael GONÇALVES : \href{mailto:rafael.goncalves@edu.ece.fr}{rafael.goncalves@edu.ece.fr}
+    \item Alban HOELLINGER : \href{mailto:alban.hoellinger@edu.ece.fr}{alban.hoellinger@edu.ece.fr}
+    \item Baptiste LE SCIELLOUR : \href{mailto:baptiste.lesciellour@edu.ece.fr}{baptiste.lesciellour@edu.ece.fr}
+    \item Eva SUPIOT : \href{mailto:eva.supiot@edu.ece.fr}{eva.supiot@edu.ece.fr}
+\end{itemize}
+
+\end{document}

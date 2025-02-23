@@ -140,6 +140,8 @@ python -m uncluttr.core.main
 - Classification automatique et ajout de métadonnées
 - Organisation des documents dans une arborescence
 
+<video controls src="assets/readme/uncluttr_court_compressed.mp4" title="Title"></video>
+
 ### Fonctionnalités à venir
 
 - Rendre le démarrage du daemon indépent du reste et automatique au démarrage de la machine hôte
